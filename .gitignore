@@ -1,0 +1,13 @@
+#folder bin
+*build/
+*lib/
+*nbproject/
+# игнорировать doc/notes.txt, но не doc/server/arch.txt
+doc/*.txt
+# игнорировать все .txt файлы в каталоге doc/
+*.txt
+*.xml
+*~
+*testFile
+*.classpath
+*.project
