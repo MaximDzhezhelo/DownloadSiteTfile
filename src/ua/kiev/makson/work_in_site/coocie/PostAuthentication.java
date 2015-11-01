@@ -19,10 +19,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import ua.kiev.makson.work_in_site.FileRead;
-import ua.kiev.makson.work_in_site.FileWrite;
-import ua.kiev.makson.work_in_site.ValueCharset;
-
 public class PostAuthentication {
     private int statusLine;
     private static final Logger LOGGER = Logger

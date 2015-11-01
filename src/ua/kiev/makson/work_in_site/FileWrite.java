@@ -29,6 +29,5 @@ public class FileWrite {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }
         LOGGER.log(Level.SEVERE, "write Page of Site in " + charset);
-        System.out.println(docPage);
     }
 }

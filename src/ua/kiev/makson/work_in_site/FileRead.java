@@ -27,7 +27,6 @@ public class FileRead {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }
         LOGGER.log(Level.SEVERE, "read Page of Site in " + charset);
-        System.out.println(response);
         return response.toString();
     }
 
