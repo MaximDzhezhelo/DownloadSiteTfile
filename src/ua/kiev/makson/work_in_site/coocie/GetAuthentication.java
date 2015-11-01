@@ -1,5 +1,6 @@
 package ua.kiev.makson.work_in_site.coocie;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,10 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+
+import ua.kiev.makson.work_in_site.FileRead;
+import ua.kiev.makson.work_in_site.FileWrite;
+import ua.kiev.makson.work_in_site.ValueCharset;
 
 public class GetAuthentication {
     private int statusLine;
@@ -27,15 +32,15 @@ public class GetAuthentication {
     }
 
     public void doGet(String url, Map<String, String> header,
-            GeneralHttpClient genClient) {
+            GeneralHttpClient genClient, File rootDirectory) {
         Client client = genClient.getClient();
         List<Cookie> cookies = client.getCookies();
         BasicCookieStore cookieStore = client.getCookieStore();
         CloseableHttpClient httpClient = client.getHttpClient();
         boolean debug = client.isDebug();
         if (cookies.isEmpty() && debug) {
-//            LOGGER.log(Level.SEVERE,
-//                    "Cookies NOT added by previous request. Skiping add cookie...");
+            // LOGGER.log(Level.SEVERE,
+            // "Cookies NOT added by previous request. Skiping add cookie...");
         } else {
             StringBuilder builder = new StringBuilder();
             for (Cookie cookie : cookies) {
@@ -52,12 +57,23 @@ public class GetAuthentication {
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(httpGet);
+
+            ValueCharset valueCharset = new ValueCharset();
+            String charset = valueCharset.getTheValueOfCharset(response);
+
             if (debug) {
                 statusLine = response.getStatusLine().getStatusCode();
                 LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
             }
 
             HttpEntity entity = response.getEntity();
+
+            FileRead fileRead = new FileRead();
+            String docPage = fileRead.readFromEntity(entity, charset);
+
+            FileWrite fileWrite = new FileWrite();
+            fileWrite.writeInFile(docPage, rootDirectory, charset);
+
             EntityUtils.consume(entity);
             cookies = cookieStore.getCookies();
         } catch (IOException ex) {

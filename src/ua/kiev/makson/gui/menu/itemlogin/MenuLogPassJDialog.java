@@ -25,8 +25,8 @@ public class MenuLogPassJDialog extends JDialog {
     public void createDimension() {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension dim = kit.getScreenSize();
-        width = dim.width / 4;
-        height = dim.height / 6;
+        width = dim.width / 3;
+        height = dim.height / 5;
     }
 
     public void createLoginPanel() {

@@ -1,34 +1,34 @@
 package ua.kiev.makson.work_in_site;
 
-import java.io.DataOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileWrite {
-    private File rootDirectory;
-    private String answer;
+    private static final Logger LOGGER = Logger.getLogger(FileWrite.class
+            .getName());
 
-    public FileWrite(String answer, File rootDirectory) {
-        this.answer = answer;
-        this.rootDirectory = rootDirectory;
-    }
-
-    public void writeInFile() {
-        rootDirectory = new File(rootDirectory, "answer.html");
+    public void writeInFile(String docPage, File rootDirectory, String charset) {
+        rootDirectory = new File(rootDirectory, "site.html");
         if (!rootDirectory.exists()) {
             try {
                 rootDirectory.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, ex.getMessage());
             }
         }
-        try (DataOutputStream wr = new DataOutputStream(new FileOutputStream(
-                rootDirectory))) {
-            wr.writeUTF(answer);
-            wr.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(rootDirectory), charset));) {
+            bw.write(docPage);
+            bw.flush();
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
         }
+        LOGGER.log(Level.SEVERE, "write Page of Site in " + charset);
+        System.out.println(docPage);
     }
 }

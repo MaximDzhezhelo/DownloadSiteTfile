@@ -47,6 +47,10 @@ public class Controller {
     public String readSelectFile() {
         if (read == null) {
             read = new FileRead();
+        } else {
+            if (fileEditorPane == null) {
+                return "if you choose the file for viewing?";
+            }
         }
         String textResult = read.readFromRootDirectory(fileEditorPane);
         return textResult;

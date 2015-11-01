@@ -1,5 +1,6 @@
 package ua.kiev.makson.work_in_site.coocie;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import ua.kiev.makson.work_in_site.FileRead;
+import ua.kiev.makson.work_in_site.FileWrite;
+import ua.kiev.makson.work_in_site.ValueCharset;
+
 public class PostAuthentication {
     private int statusLine;
     private static final Logger LOGGER = Logger
@@ -32,7 +37,8 @@ public class PostAuthentication {
     }
 
     public boolean doPost(String url, Map<String, String> header,
-            Map<String, String> params, GeneralHttpClient genClient) {
+            Map<String, String> params, GeneralHttpClient genClient,
+            File rootDirectory) {
         Client client = genClient.getClient();
         List<Cookie> cookies = client.getCookies();
         BasicCookieStore cookieStore = client.getCookieStore();
@@ -69,6 +75,7 @@ public class PostAuthentication {
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(httpPost);
+
             if (debug) {
                 statusLine = response.getStatusLine().getStatusCode();
                 LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
