@@ -1,7 +1,7 @@
 #folder bin
-build/
-lib/
-nbproject/
+*build/
+*lib/
+*nbproject/
 # игнорировать doc/notes.txt, но не doc/server/arch.txt
 doc/*.txt
 # игнорировать все .txt файлы в каталоге doc/

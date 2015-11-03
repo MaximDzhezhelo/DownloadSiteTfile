@@ -68,6 +68,9 @@ public class AfterAuthentication {
             if (debug) {
                 statusLine = response.getStatusLine().getStatusCode();
                 LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
+                if (statusLine != 200) {
+                    response = httpClient.execute(httpGet);
+                }
             }
 
             HttpEntity entity = response.getEntity();
