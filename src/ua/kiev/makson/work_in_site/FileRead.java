@@ -2,7 +2,7 @@ package ua.kiev.makson.work_in_site;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
@@ -13,8 +13,13 @@ import org.apache.http.HttpEntity;
 public class FileRead {
     private static final Logger LOGGER = Logger.getLogger(FileRead.class
             .getName());
+    private String charset;
 
-    public String readFromEntity(HttpEntity entity, String charset) {
+    public FileRead(String charset) {
+        this.charset = charset;
+    }
+
+    public String readFromEntity(HttpEntity entity) {
         StringBuffer response = new StringBuffer();
         try (BufferedReader in = new BufferedReader(new InputStreamReader(
                 entity.getContent(), charset))) {
@@ -32,8 +37,8 @@ public class FileRead {
 
     public String readFromRootDirectory(File rootDirectory) {
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new FileReader(
-                rootDirectory))) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(rootDirectory), charset))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 inputLine = String.format("%s%n", inputLine);

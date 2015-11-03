@@ -62,6 +62,7 @@ public class GetAuthentication {
 
             ValueCharset valueCharset = new ValueCharset();
             String charset = valueCharset.getTheValueOfCharset(response);
+            client.setCharset(charset);
 
             if (debug) {
                 statusLine = response.getStatusLine().getStatusCode();
@@ -70,8 +71,8 @@ public class GetAuthentication {
 
             HttpEntity entity = response.getEntity();
 
-            FileRead fileRead = new FileRead();
-            String docPage = fileRead.readFromEntity(entity, charset);
+            FileRead fileRead = new FileRead(charset);
+            String docPage = fileRead.readFromEntity(entity);
 
             FileWrite fileWrite = new FileWrite();
             fileWrite.writeInFile(docPage, rootDirectory, charset);

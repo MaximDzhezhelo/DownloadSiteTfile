@@ -72,8 +72,8 @@ public class AfterAuthentication {
 
             HttpEntity entity = response.getEntity();
 
-            FileRead fileRead = new FileRead();
-            String docPage = fileRead.readFromEntity(entity, charset);
+            FileRead fileRead = new FileRead(charset);
+            String docPage = fileRead.readFromEntity(entity);
 
             FileWrite fileWrite = new FileWrite();
             fileWrite.writeInFile(docPage, rootDirectory, charset);

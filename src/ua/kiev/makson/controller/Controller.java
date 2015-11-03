@@ -46,7 +46,8 @@ public class Controller {
 
     public String readSelectFile() {
         if (read == null) {
-            read = new FileRead();
+            String charset = controlSite.getCharset();
+            read = new FileRead(charset);
         } else {
             if (fileEditorPane == null) {
                 return "if you choose the file for viewing?";

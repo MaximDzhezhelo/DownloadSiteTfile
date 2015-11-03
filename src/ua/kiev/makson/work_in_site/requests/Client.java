@@ -13,6 +13,7 @@ public class Client {
     private BasicCookieStore cookieStore;
     private CloseableHttpClient httpClient;
     private List<Cookie> cookies;
+    private String charset;
 
     public Client() {
         debug = true;
@@ -54,4 +55,11 @@ public class Client {
         this.cookies = cookies;
     }
 
+    public void setCharset(String charset) {
+        this.charset = charset;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
 }
