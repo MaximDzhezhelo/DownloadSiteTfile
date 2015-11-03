@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.coocie;
+package ua.kiev.makson.work_in_site.requests;
 
 import java.util.Collections;
 import java.util.List;

@@ -79,13 +79,14 @@ public class Controller {
 
     public void goToTheSite() {
         if (controlSite == null) {
-            JOptionPane.showMessageDialog(null, "введите логин и пароль");
+            JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
         }
+        controlSite.goInTheSite();
     }
 
     public void stopToTheSite() {
         if (controlSite == null) {
-            JOptionPane.showMessageDialog(null, "введите логин и пароль");
+            JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
         }
     }
 }

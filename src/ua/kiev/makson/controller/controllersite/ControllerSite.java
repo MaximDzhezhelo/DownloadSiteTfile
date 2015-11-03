@@ -2,7 +2,7 @@ package ua.kiev.makson.controller.controllersite;
 
 import java.io.File;
 
-import ua.kiev.makson.work_in_site.coocie.GeneralHttpClient;
+import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
 public class ControllerSite {
     private String urlString;
@@ -57,6 +57,10 @@ public class ControllerSite {
 
     public void loginStart() {
         genClient.authentication(this);
+    }
+
+    public void goInTheSite() {
+        genClient.getVideo(this);
     }
 
     public boolean setColorRegistration() {

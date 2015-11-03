@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.coocie;
+package ua.kiev.makson.work_in_site.requests.get;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -17,11 +18,11 @@ import org.apache.http.util.EntityUtils;
 import ua.kiev.makson.work_in_site.FileRead;
 import ua.kiev.makson.work_in_site.FileWrite;
 import ua.kiev.makson.work_in_site.ValueCharset;
+import ua.kiev.makson.work_in_site.requests.Client;
+import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
-public class GetAuthentication {
+public class AfterAuthentication {
     private int statusLine;
-    private static final Logger LOGGER = Logger
-            .getLogger(GetAuthentication.class.getName());
 
     public int getStatusLine() {
         return statusLine;
@@ -30,6 +31,9 @@ public class GetAuthentication {
     public void setStatusLine(int statusLine) {
         this.statusLine = statusLine;
     }
+
+    private static final Logger LOGGER = Logger
+            .getLogger(AfterAuthentication.class.getName());
 
     public void doGet(String url, Map<String, String> header,
             GeneralHttpClient genClient, File rootDirectory) {

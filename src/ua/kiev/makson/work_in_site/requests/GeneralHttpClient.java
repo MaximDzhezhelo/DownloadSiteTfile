@@ -1,5 +1,4 @@
-package ua.kiev.makson.work_in_site.coocie;
-
+package ua.kiev.makson.work_in_site.requests;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 
@@ -21,9 +20,11 @@ public class GeneralHttpClient {
     public void authentication(ControllerSite controlSite) {
         Request request = new Request();
         request.authentication(this, controlSite);
-
     }
 
-    
+    public void getVideo(ControllerSite controlSite) {
+        Request request = new Request();
+        request.getVideo(this, controlSite);
+    }
 
 }
