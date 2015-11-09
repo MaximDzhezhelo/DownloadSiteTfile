@@ -6,18 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.util.EntityUtils;
 
-import ua.kiev.makson.work_in_site.FileRead;
-import ua.kiev.makson.work_in_site.FileWrite;
-import ua.kiev.makson.work_in_site.ValueCharset;
+import ua.kiev.makson.work_in_site.AnalysisEntity;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
@@ -62,26 +57,14 @@ public class AfterAuthentication {
         try {
             response = httpClient.execute(httpGet);
 
-            ValueCharset valueCharset = new ValueCharset();
-            String charset = valueCharset.getTheValueOfCharset(response);
-
             if (debug) {
                 statusLine = response.getStatusLine().getStatusCode();
                 LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
-                if (statusLine != 200) {
-                    response = httpClient.execute(httpGet);
-                }
             }
 
-            HttpEntity entity = response.getEntity();
+            AnalysisEntity entity = new AnalysisEntity();
+            entity.getDataEntity(response, genClient, rootDirectory);
 
-            FileRead fileRead = new FileRead(charset);
-            String docPage = fileRead.readFromEntity(entity);
-
-            FileWrite fileWrite = new FileWrite();
-            fileWrite.writeInFile(docPage, rootDirectory, charset);
-
-            EntityUtils.consume(entity);
             cookies = cookieStore.getCookies();
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());

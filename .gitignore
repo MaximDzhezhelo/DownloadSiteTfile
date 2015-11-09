@@ -12,3 +12,5 @@ doc/*.txt
 *.classpath
 *.project
 *.html
+*.db
+
