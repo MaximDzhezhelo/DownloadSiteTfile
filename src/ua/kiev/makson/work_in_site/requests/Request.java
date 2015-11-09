@@ -12,8 +12,8 @@ import ua.kiev.makson.work_in_site.requests.get.AfterAuthentication;
 
 public class Request {
     private RequestHelper requestHelper;
-    private static final Logger LOGGER = Logger
-            .getLogger(AfterAuthentication.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Request.class
+            .getName());
 
     private Map<String, String> header;
 

@@ -1,25 +1,54 @@
-package ua.kiev.makson.work_in_site.requests.authentication;
+package ua.kiev.makson.timer;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 
-import ua.kiev.makson.work_in_site.AnalysisEntity;
+import ua.kiev.makson.work_in_site.FileRead;
+import ua.kiev.makson.work_in_site.FileWrite;
+import ua.kiev.makson.work_in_site.ValueCharset;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
-public class GetAuthentication {
+public class GetTask extends TimerTask {
     private int statusLine;
-    private static final Logger LOGGER = Logger
-            .getLogger(GetAuthentication.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GetTask.class
+            .getName());
+
+    private String url;
+    private Map<String, String> header;
+    private GeneralHttpClient genClient;
+    private File rootDirectory;
+    private Client client;
+    private List<Cookie> cookies;
+    private BasicCookieStore cookieStore;
+    private CloseableHttpClient httpClient;
+    Timer timer = new Timer();
+
+    public GetTask(String url, Map<String, String> header,
+            GeneralHttpClient genClient, File rootDirectory) {
+        this.genClient = genClient;
+        this.header = header;
+        this.rootDirectory = rootDirectory;
+        this.url = url;
+        client = genClient.getClient();
+        cookies = client.getCookies();
+        cookieStore = client.getCookieStore();
+        httpClient = client.getHttpClient();
+    }
 
     public int getStatusLine() {
         return statusLine;
@@ -29,12 +58,8 @@ public class GetAuthentication {
         this.statusLine = statusLine;
     }
 
-    public void doGet(String url, Map<String, String> header,
-            GeneralHttpClient genClient, File rootDirectory) {
-        Client client = genClient.getClient();
-        List<Cookie> cookies = client.getCookies();
-        BasicCookieStore cookieStore = client.getCookieStore();
-        CloseableHttpClient httpClient = client.getHttpClient();
+    public void doGet() {
+        LOGGER.log(Level.SEVERE, "Start get");
         boolean debug = client.isDebug();
         if (cookies.isEmpty() && debug) {
             // LOGGER.log(Level.SEVERE,
@@ -55,14 +80,27 @@ public class GetAuthentication {
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(httpGet);
+            LOGGER.log(Level.SEVERE, "response ");
+            ValueCharset valueCharset = new ValueCharset();
+            String charset = valueCharset.getTheValueOfCharset(response);
+            client.setCharset(charset);
+
             if (debug) {
                 statusLine = response.getStatusLine().getStatusCode();
                 LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
             }
+            HttpEntity entity = response.getEntity();
+            if (!(statusLine == 200)) {
 
-            AnalysisEntity entity = new AnalysisEntity();
-            entity.getDataEntity(response, genClient, rootDirectory);
+                FileRead fileRead = new FileRead(charset);
+                String docPage = fileRead.readFromEntity(entity);
 
+                FileWrite fileWrite = new FileWrite();
+                fileWrite.writeInFile(docPage, rootDirectory, charset);
+                LOGGER.log(Level.SEVERE, "file write ");
+
+            }
+            EntityUtils.consume(entity);
             cookies = cookieStore.getCookies();
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
@@ -76,5 +114,12 @@ public class GetAuthentication {
                 }
             }
         }
+    }
+
+    @Override
+    public void run() {
+        doGet();
+        System.out.println("task cansel");
+        cancel();
     }
 }
