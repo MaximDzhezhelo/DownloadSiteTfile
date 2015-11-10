@@ -4,7 +4,8 @@ public class StartWork {
 
     public static void main(String[] args) {
         JavaSQL javaSQL = new JavaSQL();
-        javaSQL.createSQL();
+        javaSQL.showAll();
+        javaSQL.searchNameVideo("Макс ");
 
     }
 
