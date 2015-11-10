@@ -1,6 +1,6 @@
 package ua.kiev.makson.work_in_site.page;
 
-public class Video {
+public class VideoDescription {
     private String name;
     private String viewtopic;
     private String downloadUrl;
@@ -54,7 +54,7 @@ public class Video {
             return false;
         if (this.getClass() != other.getClass())
             return false;
-        Video otherObj = (Video) other;
+        VideoDescription otherObj = (VideoDescription) other;
         return this.name.equals(otherObj.name);
     }
 

@@ -61,11 +61,12 @@ public class JavaSQL {
         }
     }
 
-    public void searchVideoByName(String str) {
+    public HashMap<Integer, String> searchVideoByName(String str) {
+        HashMap<Integer, String> map = new HashMap<>();
         try (Connection con = DriverManager
                 .getConnection("jdbc:sqlite:collection.db")) {
             state = con.createStatement();
-            HashMap<Integer, String> map = new HashMap<>();
+
             ResultSet rs = state
                     .executeQuery("SELECT * FROM `collection` WHERE  `collection.nameVideo`= '"
                             + str + "'");
@@ -73,13 +74,12 @@ public class JavaSQL {
                 int id = rs.getInt(1);
                 String viDeoObj = rs.getString("collection.viDeoObj");
                 map.put(id, viDeoObj);
-
             }
             if (map.size() > 0) {
-                Set<Entry<Integer, String>> set = map.entrySet();
-                for (Entry<Integer, String> entry : set) {
-                    System.out.printf("%s%n", entry);
-                }
+                // Set<Entry<Integer, String>> set = map.entrySet();
+                // for (Entry<Integer, String> entry : set) {
+                // System.out.printf("%s%n", entry);
+                // }
 
             } else {
                 LOGGER.log(Level.SEVERE,
@@ -89,18 +89,40 @@ public class JavaSQL {
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }
+        return map;
     }
 
-    public void deleteVideoByID(int id) {
+    public boolean checkVideoByName(String str) {
         try (Connection con = DriverManager
                 .getConnection("jdbc:sqlite:collection.db")) {
             state = con.createStatement();
-            int x = state.executeUpdate("DELETE FROM `collection` WHERE id= '"
-                    + id + "'");
-            System.out.println(x);
+
+            ResultSet rs = state
+                    .executeQuery("SELECT * FROM `collection` WHERE  `collection.nameVideo`= '"
+                            + str + "'");
+            if (rs.next()) {
+                state.close();
+                return true;
+            }
             state.close();
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }
+        return false;
+
+    }
+
+    public int deleteVideoByID(int id) {
+        int x = 0;
+        try (Connection con = DriverManager
+                .getConnection("jdbc:sqlite:collection.db")) {
+            state = con.createStatement();
+            x = state.executeUpdate("DELETE FROM `collection` WHERE id= '" + id
+                    + "'");
+            state.close();
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+        }
+        return x;
     }
 }

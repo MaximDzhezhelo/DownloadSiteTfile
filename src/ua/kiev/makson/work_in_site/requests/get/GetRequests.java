@@ -12,11 +12,13 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.AnalysisEntity;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
+import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 
-public class AfterAuthentication {
+public class GetRequests {
     private int statusLine;
 
     public int getStatusLine() {
@@ -27,11 +29,14 @@ public class AfterAuthentication {
         this.statusLine = statusLine;
     }
 
-    private static final Logger LOGGER = Logger
-            .getLogger(AfterAuthentication.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GetRequests.class
+            .getName());
 
-    public void doGet(String url, Map<String, String> header,
-            GeneralHttpClient genClient, File rootDirectory) {
+    public void doGet(String url, RequesAssistant assistant) {
+        GeneralHttpClient genClient = assistant.getGenClient();
+        Map<String, String> header = assistant.getHeader();
+        ControllerSite controlSite = assistant.getControlSite();
+        File rootDirectory = controlSite.getRootDirectory();
         Client client = genClient.getClient();
         List<Cookie> cookies = client.getCookies();
         BasicCookieStore cookieStore = client.getCookieStore();
