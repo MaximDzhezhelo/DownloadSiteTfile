@@ -5,15 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import ua.kiev.makson.work_in_site.page.Video;
 
 public class JavaSQL {
     // private AESCrypto encrypt;
@@ -65,7 +61,7 @@ public class JavaSQL {
         }
     }
 
-    public void searchNameVideo(String str) {
+    public void searchVideoByName(String str) {
         try (Connection con = DriverManager
                 .getConnection("jdbc:sqlite:collection.db")) {
             state = con.createStatement();
@@ -89,6 +85,19 @@ public class JavaSQL {
                 LOGGER.log(Level.SEVERE,
                         String.format("%s%n", "not have site with this word"));
             }
+            state.close();
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+        }
+    }
+
+    public void deleteVideoByID(int id) {
+        try (Connection con = DriverManager
+                .getConnection("jdbc:sqlite:collection.db")) {
+            state = con.createStatement();
+            int x = state.executeUpdate("DELETE FROM `collection` WHERE id= '"
+                    + id + "'");
+            System.out.println(x);
             state.close();
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
