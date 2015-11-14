@@ -21,8 +21,11 @@ public class WorkWithPage {
     public void parsingPage(JavaSQL javaSQL, RequesAssistant assistant) {
         ControllerSite controlSite = assistant.getControlSite();
         String charset = controlSite.getCharset();
-        File file = new File("site.html");
+        String fileName = controlSite.getDefaultReadName();
+        File rootDirectory = controlSite.getRootDirectory();
+        File file = new File(rootDirectory, fileName);
         if (file.exists()) {
+            LOGGER.log(Level.SEVERE, "File exists");
             FileRead fileRead = new FileRead(charset);
             String page = fileRead.readFromRootDirectory(file);
 
@@ -54,21 +57,20 @@ public class WorkWithPage {
                         description.setName(nameOfFile);
                         LOGGER.log(Level.SEVERE, "nameOfFile there is");
 
-                        // video.setName(nameOfFile);
                         Elements links = classT.select("a[href]");
                         for (Element link : links) {
                             String viewtopic = link.attr("href");
 
-                            FormingObjectVideo objectVideo = new FormingObjectVideo();
-                            description = objectVideo.getVideoDescription(
-                                    viewtopic, description, assistant);
+                            description = setViewtopic(viewtopic, description,
+                                    assistant);
                         }
 
                         Elements classDL = elementDiv.getElementsByClass("dl");
                         Elements linksDL = classDL.select("a[href]");
                         for (Element link : linksDL) {
                             String downloadUrl = link.attr("href");
-                            // video.setDownloadUrl(downloadUrl);
+                            description = setDownloadUrl(downloadUrl,
+                                    description, assistant);
                         }
                         javaSQL.writeData(nameOfFile, description.toString());
                     }
@@ -77,6 +79,19 @@ public class WorkWithPage {
         } else {
             LOGGER.log(Level.SEVERE, "File is not exists");
         }
+    }
 
+    private VideoDescription setViewtopic(String viewtopic,
+            VideoDescription description, RequesAssistant assistant) {
+        FormingObjectVideo objectVideo = new FormingObjectVideo();
+        return description = objectVideo.getVideoDescription(viewtopic,
+                description, assistant);
+    }
+
+    private VideoDescription setDownloadUrl(String downloadUrl,
+            VideoDescription description, RequesAssistant assistant) {
+
+        DownloadFile download = new DownloadFile();
+        return download.startDownload(downloadUrl, description, assistant);
     }
 }

@@ -28,16 +28,4 @@ public class GeneralWorkInSite {
     public void parsingPage(RequesAssistant assistant) {
         workWithPage.parsingPage(javaSQL, assistant);
     }
-
-    // public static void main(String[] args) {
-    // GeneralWorkInSite generalWorkInSite = new GeneralWorkInSite();
-    // // javaSQL.showAll();
-    // // javaSQL.searchVideoByName("Эверест ");
-    // // javaSQL.deleteVideoByID(64);
-    // // boolean res = javaSQL
-    // // .checkVideoByName("Ананасовый экспресс: Сижу, курю ");
-    // //
-    // // System.out.println(res);
-    // // workWithPage.parsingPage(javaSQL, "windows-1251");
-    // }
 }

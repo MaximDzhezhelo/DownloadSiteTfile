@@ -49,8 +49,9 @@ public class VideoDescription {
 
     @Override
     public String toString() {
-        return String.format("%s%n %s%n %s%n %s%n", name, description,
-                viewtopic, downloadUrl);
+        return String.format(
+                "name%s%ndescription%s%nviewtopic%s%ndownloadUrl%s%n", name,
+                description, viewtopic, downloadUrl);
     }
 
     @Override
