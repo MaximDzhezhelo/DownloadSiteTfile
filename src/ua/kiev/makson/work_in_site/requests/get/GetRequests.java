@@ -1,6 +1,5 @@
 package ua.kiev.makson.work_in_site.requests.get;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-
-import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.AnalysisEntity;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
@@ -35,8 +32,6 @@ public class GetRequests {
     public void doGet(String url, RequesAssistant assistant) {
         GeneralHttpClient genClient = assistant.getGenClient();
         Map<String, String> header = assistant.getHeader();
-        ControllerSite controlSite = assistant.getControlSite();
-        File rootDirectory = controlSite.getRootDirectory();
         Client client = genClient.getClient();
         List<Cookie> cookies = client.getCookies();
         BasicCookieStore cookieStore = client.getCookieStore();
@@ -68,7 +63,7 @@ public class GetRequests {
             }
 
             AnalysisEntity entity = new AnalysisEntity();
-            entity.getDataEntity(response, genClient, rootDirectory);
+            entity.getDataEntity(response, assistant);
 
             cookies = cookieStore.getCookies();
         } catch (IOException ex) {

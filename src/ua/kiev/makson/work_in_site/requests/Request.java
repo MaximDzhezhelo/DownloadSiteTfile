@@ -29,8 +29,10 @@ public class Request {
         String url = controlSite.getUrl();
         File rootDirectory = controlSite.getRootDirectory();
 
+        RequesAssistant assistant = new RequesAssistant(genClient, controlSite,
+                header);
         GetAuthentication get = new GetAuthentication();
-        get.doGet(url, header, genClient, rootDirectory);
+        get.doGet(url, assistant);
 
         Map<String, String> params = requestHelper
                 .getPostParamsForLogin(controlSite);

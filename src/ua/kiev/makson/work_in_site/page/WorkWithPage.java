@@ -28,6 +28,7 @@ public class WorkWithPage {
 
             Document doc = Jsoup.parse(page);
             VideoDescription description = new VideoDescription();
+
             String title = doc.title();
             System.out.println(title);
 
@@ -52,19 +53,15 @@ public class WorkWithPage {
                     if (!thereIs) {
                         description.setName(nameOfFile);
                         LOGGER.log(Level.SEVERE, "nameOfFile there is");
-                        String category = nameFile.substring(x + 1,
-                                nameFile.length()).trim();
 
                         // video.setName(nameOfFile);
-                        // video.setCategory(category);
-
                         Elements links = classT.select("a[href]");
                         for (Element link : links) {
                             String viewtopic = link.attr("href");
+
                             FormingObjectVideo objectVideo = new FormingObjectVideo();
-                            objectVideo.getVideoDescription(viewtopic,
-                                    description, assistant);
-                            // video.setViewtopic(viewtopic);
+                            description = objectVideo.getVideoDescription(
+                                    viewtopic, description, assistant);
                         }
 
                         Elements classDL = elementDiv.getElementsByClass("dl");
@@ -73,7 +70,7 @@ public class WorkWithPage {
                             String downloadUrl = link.attr("href");
                             // video.setDownloadUrl(downloadUrl);
                         }
-                        // javaSQL.writeData(nameOfFile, video.toString());
+                        javaSQL.writeData(nameOfFile, description.toString());
                     }
                 }
             }

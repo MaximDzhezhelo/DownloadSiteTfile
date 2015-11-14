@@ -7,34 +7,39 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.FileRead;
+import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 
-public class CreateString {
+public class FormingDescription {
 
-    public static void main(String[] args) {
-        FileRead fileRead = new FileRead("windows-1251");
-        File file = new File("site.html");
-        if (file.exists()) {
-            String page = fileRead.readFromRootDirectory(file);
+    public VideoDescription startForming(RequesAssistant assistant,
+            VideoDescription descriptionObject) {
+        ControllerSite controlSite = assistant.getControlSite();
+        String charset = controlSite.getCharset();
+        String fileName = controlSite.getDefaultReadName();
+        FileRead fileRead = new FileRead(charset);
+        File file = new File(fileName);
 
-            Document doc = Jsoup.parse(page);
+        String page = fileRead.readFromRootDirectory(file);
 
-            CreateString create = new CreateString();
-            Element body = doc.body();
+        Document doc = Jsoup.parse(page);
+        Element body = doc.body();
+        String img = getIMG(body);
+        String description = getDescription(body);
+        descriptionObject.setImg(img);
+        descriptionObject.setDescription(description);
 
-            System.out.println(create.getIMG(body));
-            System.out.println(create.getDescription(body));
-
-        }
+        return descriptionObject;
     }
 
-    public String getIMG(Element body) {
+    private String getIMG(Element body) {
         Element img = body.getElementById("postImgAligned");
         String imgURL = img.attr("src");
         return imgURL;
     }
 
-    public String getDescription(Element body) {
+    private String getDescription(Element body) {
         StringBuilder sb = new StringBuilder();
         Elements el = body.getElementsByClass("field");
         for (Element element : el) {

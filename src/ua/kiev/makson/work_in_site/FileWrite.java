@@ -12,8 +12,9 @@ public class FileWrite {
     private static final Logger LOGGER = Logger.getLogger(FileWrite.class
             .getName());
 
-    public void writeInFile(String docPage, File rootDirectory, String charset) {
-        rootDirectory = new File(rootDirectory, "site.html");
+    public void writeInFile(String docPage, File rootDirectory, String charset,
+            String defaultReadName) {
+        rootDirectory = new File(rootDirectory, defaultReadName);
         if (!rootDirectory.exists()) {
             try {
                 rootDirectory.createNewFile();

@@ -1,6 +1,5 @@
 package ua.kiev.makson.work_in_site.requests.authentication;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import ua.kiev.makson.work_in_site.AnalysisEntity;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
+import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 
 public class GetAuthentication {
     private int statusLine;
@@ -29,8 +29,9 @@ public class GetAuthentication {
         this.statusLine = statusLine;
     }
 
-    public void doGet(String url, Map<String, String> header,
-            GeneralHttpClient genClient, File rootDirectory) {
+    public void doGet(String url, RequesAssistant assistant) {
+        GeneralHttpClient genClient = assistant.getGenClient();
+        Map<String, String> header = assistant.getHeader();
         Client client = genClient.getClient();
         List<Cookie> cookies = client.getCookies();
         BasicCookieStore cookieStore = client.getCookieStore();
@@ -61,7 +62,7 @@ public class GetAuthentication {
             }
 
             AnalysisEntity entity = new AnalysisEntity();
-            entity.getDataEntity(response, genClient, rootDirectory);
+            entity.getDataEntity(response, assistant);
 
             cookies = cookieStore.getCookies();
         } catch (IOException ex) {

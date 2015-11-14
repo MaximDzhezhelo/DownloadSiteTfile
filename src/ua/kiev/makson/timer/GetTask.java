@@ -96,7 +96,7 @@ public class GetTask extends TimerTask {
                 String docPage = fileRead.readFromEntity(entity);
 
                 FileWrite fileWrite = new FileWrite();
-                fileWrite.writeInFile(docPage, rootDirectory, charset);
+//                fileWrite.writeInFile(docPage, rootDirectory, charset);
                 LOGGER.log(Level.SEVERE, "file write ");
 
             }

@@ -11,6 +11,7 @@ public class ControllerSite {
     private File rootDirectory;
     private boolean registration;
     private GeneralHttpClient genClient;
+    private String defaultReadName;
 
     public ControllerSite(String url, String login, String password,
             File rootDirectory) {
@@ -19,6 +20,7 @@ public class ControllerSite {
         this.password = password;
         this.rootDirectory = rootDirectory;
         genClient = new GeneralHttpClient();
+        defaultReadName = "site.html";
     }
 
     public void setRegistration(boolean registration) {
@@ -39,6 +41,10 @@ public class ControllerSite {
 
     public File getRootDirectory() {
         return rootDirectory;
+    }
+
+    public String getDefaultReadName() {
+        return defaultReadName;
     }
 
     public void setUrlLogPass(String url, String login, String password,
