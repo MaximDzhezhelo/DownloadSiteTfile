@@ -19,7 +19,8 @@ public class FormingDescription {
         String charset = controlSite.getCharset();
         String fileName = controlSite.getDefaultReadName();
         FileRead fileRead = new FileRead(charset);
-        File file = new File(fileName);
+        File rootDirectory = controlSite.getRootDirectory();
+        File file = new File(rootDirectory, fileName);
 
         String page = fileRead.readFromRootDirectory(file);
 
