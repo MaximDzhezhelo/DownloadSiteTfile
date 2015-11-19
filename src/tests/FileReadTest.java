@@ -6,19 +6,19 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 
 import org.apache.http.HttpEntity;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import ua.kiev.makson.work_in_site.FileRead;
 
 public class FileReadTest {
-    private static FileRead test;
-    private static File rootDirectory;
-    private static HttpEntity entity;
+    private FileRead test;
+    private File rootDirectory;
+    private HttpEntity entity;
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
+    @Before
+    public void setUpBeforeClass() throws Exception {
         test = Mockito.mock(FileRead.class);
         rootDirectory = new File("site.html");
         entity = Mockito.mock(HttpEntity.class);
@@ -41,11 +41,20 @@ public class FileReadTest {
 
     @Test
     public void returnStatementFromEntity() {
-        when(test.readFromEntity(entity)).thenReturn("site.html");
         when(test.readFromEntity(entity)).thenReturn(anyString());
         // verify(test, atLeastOnce()).readFromEntity(entity);
         assertEquals(test.readFromEntity(entity), anyString());
 
     }
 
+    @Test
+    public void returnStatementFrDirectory() {
+        when(test.readFromRootDirectory(rootDirectory)).thenReturn("site.html");
+        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
+        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
+        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
+        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
+        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
+        verify(test, atLeast(5)).readFromRootDirectory(rootDirectory);
+    }
 }

@@ -15,13 +15,9 @@ public class FileWrite {
     public void writeInFile(String docPage, File rootDirectory, String charset,
             String defaultReadName) {
         rootDirectory = new File(rootDirectory, defaultReadName);
-        if (!rootDirectory.exists()) {
-            try {
-                rootDirectory.createNewFile();
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, ex.getMessage());
-            }
-        }
+
+        ifExists(rootDirectory);
+
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(rootDirectory), charset));) {
             bw.write(docPage);
@@ -30,5 +26,15 @@ public class FileWrite {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }
         LOGGER.log(Level.SEVERE, "write Page of Site in " + charset);
+    }
+
+    private void ifExists(File rootDirectory) {
+        if (!rootDirectory.exists()) {
+            try {
+                rootDirectory.createNewFile();
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, ex.getMessage());
+            }
+        }
     }
 }
