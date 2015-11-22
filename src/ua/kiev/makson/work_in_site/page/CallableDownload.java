@@ -40,12 +40,13 @@ public class CallableDownload implements Callable<VideoDescription> {
         }
         GetDownlodRequests requests = new GetDownlodRequests();
         File fileDownload = new File(fileFolder, nameFile);
+        
         requests.doGet(downloadUrl, assistant, fileDownload);
         String getPath = fileDownload.getAbsolutePath();
         description.setDownloadUrl(getPath);
 
         FileWrite fileWrite = new FileWrite();
-        fileWrite.writeInFile(description.toString(), fileFolder, null,
+        fileWrite.writeInFile(description.toString(), fileFolder, "UTF-8",
                 namedescr);
 
         return description;

@@ -62,6 +62,6 @@ public class FileWriteTest {
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        assertTrue(file.delete());
+        file.delete();
     }
 }

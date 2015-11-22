@@ -17,7 +17,6 @@ public class FileWrite {
         rootDirectory = new File(rootDirectory, defaultReadName);
 
         ifExists(rootDirectory);
-
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(rootDirectory), charset));) {
             bw.write(docPage);

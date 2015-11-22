@@ -33,6 +33,7 @@ public class GetDownlodRequests {
     }
 
     public void doGet(String url, RequesAssistant assistant, File file) {
+        LOGGER.log(Level.SEVERE, "GetDownlodRequests ");
         GeneralHttpClient genClient = assistant.getGenClient();
         Map<String, String> header = assistant.getHeader();
         Client client = genClient.getClient();
@@ -64,7 +65,9 @@ public class GetDownlodRequests {
             }
             HttpEntity entity = response.getEntity();
             LOGGER.log(Level.SEVERE, "write entity");
+            System.out.println("write entity");
             entity.writeTo(new BufferedOutputStream(new FileOutputStream(file)));
+            System.out.println(entity.toString());
 
             cookies = cookieStore.getCookies();
         } catch (IOException ex) {

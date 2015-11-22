@@ -69,7 +69,7 @@ public class ControllerSite {
         genClient.getVideo(this);
     }
 
-    public boolean setColorRegistration() {
+    public boolean getColorRegistration() {
         return registration;
     }
 

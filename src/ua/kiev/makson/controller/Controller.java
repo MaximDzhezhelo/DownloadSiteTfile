@@ -75,7 +75,7 @@ public class Controller {
     }
 
     public boolean setRegistration() {
-        return controlSite.setColorRegistration();
+        return controlSite.getColorRegistration();
     }
 
     public void goToTheSite() {

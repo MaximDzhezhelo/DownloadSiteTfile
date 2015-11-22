@@ -30,6 +30,7 @@ public class GetRequests {
             .getName());
 
     public void doGet(String url, RequesAssistant assistant) {
+        LOGGER.log(Level.SEVERE, "getRequests");
         GeneralHttpClient genClient = assistant.getGenClient();
         Map<String, String> header = assistant.getHeader();
         Client client = genClient.getClient();

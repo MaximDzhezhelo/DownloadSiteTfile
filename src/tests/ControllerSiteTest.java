@@ -17,9 +17,17 @@ public class ControllerSiteTest {
     }
 
     @Test
-    public void test() {
+    public void testDefaultReadName() {
         String name = controllerSite.getDefaultReadName();
         assertTrue(name.equals("site.html"));
+    }
+
+    @Test
+    public void testColorRegistration() {
+        boolean flag = controllerSite.getColorRegistration();
+        assertFalse(flag);
+        controllerSite.setRegistration(true);
+        assertTrue(controllerSite.getColorRegistration());
     }
 
 }

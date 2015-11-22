@@ -1,60 +1,48 @@
 package tests;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.io.File;
+import java.io.IOException;
 
-import org.apache.http.HttpEntity;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import ua.kiev.makson.work_in_site.FileRead;
 
 public class FileReadTest {
     private FileRead test;
-    private File rootDirectory;
-    private HttpEntity entity;
+    private static File rootDirectory;
 
     @Before
     public void setUpBeforeClass() throws Exception {
-        test = Mockito.mock(FileRead.class);
         rootDirectory = new File("site.html");
-        entity = Mockito.mock(HttpEntity.class);
+        test = new FileRead("UTF-8");
     }
 
     @Test
-    public void isFileExist() {
+    public void isFileExist() throws IOException {
+        if (!rootDirectory.exists()) {
+            rootDirectory.createNewFile();
+        }
         assertTrue(rootDirectory.exists());
     }
 
     @Test
-    public void returnStatementFromRootDirectory() {
-        when(test.readFromRootDirectory(rootDirectory)).thenReturn("site.html");
-        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
-        assertNotEquals(test.readFromRootDirectory(rootDirectory), "xrenb");
-        verify(test, atLeastOnce()).readFromRootDirectory(rootDirectory);
-        verify(test, atLeast(2)).readFromRootDirectory(rootDirectory);
-        verify(test, never()).readFromRootDirectory(new File("xrenb"));
+    public void isreadFromRootDirectory() {
+        String result = test.readFromRootDirectory(rootDirectory);
+        assertNotNull(result);
+        assertTrue(result.length() == 0);
     }
 
-    @Test
-    public void returnStatementFromEntity() {
-        when(test.readFromEntity(entity)).thenReturn(anyString());
-        // verify(test, atLeastOnce()).readFromEntity(entity);
-        assertEquals(test.readFromEntity(entity), anyString());
-
+    @Test(expected = NullPointerException.class)
+    public void isreadFromRootDirectoryException() {
+        test.readFromRootDirectory(null);
     }
 
-    @Test
-    public void returnStatementFrDirectory() {
-        when(test.readFromRootDirectory(rootDirectory)).thenReturn("site.html");
-        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
-        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
-        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
-        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
-        assertEquals(test.readFromRootDirectory(rootDirectory), "site.html");
-        verify(test, atLeast(5)).readFromRootDirectory(rootDirectory);
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+        rootDirectory.delete();
     }
 }
