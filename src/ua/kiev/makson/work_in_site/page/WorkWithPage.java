@@ -84,8 +84,8 @@ public class WorkWithPage {
     private VideoDescription setViewtopic(String viewtopic,
             VideoDescription description, RequesAssistant assistant) {
         FormingObjectVideo objectVideo = new FormingObjectVideo();
-        return description = objectVideo.getVideoDescription(viewtopic,
-                description, assistant);
+        return objectVideo.getVideoDescription(viewtopic, description,
+                assistant);
     }
 
     private VideoDescription setDownloadUrl(String downloadUrl,

@@ -23,8 +23,6 @@ public class FormingObjectVideo {
         descriptionObject.setViewtopic(viewtopic);
 
         FormingDescription formingDescription = new FormingDescription();
-        descriptionObject = formingDescription.startForming(assistant,
-                descriptionObject);
-        return descriptionObject;
+        return formingDescription.startForming(assistant, descriptionObject);
     }
 }

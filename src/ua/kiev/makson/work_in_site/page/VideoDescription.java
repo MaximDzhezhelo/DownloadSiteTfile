@@ -50,8 +50,8 @@ public class VideoDescription {
     @Override
     public String toString() {
         return String.format(
-                "name%s%ndescription%s%nviewtopic%s%ndownloadUrl%s%n", name,
-                description, viewtopic, downloadUrl);
+                "name: %s%ndescription: %s%nviewtopic: %s%ndownloadUrl: %s%n",
+                name, description, viewtopic, downloadUrl);
     }
 
     @Override
