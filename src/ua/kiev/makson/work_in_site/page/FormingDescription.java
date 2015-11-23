@@ -28,16 +28,22 @@ public class FormingDescription {
         Element body = doc.body();
         String img = getIMG(body);
         String description = getDescription(body);
+        String url = getURL(body);
         descriptionObject.setImg(img);
         descriptionObject.setDescription(description);
+        descriptionObject.setUrl(url);
 
         return descriptionObject;
     }
 
     private String getIMG(Element body) {
         Element img = body.getElementById("postImgAligned");
-        String imgURL = img.attr("src");
-        return imgURL;
+        return img.attr("src");
+    }
+
+    private String getURL(Element body) {
+        Elements url = body.getElementsByClass("dlLink");
+        return url.attr("href");
     }
 
     private String getDescription(Element body) {

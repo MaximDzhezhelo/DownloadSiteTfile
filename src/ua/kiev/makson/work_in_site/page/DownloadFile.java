@@ -25,6 +25,7 @@ public class DownloadFile {
         try {
             description = answerDownload.get();
             exService.shutdown();
+            LOGGER.log(Level.SEVERE, "cancelDownload");
         } catch (InterruptedException | ExecutionException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }

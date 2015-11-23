@@ -21,27 +21,43 @@ public class CallableDownload implements Callable<VideoDescription> {
             RequesAssistant assistant) {
         this.assistant = assistant;
         this.description = description;
-        this.downloadUrl = downloadUrl;
+        this.downloadUrl = String.format("http://tfile.me%s", downloadUrl);
     }
 
     @Override
     public VideoDescription call() throws Exception {
-        LOGGER.log(Level.SEVERE, "call");
+        LOGGER.log(Level.SEVERE, "call method (download torrent)");
         ControllerSite controlSite = assistant.getControlSite();
         File rootDirectory = controlSite.getRootDirectory();
         String nameFolder = description.getName();
         String nameFile = String.format("%s.torrent", nameFolder);
         String namedescr = String.format("%s.txt", nameFolder);
+        String nameIMG = String.format("%s.jpg", nameFolder);
 
         File fileFolder = new File(rootDirectory, nameFolder);
 
         if (!fileFolder.exists()) {
             fileFolder.mkdir();
         }
+
         GetDownlodRequests requests = new GetDownlodRequests();
+
         File fileDownload = new File(fileFolder, nameFile);
-        
+
+        if (!fileDownload.exists()) {
+            fileDownload.createNewFile();
+        }
         requests.doGet(downloadUrl, assistant, fileDownload);
+        
+        File fileIMG = new File(fileFolder, nameIMG);
+        String imgUrl = description.getJpg();
+
+        if (!fileIMG.exists()) {
+            fileIMG.createNewFile();
+        }
+
+        requests.doGet(imgUrl, assistant, fileIMG);
+
         String getPath = fileDownload.getAbsolutePath();
         description.setDownloadUrl(getPath);
 
@@ -51,4 +67,5 @@ public class CallableDownload implements Callable<VideoDescription> {
 
         return description;
     }
+
 }

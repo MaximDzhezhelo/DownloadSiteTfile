@@ -5,7 +5,8 @@ public class VideoDescription {
     private String viewtopic;
     private String downloadUrl;
     private String description;
-    private String img;
+    private String url;
+    private String jpg;
 
     public String getName() {
         return name;
@@ -39,19 +40,27 @@ public class VideoDescription {
         this.description = description;
     }
 
-    public String getImg() {
-        return img;
+    public String getJpg() {
+        return jpg;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImg(String jpg) {
+        this.jpg = jpg;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
     public String toString() {
-        return String.format(
-                "name: %s%ndescription: %s%nviewtopic: %s%ndownloadUrl: %s%n",
-                name, description, viewtopic, downloadUrl);
+        return String
+                .format("name: %s%ndescription: %s%nviewtopic: %s%njpg: %s%nurl: %s%ndownloadUrl: %s%n",
+                        name, description, viewtopic, jpg, url, downloadUrl);
     }
 
     @Override

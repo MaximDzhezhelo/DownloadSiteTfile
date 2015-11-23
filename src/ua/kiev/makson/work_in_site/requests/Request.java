@@ -46,7 +46,6 @@ public class Request {
     }
 
     public void getVideo(GeneralHttpClient genClient, ControllerSite controlSite) {
-
         String url = "http://tfile.me/forum/viewforum.php?f=4";
         LOGGER.log(Level.SEVERE, "run method getVideo");
         RequesAssistant assistant = new RequesAssistant(genClient, controlSite,
@@ -56,6 +55,5 @@ public class Request {
 
         GeneralWorkInSite generalWorkInSite = new GeneralWorkInSite();
         generalWorkInSite.parsingPage(assistant);
-
     }
 }

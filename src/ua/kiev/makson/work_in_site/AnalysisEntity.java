@@ -23,8 +23,7 @@ public class AnalysisEntity {
         LOGGER.log(Level.SEVERE, "run Analysis Entity");
         HttpEntity entity = response.getEntity();
 
-        ValueCharset valueCharset = new ValueCharset();
-        String charset = valueCharset.getTheValueOfCharset(response);
+        String charset = getCharset(response);
 
         GeneralHttpClient genClient = assistant.getGenClient();
         ControllerSite controlSite = assistant.getControlSite();
@@ -45,5 +44,10 @@ public class AnalysisEntity {
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         }
+    }
+
+    private String getCharset(CloseableHttpResponse response) {
+        ValueCharset valueCharset = new ValueCharset();
+        return valueCharset.getTheValueOfCharset(response);
     }
 }
