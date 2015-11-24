@@ -13,14 +13,14 @@ import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequestHelper;
 
 public class AuthenticationTest {
-    private Authentication authentication;
-    private GeneralHttpClient genClient;
-    private ControllerSite controlSite;
-    private RequestHelper requestHelper;
+    private static Authentication authentication;
+    private static GeneralHttpClient genClient;
+    private static ControllerSite controlSite;
+    private static RequestHelper requestHelper;
     private static File rootDirectory;
 
     @BeforeClass
-    public void setUpBeforeClass() throws Exception {
+    public static void setUpBeforeClass() throws Exception {
         rootDirectory = new File("Get_Post");
         if (!rootDirectory.exists()) {
             rootDirectory.createNewFile();
@@ -32,13 +32,22 @@ public class AuthenticationTest {
         requestHelper = new RequestHelper();
     }
 
-    @Test
-    public void testAuthentication() {
-        authentication.startAuthentication(genClient, controlSite,
-                requestHelper);
-        assertTrue(authentication.getStatusLine() == 302);
-        assertTrue(authentication.getRandomTime().getX() == 1);
-    }
+     @Test
+     public void testAuthentication() {
+     authentication.startAuthentication(genClient, controlSite,
+     requestHelper);
+     assertTrue(authentication.getStatusLine() == 302);
+     assertTrue(authentication.getRandomTime().getX() == 1);
+     }
+
+//    @Test
+//    public void testAuthenticationFailed() {
+//        authentication.startAuthentication(genClient, controlSite,
+//                requestHelper);
+//        assertTrue(authentication.x == 2);
+//        assertTrue(authentication.getStatusLine() == 302);
+//        assertTrue(authentication.getRandomTime().getX() == 2);
+//    }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {

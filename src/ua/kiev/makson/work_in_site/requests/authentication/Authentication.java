@@ -22,6 +22,7 @@ public class Authentication {
     private ScheduledFuture<Integer> future;
     private int time;
     private int statusLine;
+    // static int x = 0;
 
     private static final Logger LOGGER = Logger.getLogger(Authentication.class
             .getName());
@@ -48,13 +49,21 @@ public class Authentication {
 
         get = new GetAuthentication(url, assistant);
 
-        time = randomTime.getRandomTime();
+        // time = randomTime.getRandomTime();
 
-        LOGGER.log(Level.SEVERE, "randomTime " + time);
+        // LOGGER.log(Level.SEVERE, "randomTime " + time);
 
-        future = executor.schedule(get, time, TimeUnit.SECONDS);
+        // future = executor.schedule(get, time, TimeUnit.SECONDS);
+
         try {
-            statusLine = future.get();
+            statusLine = callGetAgaine();
+
+            // statusLine = x;
+            // if (x == 2) {
+            // LOGGER.log(Level.SEVERE, "x == 2 ");
+            // x = 200;
+            // }
+
             if (statusLine == 200) {
                 Map<String, String> params = requestHelper
                         .getPostParamsForLogin(controlSite);
@@ -66,11 +75,12 @@ public class Authentication {
                 statusLine = future.get();
                 controlSite.setRegistration(statusLine == 302);
                 if (statusLine != 302) {
-                    callAgaine();
+                    callGetAgaine();
                 }
             } else {
-                callAgaine();
+                callGetAgaine();
             }
+            LOGGER.log(Level.SEVERE, "executor shutdown");
             executor.shutdown();
         } catch (InterruptedException | ExecutionException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
@@ -80,10 +90,19 @@ public class Authentication {
 
     }
 
-    private void callAgaine() {
+    private int callGetAgaine() throws InterruptedException, ExecutionException {
+        // x++;
         LOGGER.log(Level.SEVERE, "statusLine !==200 run again GET ");
         time = randomTime.getRandomTime();
+        LOGGER.log(Level.SEVERE, "randomTime " + time);
         future = executor.schedule(get, time, TimeUnit.SECONDS);
+        statusLine = future.get();
+        if (statusLine == 200) {
+            return statusLine;
+        } else {
+            callGetAgaine();
+        }
+        return statusLine;
     }
 
 }

@@ -9,34 +9,42 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class Start2 {
+    private static ScheduledFuture<?> tast1;
+    private static ScheduledExecutorService executor = Executors
+            .newScheduledThreadPool(1);
+    private static Future1 task1 = new Future1();
+    private static RandomTime random = new RandomTime();
+    static int z = random.getRandomTime();
+    static int c = 0;
 
     public static void main(String[] args) throws InterruptedException,
             ExecutionException {
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        Future1 task1 = new Future1();
+
         Future2 task2 = new Future2();
-        RandomTime random = new RandomTime();
-        int z = random.getRandomTime();
+
         System.out.println(z);
-        ScheduledFuture<?> tast1 = executor
-                .schedule(task1, z, TimeUnit.SECONDS);
+        z = 1;
+        tast1 = executor.schedule(task1, z, TimeUnit.SECONDS);
 
         int x = (Integer) tast1.get();
         System.out.println(x);
-        if (x == 2) {
-            ScheduledFuture<?> tast2 = executor.schedule(task2, 4,
-                    TimeUnit.SECONDS);
-            System.out.println(tast2.get());
+        c++;
+
+        while (!(x == 2)) {
+            s();
         }
-
-        System.out.println("03");
-        System.out.println("13");
-
-        System.out.println("23");
-        System.out.println("23");
-        System.out.println("23");
-        System.out.println("23");
-
+        System.out.println("x = 0  " + x);
+        ScheduledFuture<?> tast2 = executor
+                .schedule(task2, 4, TimeUnit.SECONDS);
+        System.out.println(tast2.get());
+        System.out.println("executor.shutdown()");
         executor.shutdown();
+    }
+
+    public static int s() throws InterruptedException, ExecutionException {
+        System.out.println("failed");
+        tast1 = executor.schedule(task1, z, TimeUnit.SECONDS);
+        return (Integer) tast1.get();
+
     }
 }
