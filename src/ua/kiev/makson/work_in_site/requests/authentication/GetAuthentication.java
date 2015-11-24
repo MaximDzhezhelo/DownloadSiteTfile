@@ -3,6 +3,7 @@ package ua.kiev.makson.work_in_site.requests.authentication;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,8 +17,16 @@ import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 
-public class GetAuthentication {
+public class GetAuthentication implements Callable<Integer> {
     private int statusLine;
+    private String url;
+    private RequesAssistant assistant;
+
+    public GetAuthentication(String url, RequesAssistant assistant) {
+        this.url = url;
+        this.assistant = assistant;
+    }
+
     private static final Logger LOGGER = Logger
             .getLogger(GetAuthentication.class.getName());
 
@@ -29,7 +38,7 @@ public class GetAuthentication {
         this.statusLine = statusLine;
     }
 
-    public void doGet(String url, RequesAssistant assistant) {
+    public void doGet() {
         GeneralHttpClient genClient = assistant.getGenClient();
         Map<String, String> header = assistant.getHeader();
         Client client = genClient.getClient();
@@ -77,5 +86,11 @@ public class GetAuthentication {
                 }
             }
         }
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        doGet();
+        return statusLine;
     }
 }
