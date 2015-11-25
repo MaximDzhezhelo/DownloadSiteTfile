@@ -39,7 +39,7 @@ public class MenuPanelLogPass extends JPanel implements ActionListener {
         this.control = frame.getControl();
     }
 
-    public void setRegistration(Boolean flag) {
+    public void setRegistrationColor(Boolean flag) {
         if (flag) {
             registration.setBackground(Color.GREEN);
         } else {
@@ -114,7 +114,7 @@ public class MenuPanelLogPass extends JPanel implements ActionListener {
         control = frame.getControl();
         control.sendLogPassUrl(urlString, login, pas);
         boolean flag = control.setRegistration();
-        setRegistration(flag);
+        setRegistrationColor(flag);
         frame.setControl(control);
     }
 

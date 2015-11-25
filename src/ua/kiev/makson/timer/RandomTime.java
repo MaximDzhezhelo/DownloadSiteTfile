@@ -15,7 +15,7 @@ public class RandomTime {
     public int getRandomTime() {
         x++;
         if (x < 3) {
-            y += (int) (1 + (Math.random() * (50 - 1) + 1));
+            y += 2;
         } else if (x >= 3 && x <= 7) {
             y += (int) (200 + (Math.random() * (300 - 200) + 1));
         } else {

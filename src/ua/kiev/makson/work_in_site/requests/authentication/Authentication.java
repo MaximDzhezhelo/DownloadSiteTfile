@@ -70,7 +70,7 @@ public class Authentication {
 
     private int callGet() throws InterruptedException, ExecutionException {
         LOGGER.log(Level.SEVERE, "callGet ");
-        time = randomTime.getRandomTime();
+        time = randomTime.getRandomTime();     
         LOGGER.log(Level.SEVERE, "randomTime " + time);
         future = executor.schedule(get, time, TimeUnit.SECONDS);
         statusLine = future.get();

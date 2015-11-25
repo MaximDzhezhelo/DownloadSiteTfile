@@ -72,6 +72,7 @@ public class ControllerSite {
     public boolean getColorRegistration() {
         return registration;
     }
+    
 
     public String getCharset() {
         return genClient.getClient().getCharset();
