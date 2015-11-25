@@ -49,14 +49,8 @@ public class Authentication {
 
         get = new GetAuthentication(url, assistant);
 
-        // time = randomTime.getRandomTime();
-
-        // LOGGER.log(Level.SEVERE, "randomTime " + time);
-
-        // future = executor.schedule(get, time, TimeUnit.SECONDS);
-
         try {
-            statusLine = callGetAgaine();
+            statusLine = callGet();
 
             // statusLine = x;
             // if (x == 2) {
@@ -75,10 +69,10 @@ public class Authentication {
                 statusLine = future.get();
                 controlSite.setRegistration(statusLine == 302);
                 if (statusLine != 302) {
-                    callGetAgaine();
+                    callGet();
                 }
             } else {
-                callGetAgaine();
+                callGet();
             }
             LOGGER.log(Level.SEVERE, "executor shutdown");
             executor.shutdown();
@@ -90,9 +84,9 @@ public class Authentication {
 
     }
 
-    private int callGetAgaine() throws InterruptedException, ExecutionException {
+    private int callGet() throws InterruptedException, ExecutionException {
         // x++;
-        LOGGER.log(Level.SEVERE, "statusLine !==200 run again GET ");
+        LOGGER.log(Level.SEVERE, "callGet ");
         time = randomTime.getRandomTime();
         LOGGER.log(Level.SEVERE, "randomTime " + time);
         future = executor.schedule(get, time, TimeUnit.SECONDS);
@@ -100,7 +94,8 @@ public class Authentication {
         if (statusLine == 200) {
             return statusLine;
         } else {
-            callGetAgaine();
+            LOGGER.log(Level.SEVERE, "statusLine !==200 run again GET ");
+            callGet();
         }
         return statusLine;
     }
