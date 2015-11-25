@@ -19,7 +19,9 @@ public class Authentication {
     private ScheduledExecutorService executor;
     private RandomTime randomTime;
     private GetAuthentication get;
+    private PostAuthentication post;
     private ScheduledFuture<Integer> future;
+    private Map<String, String> params;
     private int time;
     private int statusLine;
     // static int x = 0;
@@ -58,27 +60,16 @@ public class Authentication {
             // x = 200;
             // }
 
-            if (statusLine == 200) {
-                Map<String, String> params = requestHelper
-                        .getPostParamsForLogin(controlSite);
-                url = "http://tfile.me/login/login.php";
+            params = requestHelper.getPostParamsForLogin(controlSite);
+            url = "http://tfile.me/login/login.php";
+            post = new PostAuthentication(url, header, params, genClient);
+            statusLine = callPost();
+            controlSite.setRegistration(statusLine == 302);
 
-                PostAuthentication post = new PostAuthentication(url, header,
-                        params, genClient);
-                future = executor.schedule(post, time, TimeUnit.SECONDS);
-                statusLine = future.get();
-                controlSite.setRegistration(statusLine == 302);
-                if (statusLine != 302) {
-                    callGet();
-                }
-            } else {
-                callGet();
-            }
-            LOGGER.log(Level.SEVERE, "executor shutdown");
-            executor.shutdown();
         } catch (InterruptedException | ExecutionException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage());
         } finally {
+            LOGGER.log(Level.SEVERE, "executor shutdown");
             executor.shutdownNow();
         }
 
@@ -96,6 +87,19 @@ public class Authentication {
         } else {
             LOGGER.log(Level.SEVERE, "statusLine !==200 run again GET ");
             callGet();
+        }
+        return statusLine;
+    }
+
+    private int callPost() throws InterruptedException, ExecutionException {
+        LOGGER.log(Level.SEVERE, "callPost ");
+        future = executor.schedule(post, 3, TimeUnit.SECONDS);
+        statusLine = future.get();
+        if (statusLine == 302) {
+            return statusLine;
+        } else {
+            LOGGER.log(Level.SEVERE, "statusLine !==302 run again Post ");
+            callPost();
         }
         return statusLine;
     }
