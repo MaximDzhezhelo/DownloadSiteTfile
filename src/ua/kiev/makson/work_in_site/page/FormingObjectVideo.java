@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
-import ua.kiev.makson.work_in_site.requests.get.GetRequests;
+import ua.kiev.makson.work_in_site.requests.getvideo.GetRequests;
 
 public class FormingObjectVideo {
     private static final Logger LOGGER = Logger

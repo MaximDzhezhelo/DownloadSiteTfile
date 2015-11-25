@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.requests.get;
+package ua.kiev.makson.work_in_site.requests.getvideo;
 
 import java.io.IOException;
 import java.util.List;
