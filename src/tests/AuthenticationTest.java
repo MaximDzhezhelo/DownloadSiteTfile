@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.requests.authentication;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,7 @@ import org.junit.Test;
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequestHelper;
+import ua.kiev.makson.work_in_site.requests.authentication.Authentication;
 
 public class AuthenticationTest {
     private static Authentication authentication;
@@ -32,22 +33,13 @@ public class AuthenticationTest {
         requestHelper = new RequestHelper();
     }
 
-     @Test
-     public void testAuthentication() {
-     authentication.startAuthentication(genClient, controlSite,
-     requestHelper);
-     assertTrue(authentication.getStatusLine() == 302);
-     assertTrue(authentication.getRandomTime().getX() == 1);
-     }
-
-//    @Test
-//    public void testAuthenticationFailed() {
-//        authentication.startAuthentication(genClient, controlSite,
-//                requestHelper);
-//        assertTrue(authentication.x == 2);
-//        assertTrue(authentication.getStatusLine() == 302);
-//        assertTrue(authentication.getRandomTime().getX() == 2);
-//    }
+    @Test
+    public void testAuthentication() {
+        authentication.startAuthentication(genClient, controlSite,
+                requestHelper);
+        assertTrue(authentication.getStatusLine() == 302);
+        assertTrue(authentication.getRandomTime().getX() == 1);
+    }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {

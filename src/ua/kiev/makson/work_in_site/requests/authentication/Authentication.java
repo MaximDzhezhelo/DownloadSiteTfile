@@ -24,7 +24,6 @@ public class Authentication {
     private Map<String, String> params;
     private int time;
     private int statusLine;
-    // static int x = 0;
 
     private static final Logger LOGGER = Logger.getLogger(Authentication.class
             .getName());
@@ -54,12 +53,6 @@ public class Authentication {
         try {
             statusLine = callGet();
 
-            // statusLine = x;
-            // if (x == 2) {
-            // LOGGER.log(Level.SEVERE, "x == 2 ");
-            // x = 200;
-            // }
-
             params = requestHelper.getPostParamsForLogin(controlSite);
             url = "http://tfile.me/login/login.php";
             post = new PostAuthentication(url, header, params, genClient);
@@ -76,7 +69,6 @@ public class Authentication {
     }
 
     private int callGet() throws InterruptedException, ExecutionException {
-        // x++;
         LOGGER.log(Level.SEVERE, "callGet ");
         time = randomTime.getRandomTime();
         LOGGER.log(Level.SEVERE, "randomTime " + time);
