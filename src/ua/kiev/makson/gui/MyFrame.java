@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import ua.kiev.makson.controller.Controller;
 import ua.kiev.makson.gui.menu.Menu;
 import ua.kiev.makson.gui.panel.MyPanelJEditorPane;
+import ua.kiev.makson.gui.panel.TablePanel;
 import ua.kiev.makson.gui.panel.WorkInSitePanel;
 
 public class MyFrame extends JFrame {
@@ -21,6 +22,7 @@ public class MyFrame extends JFrame {
     private JTabbedPane jTabbedPane;
     private MyPanelJEditorPane panelJEditorPane;
     private WorkInSitePanel workInSitePanel;
+    private TablePanel table;
     private Menu menu;
     private Controller control;
 
@@ -70,8 +72,10 @@ public class MyFrame extends JFrame {
         jTabbedPane = new JTabbedPane();
         createMyPanelJEditorPane();
         createWorkInSitePanel();
+        createTablePanel();
         jTabbedPane.add("HTML", panelJEditorPane);
         jTabbedPane.add("Site", workInSitePanel);
+        jTabbedPane.add("Table", table);
         this.getContentPane().add(jTabbedPane);
 
     }
@@ -84,6 +88,11 @@ public class MyFrame extends JFrame {
     public void createWorkInSitePanel() {
         workInSitePanel = new WorkInSitePanel(this);
         workInSitePanel.createPanelWorkInSitePanel();
+    }
+
+    public void createTablePanel() {
+        table = new TablePanel(this);
+        table.createTablePanel();
     }
 
     public void createMyMenu() {
