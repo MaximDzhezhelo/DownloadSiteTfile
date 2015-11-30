@@ -7,7 +7,6 @@ nbproject/
 doc/*.txt
 # игнорировать все .txt файлы в каталоге doc/
 *.txt
-*.xml
 *~
 *testFile
 *.classpath
