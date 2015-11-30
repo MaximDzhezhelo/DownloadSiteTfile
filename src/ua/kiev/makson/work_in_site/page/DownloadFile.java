@@ -15,7 +15,7 @@ public class DownloadFile {
             .getName());
 
     public VideoDescription startDownload(String downloadUrl,
-            VideoDescription description, RequesAssistant assistant) {
+                                          VideoDescription description, RequesAssistant assistant) {
         LOGGER.log(Level.SEVERE, "startDownload");
         ExecutorService exService = Executors.newCachedThreadPool();
         CallableDownload callableDownload = new CallableDownload(downloadUrl,

@@ -18,13 +18,12 @@ public class TablePanel extends JPanel {
     }
 
     public void createTablePanel() {
-        String[] columnNames = { "one", "two", "three" };
-        String[][] cells = { { "///", "---", "111" }, { "df", "asdf", "asdf" },
-                { "hg", "fd", "nbvc" } };
+        String[] columnNames = { "one", "two", "three", "five" };
+        Object[][] cells = { { "///", "---", "111", false },
+                { "df", "asdf", "asdf", true }, { "hg", "fd", "nbvc", false } };
         table = new JTable(cells, columnNames);
         table.setAutoCreateRowSorter(true);
         this.add(table, BorderLayout.CENTER);
-
     }
 
 }
