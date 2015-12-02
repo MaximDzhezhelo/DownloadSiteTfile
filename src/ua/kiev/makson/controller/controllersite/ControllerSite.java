@@ -1,7 +1,6 @@
 package ua.kiev.makson.controller.controllersite;
 
 import java.io.File;
-
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
 public class ControllerSite {
@@ -10,7 +9,6 @@ public class ControllerSite {
 	private String password;
 	private File rootDirectory;
 	private boolean registration;
-	private int timeRegistration;
 	private GeneralHttpClient genClient;
 	private String defaultReadName;
 
@@ -25,11 +23,6 @@ public class ControllerSite {
 
 	public void setRegistration(boolean registration) {
 		this.registration = registration;
-	}
-
-	public void setTimeRegistration(int timeRegistration) {
-		System.out.println("controll site " + timeRegistration);
-		this.timeRegistration = timeRegistration;
 	}
 
 	public String getUrl() {
@@ -75,12 +68,6 @@ public class ControllerSite {
 
 	public boolean getColorRegistration() {
 		return registration;
-	}
-
-	public int getTimeRegistration() {
-		System.out.println("return in getTimeRegistration()");
-		return timeRegistration;
-
 	}
 
 	public String getCharset() {

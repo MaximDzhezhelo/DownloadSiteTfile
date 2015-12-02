@@ -68,23 +68,15 @@ public class Controller {
 			}
 			controlSite.shoow();
 			controlSite.loginStart();
-			setRegistrationTime();
 			setRegistrationColor();
 		}
 	}
 
 	/*
-	 * call ControllerSit and return color value
+	 * call ControllerSit and return color value //
 	 */
 	public boolean setRegistrationColor() {
 		return controlSite.getColorRegistration();
-	}
-
-	/*
-	 * call ControllerSit and return Time value
-	 */
-	public int setRegistrationTime() {
-		return controlSite.getTimeRegistration();
 	}
 
 	public void goToTheSite() {

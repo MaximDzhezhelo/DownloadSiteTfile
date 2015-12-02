@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import ua.kiev.makson.controller.Controller;
 import ua.kiev.makson.gui.MyFrame;
 
-public class MenuPanelLogPass extends JPanel implements ActionListener {
+public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,6 @@ public class MenuPanelLogPass extends JPanel implements ActionListener {
 	}
 
 	public void setRegistrationTime(int time) {
-		System.out.println("in menu in last method " + time);
 		registration.setText(new Integer(time).toString());
 	}
 
@@ -119,9 +118,6 @@ public class MenuPanelLogPass extends JPanel implements ActionListener {
 		control = frame.getControl();
 		control.sendLogPassUrl(urlString, login, pas);
 		boolean flag = control.setRegistrationColor();
-		int time = control.setRegistrationTime();
-		System.out.println("int menu " + time);
-		setRegistrationTime(time);
 		setRegistrationColor(flag);
 		frame.setControl(control);
 	}
@@ -133,9 +129,15 @@ public class MenuPanelLogPass extends JPanel implements ActionListener {
 		}
 		JButton button = (JButton) e.getSource();
 		if (button.getText().equals("push")) {
-			sendLogPass();
+			new Thread(this).start();
 		} else if (button.getText().equals("Cancel")) {
 			dialog.setVisible(false);
+
 		}
+	}
+
+	@Override
+	public void run() {
+		sendLogPass();
 	}
 }

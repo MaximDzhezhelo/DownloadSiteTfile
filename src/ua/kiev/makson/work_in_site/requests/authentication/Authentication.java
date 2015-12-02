@@ -8,7 +8,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.Indication;
 import ua.kiev.makson.timer.RandomTime;

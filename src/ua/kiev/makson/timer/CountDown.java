@@ -20,7 +20,6 @@ public class CountDown extends TimerTask {
 		if (count == 0) {
 			timer.cancel();
 		} else {
-			controlSite.setTimeRegistration(count);
 			count--;
 			timer.schedule(new CountDown(count, timer, controlSite), 1000);
 		}
