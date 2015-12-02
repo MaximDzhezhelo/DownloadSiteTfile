@@ -5,76 +5,85 @@ import java.io.File;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
 public class ControllerSite {
-    private String urlString;
-    private String login;
-    private String password;
-    private File rootDirectory;
-    private boolean registration;
-    private GeneralHttpClient genClient;
-    private String defaultReadName;
+	private String urlString;
+	private String login;
+	private String password;
+	private File rootDirectory;
+	private boolean registration;
+	private int timeRegistration;
+	private GeneralHttpClient genClient;
+	private String defaultReadName;
 
-    public ControllerSite(String url, String login, String password,
-            File rootDirectory) {
-        this.urlString = url;
-        this.login = login;
-        this.password = password;
-        this.rootDirectory = rootDirectory;
-        genClient = new GeneralHttpClient();
-        defaultReadName = "site.html";
-    }
+	public ControllerSite(String url, String login, String password, File rootDirectory) {
+		this.urlString = url;
+		this.login = login;
+		this.password = password;
+		this.rootDirectory = rootDirectory;
+		genClient = new GeneralHttpClient();
+		defaultReadName = "site.html";
+	}
 
-    public void setRegistration(boolean registration) {
-        this.registration = registration;
-    }
+	public void setRegistration(boolean registration) {
+		this.registration = registration;
+	}
 
-    public String getUrl() {
-        return urlString;
-    }
+	public void setTimeRegistration(int timeRegistration) {
+		System.out.println("controll site " + timeRegistration);
+		this.timeRegistration = timeRegistration;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getUrl() {
+		return urlString;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public File getRootDirectory() {
-        return rootDirectory;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getDefaultReadName() {
-        return defaultReadName;
-    }
+	public File getRootDirectory() {
+		return rootDirectory;
+	}
 
-    public void setUrlLogPass(String url, String login, String password,
-            File rootDirectory) {
-        this.urlString = url;
-        this.login = login;
-        this.password = password;
-        this.rootDirectory = rootDirectory;
-    }
+	public String getDefaultReadName() {
+		return defaultReadName;
+	}
 
-    public void shoow() {
-        System.out.println(urlString);
-        System.out.println(login);
-        System.out.println(password);
-    }
+	public void setUrlLogPass(String url, String login, String password, File rootDirectory) {
+		this.urlString = url;
+		this.login = login;
+		this.password = password;
+		this.rootDirectory = rootDirectory;
+	}
 
-    public void loginStart() {
-        genClient.authentication(this);
-    }
+	public void shoow() {
+		System.out.println(urlString);
+		System.out.println(login);
+		System.out.println(password);
+	}
 
-    public void goInTheSite() {
-        genClient.getVideo(this);
-    }
+	public void loginStart() {
+		genClient.authentication(this);
+	}
 
-    public boolean getColorRegistration() {
-        return registration;
-    }
-    
+	public void goInTheSite() {
+		genClient.getVideo(this);
+	}
 
-    public String getCharset() {
-        return genClient.getClient().getCharset();
-    }
+	public boolean getColorRegistration() {
+		return registration;
+	}
+
+	public int getTimeRegistration() {
+		System.out.println("return in getTimeRegistration()");
+		return timeRegistration;
+
+	}
+
+	public String getCharset() {
+		return genClient.getClient().getCharset();
+	}
 }
