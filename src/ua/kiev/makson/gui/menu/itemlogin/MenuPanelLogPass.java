@@ -29,9 +29,11 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 	private JPasswordField passwordField;
 	private JButton push;
 	private JButton cancel;
+	private JButton stop;
 	private MenuLogPassJDialog dialog;
 	private MyFrame frame;
 	private Controller control;
+	private Thread thread;
 
 	public MenuPanelLogPass(MenuLogPassJDialog dialog, MyFrame frame) {
 		this.dialog = dialog;
@@ -102,12 +104,16 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 		push.addActionListener(this);
 		cancel = new JButton("Cancel");
 		cancel.addActionListener(this);
+		stop = new JButton("Stop");
+		stop.addActionListener(this);
+
 		registration = new JTextField(5);
 		registration.setEnabled(false);
 		registration.setBackground(Color.RED);
 		panelButton.add(push, BorderLayout.WEST);
 		panelButton.add(registration, BorderLayout.CENTER);
 		panelButton.add(cancel, BorderLayout.EAST);
+		panelButton.add(stop, BorderLayout.EAST);
 
 	}
 
@@ -129,10 +135,14 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 		}
 		JButton button = (JButton) e.getSource();
 		if (button.getText().equals("push")) {
-			new Thread(this).start();
+			thread = new Thread(this);
+			thread.start();
 		} else if (button.getText().equals("Cancel")) {
 			dialog.setVisible(false);
-
+		} else if (button.getText().equals("Stop")) {
+			if (thread.isAlive()) {
+				thread.interrupt();
+			}
 		}
 	}
 

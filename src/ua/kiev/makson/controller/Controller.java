@@ -73,7 +73,7 @@ public class Controller {
 	}
 
 	/*
-	 * call ControllerSit and return color value //
+	 * call ControllerSite and return color value
 	 */
 	public boolean setRegistrationColor() {
 		return controlSite.getColorRegistration();
