@@ -68,7 +68,7 @@ public class Authentication {
 
 	private int callGet(ControllerSite controlSite) throws InterruptedException, ExecutionException {
 		LOGGER.log(Level.SEVERE, "callGet ");
-		time = randomTime.getRandomTime();
+		time = randomTime.getRandomTimeAuthentication();
 		indication(time, controlSite);
 		LOGGER.log(Level.SEVERE, "randomTime " + time);
 		future = executor.schedule(get, time, TimeUnit.SECONDS);
