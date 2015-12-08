@@ -5,27 +5,27 @@ import ua.kiev.makson.sql.JavaSQL;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 
 public class GeneralWorkInSite {
-    private static JavaSQL javaSQL;
-    private static WorkWithPage workWithPage;
+	private JavaSQL javaSQL;
+	private WorkWithPage workWithPage;
 
-    public static JavaSQL getJavaSQL() {
-        return javaSQL;
-    }
+	public JavaSQL getJavaSQL() {
+		return javaSQL;
+	}
 
-    public GeneralWorkInSite() {
-        javaSQL = new JavaSQL();
-        workWithPage = new WorkWithPage();
-        createDB();
-    }
+	public GeneralWorkInSite() {
+		javaSQL = new JavaSQL();
+		workWithPage = new WorkWithPage();
+		createDB();
+	}
 
-    private void createDB() {
-        File db = new File("collection.db");
-        if (!db.exists()) {
-            javaSQL.createSQL();
-        }
-    }
+	private void createDB() {
+		File db = new File("collection.db");
+		if (!db.exists()) {
+			javaSQL.createSQL();
+		}
+	}
 
-    public void parsingPage(RequesAssistant assistant) {
-        workWithPage.parsingPage(javaSQL, assistant);
-    }
+	public void parsingPage(RequesAssistant assistant) {
+		workWithPage.parsingPage(javaSQL, assistant);
+	}
 }

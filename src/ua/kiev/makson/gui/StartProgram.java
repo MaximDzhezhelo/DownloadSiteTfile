@@ -1,6 +1,6 @@
 package ua.kiev.makson.gui;
 
-public class StartProgramm {
+public class StartProgram {
 
     public static void main(String[] args) {
         MyFrame frame = new MyFrame();

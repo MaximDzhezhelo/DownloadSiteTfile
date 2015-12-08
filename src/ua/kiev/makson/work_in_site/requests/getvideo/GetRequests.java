@@ -20,6 +20,7 @@ public class GetRequests implements Callable<Integer> {
 	private String url;
 	private RequesAssistant assistant;
 	private int statusLine;
+	private static final Logger LOGGER = Logger.getLogger(GetRequests.class.getName());
 
 	public GetRequests(String url, RequesAssistant assistant) {
 		this.url = url;
@@ -33,8 +34,6 @@ public class GetRequests implements Callable<Integer> {
 	public void setStatusLine(int statusLine) {
 		this.statusLine = statusLine;
 	}
-
-	private static final Logger LOGGER = Logger.getLogger(GetRequests.class.getName());
 
 	public void doGet() {
 		LOGGER.log(Level.SEVERE, "getRequests");
