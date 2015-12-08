@@ -1,6 +1,9 @@
 package ua.kiev.makson.controller.controllersite;
 
 import java.io.File;
+
+import javax.swing.JTextField;
+
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
 public class ControllerSite {
@@ -11,6 +14,7 @@ public class ControllerSite {
 	private boolean registration;
 	private GeneralHttpClient genClient;
 	private String defaultReadName;
+	private JTextField registrationField;
 
 	public ControllerSite(String url, String login, String password, File rootDirectory) {
 		this.urlString = url;
@@ -19,6 +23,14 @@ public class ControllerSite {
 		this.rootDirectory = rootDirectory;
 		genClient = new GeneralHttpClient();
 		defaultReadName = "site.html";
+	}
+
+	public JTextField getRegistrationField() {
+		return registrationField;
+	}
+
+	public void setRegistrationField(JTextField registrationField) {
+		this.registrationField = registrationField;
 	}
 
 	public void setRegistration(boolean registration) {

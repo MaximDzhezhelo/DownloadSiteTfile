@@ -2,6 +2,7 @@ package ua.kiev.makson.controller;
 
 import java.io.File;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.FileRead;
@@ -13,6 +14,7 @@ public class Controller {
 	private SaveWayChoocerEditorPane selectFile;
 	private FileRead read;
 	private ControllerSite controlSite;
+	private JTextField registrationField;
 
 	public File getRootDirectory() {
 		return rootDirectory;
@@ -28,6 +30,10 @@ public class Controller {
 
 	public void setControlSite(ControllerSite controlSite) {
 		this.controlSite = controlSite;
+	}
+
+	public void setRegistrationField(JTextField registrationField) {
+		this.registrationField = registrationField;
 	}
 
 	public void openSelectDirectoryChoocer() {
@@ -66,6 +72,7 @@ public class Controller {
 			} else {
 				controlSite.setUrlLogPass(urlString, login, password, rootDirectory);
 			}
+			controlSite.setRegistrationField(registrationField);
 			controlSite.shoow();
 			controlSite.loginStart();
 			setRegistrationColor();

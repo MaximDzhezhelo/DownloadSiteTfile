@@ -49,10 +49,6 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 		}
 	}
 
-	public void setRegistrationTime(int time) {
-		registration.setText(new Integer(time).toString());
-	}
-
 	public void createPanel() {
 		createPanelSite();
 		createPanelName();
@@ -108,6 +104,7 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 		stop.addActionListener(this);
 
 		registration = new JTextField(5);
+		registration.setHorizontalAlignment(JTextField.CENTER);
 		registration.setEnabled(false);
 		registration.setBackground(Color.RED);
 		panelButton.add(push, BorderLayout.WEST);
@@ -122,6 +119,7 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 		String login = nameField.getText();
 		char[] pas = passwordField.getPassword();
 		control = frame.getControl();
+		control.setRegistrationField(registration);
 		control.sendLogPassUrl(urlString, login, pas);
 		boolean flag = control.setRegistrationColor();
 		setRegistrationColor(flag);

@@ -8,6 +8,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.Indication;
 import ua.kiev.makson.timer.RandomTime;
@@ -54,7 +55,8 @@ public class Authentication {
 			params = requestHelper.getPostParamsForLogin(controlSite);
 			url = "http://tfile.me/login/login.php";
 			post = new PostAuthentication(url, header, params, genClient);
-			statusLine = callPost();
+			statusLine = callPost(controlSite);
+
 			controlSite.setRegistration(statusLine == 302);
 
 		} catch (InterruptedException | ExecutionException ex) {
@@ -82,15 +84,16 @@ public class Authentication {
 		return statusLine;
 	}
 
-	private int callPost() throws InterruptedException, ExecutionException {
+	private int callPost(ControllerSite controlSite) throws InterruptedException, ExecutionException {
 		LOGGER.log(Level.SEVERE, "callPost ");
+		indication(3, controlSite);
 		future = executor.schedule(post, 3, TimeUnit.SECONDS);
 		statusLine = future.get();
 		if (statusLine == 302) {
 			return statusLine;
 		} else {
 			LOGGER.log(Level.SEVERE, "statusLine !==302 run again Post ");
-			callPost();
+			callPost(controlSite);
 		}
 		return statusLine;
 	}
@@ -103,5 +106,4 @@ public class Authentication {
 		Indication indicate = new Indication();
 		indicate.startIndication(time, controlSite);
 	}
-
 }
