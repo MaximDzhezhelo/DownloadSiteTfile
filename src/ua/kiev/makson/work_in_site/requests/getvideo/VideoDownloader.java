@@ -1,6 +1,7 @@
 package ua.kiev.makson.work_in_site.requests.getvideo;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,8 +16,11 @@ import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 import ua.kiev.makson.work_in_site.requests.page.GeneralWorkInSite;
 
-public class VideoDownloader {
+public class VideoDownloader implements Callable<Integer> {
 
+	private GeneralHttpClient genClient;
+	private ControllerSite controlSite;
+	private Map<String, String> header;
 	private ScheduledExecutorService executor;
 	private ScheduledFuture<Integer> future;
 	private RandomTime randomTime;
@@ -25,13 +29,16 @@ public class VideoDownloader {
 	private int statusLine;
 	private static final Logger LOGGER = Logger.getLogger(VideoDownloader.class.getName());
 
-	public VideoDownloader() {
+	public VideoDownloader(GeneralHttpClient genClient, ControllerSite controlSite, Map<String, String> header) {
 		executor = Executors.newScheduledThreadPool(1);
 		randomTime = new RandomTime();
+		this.genClient = genClient;
+		this.controlSite = controlSite;
+		this.header = header;
+
 	}
 
-	public void startVideoDownload(GeneralHttpClient genClient, ControllerSite controlSite, Map<String, String> header)
-			throws InterruptedException, ExecutionException {
+	public void startVideoDownload() throws InterruptedException, ExecutionException {
 
 		String url = "http://tfile.me/forum/viewforum.php?f=4";
 		LOGGER.log(Level.SEVERE, "run start Video Download");
@@ -60,5 +67,11 @@ public class VideoDownloader {
 		}
 		return statusLine;
 
+	}
+
+	@Override
+	public Integer call() throws Exception {
+		startVideoDownload();
+		return null;
 	}
 }
