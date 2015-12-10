@@ -1,38 +1,20 @@
 package ua.kiev.makson.work_in_site.requests;
 
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
-import ua.kiev.makson.timer.RandomTime;
 import ua.kiev.makson.work_in_site.requests.authentication.Authentication;
-import ua.kiev.makson.work_in_site.requests.getvideo.VideoDownloader;
+import ua.kiev.makson.work_in_site.requests.getvideo.StartGetVideo;
 
 public class Request {
 	private RequestHelper requestHelper;
 	private Authentication authentication;
-	private VideoDownloader downloader;
+	private StartGetVideo startGetVideo;
 	private Map<String, String> header;
-	private ScheduledExecutorService executor;
-	private ScheduledFuture<Integer> future;
-	private boolean doGetVideo;
-	private RandomTime randomTime;
-	private int time;
-	private static final Logger LOGGER = Logger.getLogger(Request.class.getName());
 
 	public Request() {
 		requestHelper = new RequestHelper();
 		header = requestHelper.getInitialRequestHeader();
-		doGetVideo = true;
-	}
-
-	public void setDoGetVideo(boolean doGetVideo) {
-		this.doGetVideo = doGetVideo;
 	}
 
 	public void authentication(GeneralHttpClient genClient, ControllerSite controlSite) {
@@ -43,31 +25,11 @@ public class Request {
 	}
 
 	public void getVideo(GeneralHttpClient genClient, ControllerSite controlSite) {
-		if (downloader == null) {
-			downloader = new VideoDownloader(genClient, controlSite, header);
+		if (startGetVideo == null) {
+			startGetVideo = new StartGetVideo(genClient, controlSite, header, this);
 		}
-		try {
-			loopRequests();
-		} catch (InterruptedException | ExecutionException e) {
-			actionsAfterErrorStartVideoDownload(genClient, controlSite);
-		}
+		Thread thread = new Thread(startGetVideo);
+		thread.start();
 	}
 
-	private void actionsAfterErrorStartVideoDownload(GeneralHttpClient genClient, ControllerSite controlSite) {
-		authentication(genClient, controlSite);
-		getVideo(genClient, controlSite);
-	}
-
-	private void loopRequests() throws InterruptedException, ExecutionException {
-		time = randomTime.getRandomGetRequests();
-		future = executor.schedule(downloader, time, TimeUnit.SECONDS);
-		future.get();
-		if (!doGetVideo) {
-			LOGGER.log(Level.SEVERE, "loopRequests()");
-			executor.shutdownNow();
-		} else {
-			LOGGER.log(Level.SEVERE, "loopRequests() again ");
-			loopRequests();
-		}
-	}
 }
