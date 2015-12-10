@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.page;
+package ua.kiev.makson.work_in_site.requests.page;
 
 import java.io.File;
 import ua.kiev.makson.sql.JavaSQL;

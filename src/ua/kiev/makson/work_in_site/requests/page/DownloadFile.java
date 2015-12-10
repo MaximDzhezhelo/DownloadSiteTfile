@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.page;
+package ua.kiev.makson.work_in_site.requests.page;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
