@@ -1,4 +1,4 @@
-package ua.kiev.makson.work_in_site.requests.page;
+package ua.kiev.makson.work_in_site.requests.getvideo.page;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

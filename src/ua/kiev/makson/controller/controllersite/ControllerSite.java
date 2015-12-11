@@ -12,6 +12,7 @@ public class ControllerSite {
 	private String password;
 	private File rootDirectory;
 	private boolean registration;
+	private boolean killThread;
 	private GeneralHttpClient genClient;
 	private String defaultReadName;
 	private JTextField registrationField;
@@ -35,6 +36,14 @@ public class ControllerSite {
 
 	public void setRegistration(boolean registration) {
 		this.registration = registration;
+	}
+
+	public boolean isKillThread() {
+		return killThread;
+	}
+
+	public void setKillThread(boolean killThread) {
+		this.killThread = killThread;
 	}
 
 	public String getUrl() {
@@ -71,6 +80,7 @@ public class ControllerSite {
 	}
 
 	public void loginStart() {
+		killThread = false;
 		genClient.authentication(this);
 	}
 

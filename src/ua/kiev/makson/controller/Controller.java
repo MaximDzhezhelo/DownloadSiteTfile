@@ -36,6 +36,10 @@ public class Controller {
 		this.registrationField = registrationField;
 	}
 
+	public void killThread() {
+		controlSite.setKillThread(true);
+	}
+
 	public void openSelectDirectoryChoocer() {
 		if (selectDirectory == null) {
 			selectDirectory = new SaveWayChoocerMenu();

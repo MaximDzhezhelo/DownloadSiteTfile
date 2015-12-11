@@ -32,4 +32,8 @@ public class RandomTime {
 		return (int) (7200 + (Math.random() * (8500 - 7200) + 1));
 	}
 
+	public int getRandomDownload() {
+		return (int) (6 + (Math.random() * (6 - 2) + 1));
+	}
+
 }

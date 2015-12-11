@@ -14,7 +14,7 @@ import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.RandomTime;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
-import ua.kiev.makson.work_in_site.requests.page.GeneralWorkInSite;
+import ua.kiev.makson.work_in_site.requests.getvideo.page.GeneralWorkInSite;
 
 public class VideoDownloader implements Callable<Integer> {
 

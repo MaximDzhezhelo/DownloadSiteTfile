@@ -22,7 +22,8 @@ public class CountDown extends TimerTask {
 	}
 
 	public void remaining() {
-		if (count == 0) {
+		boolean killThread = controlSite.isKillThread();
+		if (killThread || count == 0) {
 			timer.cancel();
 		} else {
 			registrationField.setText(new Integer(count).toString());
