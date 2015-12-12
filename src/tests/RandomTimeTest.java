@@ -47,4 +47,12 @@ public class RandomTimeTest {
 		t = time.getRandomGetRequests();
 		assertTrue(t >= 7200 && t <= 8500);
 	}
+
+	@Test
+	public void testRandomDownload() {
+		time = new RandomTime();
+		int t = time.getRandomDownload();
+		assertNotNull(t);
+		assertTrue(t >= 1 && t <= 7);
+	}
 }

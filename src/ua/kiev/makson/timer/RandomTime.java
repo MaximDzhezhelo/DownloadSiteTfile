@@ -33,7 +33,7 @@ public class RandomTime {
 	}
 
 	public int getRandomDownload() {
-		return (int) (6 + (Math.random() * (6 - 2) + 1));
+		return (int) (1 + (Math.random() * (7 - 2) + 1));
 	}
 
 }

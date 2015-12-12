@@ -94,6 +94,7 @@ public class Controller {
 		if (controlSite == null) {
 			JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
 		}
+		controlSite.setRootDirectory(rootDirectory);
 		controlSite.goInTheSite();
 	}
 

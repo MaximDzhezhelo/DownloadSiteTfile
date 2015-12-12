@@ -62,6 +62,10 @@ public class ControllerSite {
 		return rootDirectory;
 	}
 
+	public void setRootDirectory(File rootDirectory) {
+		this.rootDirectory = rootDirectory;
+	}
+
 	public String getDefaultReadName() {
 		return defaultReadName;
 	}
