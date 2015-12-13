@@ -69,6 +69,7 @@ public class WorkWithPage {
 							description = setDownloadUrl(downloadUrl, description, assistant);
 						}
 						javaSQL.writeData(nameOfFile, description.toString());
+						updatePanel(controlSite);
 					}
 				}
 			}
@@ -87,5 +88,11 @@ public class WorkWithPage {
 
 		DownloadFile download = new DownloadFile(downloadUrl, description, assistant);
 		return download.startDownload();
+	}
+
+	private void updatePanel(ControllerSite controlSite) {
+		System.out.println("updatePanel");
+		UpdateWorkInSitePanel update = new UpdateWorkInSitePanel(controlSite);
+		new Thread(update).start();
 	}
 }

@@ -40,6 +40,10 @@ public class ControllerSite {
 		this.registration = registration;
 	}
 
+	public ControllerWorkInSitePanel getControllerWorkInSitePanel() {
+		return controllerWorkInSitePanel;
+	}
+
 	public boolean isKillThread() {
 		return killThread;
 	}
