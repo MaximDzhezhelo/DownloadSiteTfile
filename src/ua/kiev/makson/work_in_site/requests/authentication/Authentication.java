@@ -104,6 +104,6 @@ public class Authentication {
 	 */
 	private void indication(int time, ControllerSite controlSite) {
 		Indication indicate = new Indication();
-		indicate.startIndication(time, controlSite);
+		indicate.startIndicationAuthentication(time, controlSite);
 	}
 }

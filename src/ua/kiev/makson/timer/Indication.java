@@ -8,11 +8,21 @@ public class Indication {
 
 	/*
 	 * creates a Timer Object, CountDown Object. begins the process of the count
-	 * down.
+	 * down in Authentication.
 	 */
-	public void startIndication(int time, ControllerSite controlSite) {
+	public void startIndicationAuthentication(int time, ControllerSite controlSite) {
 		Timer timer = new Timer();
-		CountDown down = new CountDown(time, timer, controlSite);
+		CountDownAuthentication down = new CountDownAuthentication(time, timer, controlSite);
+		down.remaining();
+	}
+
+	/*
+	 * creates a Timer Object, CountDown Object. begins the process of the count
+	 * down in DownloadVideo.
+	 */
+	public void startIndicationDownloadVideo(int time, ControllerSite controlSite) {
+		Timer timer = new Timer();
+		CountDownDownloadVideo down = new CountDownDownloadVideo(time, timer, controlSite);
 		down.remaining();
 	}
 }

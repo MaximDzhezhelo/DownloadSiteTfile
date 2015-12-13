@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
+import ua.kiev.makson.timer.Indication;
 import ua.kiev.makson.timer.RandomTime;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.Request;
@@ -21,7 +22,6 @@ public class StartGetVideo implements Runnable {
 	private ScheduledExecutorService executor;
 	private ScheduledFuture<Integer> future;
 	private boolean doGetVideo;
-	private RandomTime randomTime;
 	private int time;
 	private VideoDownloader downloader;
 	private Map<String, String> header;
@@ -34,7 +34,6 @@ public class StartGetVideo implements Runnable {
 		this.controlSite = controlSite;
 		this.header = header;
 		executor = Executors.newScheduledThreadPool(1);
-		randomTime = new RandomTime();
 		doGetVideo = true;
 	}
 
@@ -53,9 +52,15 @@ public class StartGetVideo implements Runnable {
 		}
 	}
 
+	/*
+	 * Method in cocurrent processes the request startVideoDownload ().
+	 * Initially triggered a timer to 2 seconds, then the cycle is triggered
+	 * timer with random time, then the program and re-authenticates all
+	 * requests are processed.
+	 */
 	private void loopRequests() throws InterruptedException, ExecutionException {
-		time = randomTime.getRandomGetRequests();
-		LOGGER.log(Level.SEVERE, "randomTime " + time);
+		RandomTime randomTime = new RandomTime();
+		timer(randomTime);
 		future = executor.schedule(downloader, time, TimeUnit.SECONDS);
 		future.get();
 		if (!doGetVideo) {
@@ -63,13 +68,26 @@ public class StartGetVideo implements Runnable {
 			executor.shutdownNow();
 		} else {
 			LOGGER.log(Level.SEVERE, "loopRequests() again ");
+			timer(randomTime);
+			request.authentication(genClient, controlSite);
 			loopRequests();
 		}
+	}
+
+	private void timer(RandomTime randomTime) {
+		time = randomTime.getRandomGetRequests();
+		LOGGER.log(Level.SEVERE, "randomTime " + time);
+		indication(time, controlSite);
 	}
 
 	private void actionsAfterErrorStartVideoDownload(GeneralHttpClient genClient, ControllerSite controlSite) {
 		request.authentication(genClient, controlSite);
 		request.getVideo(genClient, controlSite);
+	}
+
+	private void indication(int time, ControllerSite controlSite) {
+		Indication indicate = new Indication();
+		indicate.startIndicationDownloadVideo(time, controlSite);
 	}
 
 	@Override

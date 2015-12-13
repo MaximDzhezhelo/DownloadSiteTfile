@@ -8,13 +8,13 @@ import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 
-public class CountDown extends TimerTask {
+public class CountDownAuthentication extends TimerTask {
 	private Timer timer;
 	private int count;
 	private ControllerSite controlSite;
 	private JTextField registrationField;
 
-	public CountDown(int count, Timer timer, ControllerSite controlSite) {
+	public CountDownAuthentication(int count, Timer timer, ControllerSite controlSite) {
 		this.count = count;
 		this.timer = timer;
 		this.controlSite = controlSite;
@@ -28,7 +28,7 @@ public class CountDown extends TimerTask {
 		} else {
 			registrationField.setText(new Integer(count).toString());
 			count--;
-			timer.schedule(new CountDown(count, timer, controlSite), 1000);
+			timer.schedule(new CountDownAuthentication(count, timer, controlSite), 1000);
 		}
 	}
 
