@@ -34,7 +34,6 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 	private MyFrame frame;
 	private Controller control;
 	private Thread thread;
-	// private Thread killThread;
 
 	public MenuPanelLogPass(MenuLogPassJDialog dialog, MyFrame frame) {
 		this.dialog = dialog;

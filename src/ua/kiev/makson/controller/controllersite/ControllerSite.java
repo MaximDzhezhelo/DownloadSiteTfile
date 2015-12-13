@@ -16,6 +16,7 @@ public class ControllerSite {
 	private GeneralHttpClient genClient;
 	private String defaultReadName;
 	private JTextField registrationField;
+	private ControllerWorkInSitePanel controllerWorkInSitePanel;
 
 	public ControllerSite(String url, String login, String password, File rootDirectory) {
 		this.urlString = url;
@@ -23,6 +24,7 @@ public class ControllerSite {
 		this.password = password;
 		this.rootDirectory = rootDirectory;
 		genClient = new GeneralHttpClient();
+		controllerWorkInSitePanel = new ControllerWorkInSitePanel();
 		defaultReadName = "site.html";
 	}
 
@@ -68,6 +70,12 @@ public class ControllerSite {
 
 	public String getDefaultReadName() {
 		return defaultReadName;
+	}
+
+	public void setTextFieldInWorkinSitePanel(JTextField count, JTextField leftTime, JTextField loading) {
+		controllerWorkInSitePanel.setCount(count);
+		controllerWorkInSitePanel.setLeftTime(leftTime);
+		controllerWorkInSitePanel.setLoading(loading);
 	}
 
 	public void setUrlLogPass(String url, String login, String password, File rootDirectory) {

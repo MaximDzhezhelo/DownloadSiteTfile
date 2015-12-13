@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,9 +19,9 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 	private JPanel panelText;
 	private JButton butStart;
 	private JButton butStop;
-	private JTextField field1;
-	private JTextField field2;
-	private JTextField field3;
+	private JTextField count;
+	private JTextField leftTime;
+	private JTextField loading;
 	private MyFrame frame;
 	private Controller control;
 
@@ -41,7 +42,6 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 		panel.add(panelBut, BorderLayout.CENTER);
 		panel.add(panelText, BorderLayout.AFTER_LAST_LINE);
 		this.add(panel);
-
 	}
 
 	public void createButton() {
@@ -56,16 +56,33 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 
 	public void createTextFieldPanel() {
 		panelText = new JPanel();
-		field1 = new JTextField(10);
-		field1.setEnabled(false);
-		field2 = new JTextField(10);
-		field2.setEnabled(false);
-		field3 = new JTextField(10);
-		field3.setEnabled(false);
-		panelText.add(field1);
-		panelText.add(field2);
-		panelText.add(field3);
+		JLabel labelCount = new JLabel("Count");
+		count = new JTextField(10);
+		count.setEnabled(false);
+		JLabel labelTime = new JLabel("LeftTime");
+		leftTime = new JTextField(10);
+		leftTime.setEnabled(false);
+		JLabel labelLoad = new JLabel("Loading");
+		loading = new JTextField(10);
+		loading.setEnabled(false);
+		panelText.add(labelCount);
+		panelText.add(count);
+		panelText.add(labelTime);
+		panelText.add(leftTime);
+		panelText.add(labelLoad);
+		panelText.add(loading);
+	}
 
+	private void startWorkingSite() {
+		control = frame.getControl();
+		control.goToTheSite(count, leftTime, loading);
+		frame.setControl(control);
+	}
+
+	private void stopWorkingSite() {
+		control = frame.getControl();
+		control.stopToTheSite();
+		frame.setControl(control);
 	}
 
 	@Override
@@ -76,13 +93,9 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 		if (e.getSource() instanceof JButton) {
 			JButton buton = (JButton) e.getSource();
 			if (buton.getText().equals("Start")) {
-				control = frame.getControl();
-				control.goToTheSite();
-				frame.setControl(control);
+				startWorkingSite();
 			} else if (buton.getText().equals("Stop")) {
-				control = frame.getControl();
-				control.stopToTheSite();
-				frame.setControl(control);
+				stopWorkingSite();
 			}
 		}
 	}

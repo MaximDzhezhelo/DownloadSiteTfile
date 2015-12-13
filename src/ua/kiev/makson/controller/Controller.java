@@ -90,11 +90,12 @@ public class Controller {
 		return controlSite.getColorRegistration();
 	}
 
-	public void goToTheSite() {
+	public void goToTheSite(JTextField count, JTextField leftTime, JTextField loading) {
 		if (controlSite == null) {
 			JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
 		}
 		controlSite.setRootDirectory(rootDirectory);
+		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading);
 		controlSite.goInTheSite();
 	}
 
