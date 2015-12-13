@@ -23,7 +23,6 @@ public class UpdateWorkInSitePanel implements Runnable {
 	}
 
 	private void updateCount() {
-		System.out.println("updateCount()");
 		String count = countField.getText();
 		if (count.equals("") || count == null) {
 			count = "0";
@@ -39,7 +38,6 @@ public class UpdateWorkInSitePanel implements Runnable {
 
 			@Override
 			public void run() {
-				System.out.println("run updateCount()");
 				updateCount();
 			}
 		});

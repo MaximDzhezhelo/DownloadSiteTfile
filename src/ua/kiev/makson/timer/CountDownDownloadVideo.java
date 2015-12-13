@@ -2,13 +2,14 @@ package ua.kiev.makson.timer;
 
 import java.awt.EventQueue;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.controller.controllersite.ControllerWorkInSitePanel;
 
-public class CountDownDownloadVideo implements Runnable {
+public class CountDownDownloadVideo extends TimerTask {
 	private Timer timer;
 	private int count;
 	private ControllerSite controlSite;
@@ -25,13 +26,13 @@ public class CountDownDownloadVideo implements Runnable {
 
 	public void remaining() {
 		// boolean killThread = controlSite.isKillThread();
-		boolean killThread = false;
-		if (killThread || count == 0) {
+		// boolean killThread = false;
+		if (count == 0) {
 			timer.cancel();
 		} else {
 			leftTimeField.setText(new Integer(count).toString());
 			count--;
-			timer.schedule(new CountDownAuthentication(count, timer, controlSite), 1000);
+			timer.schedule(new CountDownDownloadVideo(count, timer, controlSite), 1000);
 		}
 	}
 

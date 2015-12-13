@@ -22,6 +22,7 @@ public class StartGetVideo implements Runnable {
 	private ScheduledExecutorService executor;
 	private ScheduledFuture<Integer> future;
 	private boolean doGetVideo;
+	private RandomTime randomTime;
 	private int time;
 	private VideoDownloader downloader;
 	private Map<String, String> header;
@@ -34,6 +35,7 @@ public class StartGetVideo implements Runnable {
 		this.controlSite = controlSite;
 		this.header = header;
 		executor = Executors.newScheduledThreadPool(1);
+		randomTime = new RandomTime();
 		doGetVideo = true;
 	}
 
@@ -59,25 +61,17 @@ public class StartGetVideo implements Runnable {
 	 * requests are processed.
 	 */
 	private void loopRequests() throws InterruptedException, ExecutionException {
-		RandomTime randomTime = new RandomTime();
-		timer(randomTime);
+		time = randomTime.getRandomGetRequests();
+		LOGGER.log(Level.SEVERE, "randomTime " + time);
+		indication(time, controlSite);
 		future = executor.schedule(downloader, time, TimeUnit.SECONDS);
 		future.get();
 		if (!doGetVideo) {
 			LOGGER.log(Level.SEVERE, "loopRequests()");
 			executor.shutdownNow();
 		} else {
-			LOGGER.log(Level.SEVERE, "loopRequests() again ");
-			timer(randomTime);
-			request.authentication(genClient, controlSite);
 			loopRequests();
 		}
-	}
-
-	private void timer(RandomTime randomTime) {
-		time = randomTime.getRandomGetRequests();
-		LOGGER.log(Level.SEVERE, "randomTime " + time);
-		indication(time, controlSite);
 	}
 
 	private void actionsAfterErrorStartVideoDownload(GeneralHttpClient genClient, ControllerSite controlSite) {
