@@ -1,6 +1,7 @@
 package ua.kiev.makson.work_in_site.requests.getvideo;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,7 +16,7 @@ import ua.kiev.makson.timer.RandomTime;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.Request;
 
-public class StartGetVideo implements Runnable {
+public class StartGetVideo implements Callable<Integer> {
 	private Request request;
 	private GeneralHttpClient genClient;
 	private ControllerSite controlSite;
@@ -85,7 +86,8 @@ public class StartGetVideo implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public Integer call() throws Exception {
 		getVideo();
+		return null;
 	}
 }

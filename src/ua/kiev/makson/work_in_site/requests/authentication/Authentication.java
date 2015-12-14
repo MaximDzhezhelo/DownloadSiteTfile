@@ -1,6 +1,7 @@
 package ua.kiev.makson.work_in_site.requests.authentication;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,9 +17,12 @@ import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 import ua.kiev.makson.work_in_site.requests.RequestHelper;
 
-public class Authentication {
+public class Authentication implements Callable<Integer> {
 	private ScheduledExecutorService executor;
 	private RandomTime randomTime;
+	private GeneralHttpClient genClient;
+	private ControllerSite controlSite;
+	private RequestHelper requestHelper;
 	private GetAuthentication get;
 	private PostAuthentication post;
 	private ScheduledFuture<Integer> future;
@@ -28,7 +32,10 @@ public class Authentication {
 
 	private static final Logger LOGGER = Logger.getLogger(Authentication.class.getName());
 
-	public Authentication() {
+	public Authentication(GeneralHttpClient genClient, ControllerSite controlSite, RequestHelper requestHelper) {
+		this.genClient = genClient;
+		this.controlSite = controlSite;
+		this.requestHelper = requestHelper;
 		executor = Executors.newScheduledThreadPool(1);
 		randomTime = new RandomTime();
 	}
@@ -41,8 +48,7 @@ public class Authentication {
 		return randomTime;
 	}
 
-	public void startAuthentication(GeneralHttpClient genClient, ControllerSite controlSite,
-			RequestHelper requestHelper) {
+	public void startAuthentication() {
 		String url = controlSite.getUrl();
 		Map<String, String> header = requestHelper.getInitialRequestHeader();
 		RequesAssistant assistant = new RequesAssistant(genClient, controlSite, header);
@@ -105,5 +111,11 @@ public class Authentication {
 	private void indication(int time, ControllerSite controlSite) {
 		Indication indicate = new Indication();
 		indicate.startIndicationAuthentication(time, controlSite);
+	}
+
+	@Override
+	public Integer call() throws Exception {
+		startAuthentication();
+		return statusLine;
 	}
 }

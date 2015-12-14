@@ -23,8 +23,8 @@ public class GeneralHttpClient {
 	}
 
 	public void getVideo(ControllerSite controlSite) {
-		Request request = new Request();
-		request.getVideo(this, controlSite);
+		StartRequestGetVideo requestGetVideo = new StartRequestGetVideo(controlSite, this);
+		new Thread(requestGetVideo).start();
 	}
 
 }
