@@ -15,6 +15,9 @@ import ua.kiev.makson.work_in_site.FileRead;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 
 public class WorkWithPage {
+	private FormingObjectVideo objectVideo;
+	private DownloadFile download;
+	private boolean stop;
 	private static final Logger LOGGER = Logger.getLogger(WorkWithPage.class.getName());
 
 	public void parsingPage(JavaSQL javaSQL, RequesAssistant assistant) {
@@ -36,7 +39,9 @@ public class WorkWithPage {
 
 			Element body = doc.body();
 			Elements div = body.select("tr.tor");
-			for (Element elementDiv : div) {
+			for (int i = 0; i < div.size() && !stop; i++) {
+				// for (Element elementDiv : div) {
+				Element elementDiv = div.get(i);
 				Elements clasI = elementDiv.getElementsByClass("i");
 
 				Elements tagB = clasI.select("b");
@@ -79,20 +84,25 @@ public class WorkWithPage {
 	}
 
 	private VideoDescription setViewtopic(String viewtopic, VideoDescription description, RequesAssistant assistant) {
-		FormingObjectVideo objectVideo = new FormingObjectVideo();
+		objectVideo = new FormingObjectVideo();
 		return objectVideo.getVideoDescription(viewtopic, description, assistant);
 	}
 
 	private VideoDescription setDownloadUrl(String downloadUrl, VideoDescription description,
 			RequesAssistant assistant) {
 
-		DownloadFile download = new DownloadFile(downloadUrl, description, assistant);
+		download = new DownloadFile(downloadUrl, description, assistant);
 		return download.startDownload();
 	}
 
+	public void stopDownload() {
+		stop = true;
+		download.stopDownload();
+	}
+
 	private void updatePanel(ControllerSite controlSite) {
-		System.out.println("updatePanel");
 		UpdateWorkInSitePanel update = new UpdateWorkInSitePanel(controlSite);
 		new Thread(update).start();
 	}
+
 }

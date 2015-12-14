@@ -5,6 +5,7 @@ import ua.kiev.makson.controller.controllersite.ControllerSite;
 public class RequestsGetVideoCreateThread implements Runnable {
 	private ControllerSite controlSite;
 	private GeneralHttpClient genClient;
+	private RequestGetVideoStart getVideoStart;
 
 	public RequestsGetVideoCreateThread(ControllerSite controlSite, GeneralHttpClient genClient) {
 		this.controlSite = controlSite;
@@ -12,13 +13,17 @@ public class RequestsGetVideoCreateThread implements Runnable {
 	}
 
 	public void getVideo() {
-		RequestGetVideoStart getVideoStart = new RequestGetVideoStart(controlSite, genClient);
+		getVideoStart = new RequestGetVideoStart(controlSite, genClient);
 		getVideoStart.loopRequests();
 	}
 
 	@Override
 	public void run() {
 		getVideo();
+	}
+
+	public void stopVideo() {
+		getVideoStart.setDoGetVideo(true);
 	}
 
 }

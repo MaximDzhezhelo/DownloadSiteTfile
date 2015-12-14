@@ -20,6 +20,7 @@ public class VideoDownloader {
 	private GeneralHttpClient genClient;
 	private ControllerSite controlSite;
 	private Map<String, String> header;
+	private GeneralWorkInSite generalWorkInSite;
 	private ScheduledExecutorService executor;
 	private ScheduledFuture<Integer> future;
 	private RandomTime randomTime;
@@ -47,9 +48,8 @@ public class VideoDownloader {
 		get = new GetRequests(url, assistant);
 		statusLine = callGetAfterAuthentication();
 
-		GeneralWorkInSite generalWorkInSite = new GeneralWorkInSite();
+		generalWorkInSite = new GeneralWorkInSite();
 		generalWorkInSite.parsingPage(assistant);
-
 	}
 
 	private int callGetAfterAuthentication() throws InterruptedException, ExecutionException {
@@ -65,6 +65,13 @@ public class VideoDownloader {
 			callGetAfterAuthentication();
 		}
 		return statusLine;
-
 	}
+
+	public void stopDownload() {
+		generalWorkInSite.stopDownload();
+		if (!executor.isShutdown()) {
+			executor.shutdownNow();
+		}
+	}
+
 }

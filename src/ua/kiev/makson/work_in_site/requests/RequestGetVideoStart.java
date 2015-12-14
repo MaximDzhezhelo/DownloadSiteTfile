@@ -14,6 +14,7 @@ import ua.kiev.makson.timer.Indication;
 import ua.kiev.makson.timer.RandomTime;
 
 public class RequestGetVideoStart implements Callable<Integer> {
+	private Request request;
 	private ControllerSite controlSite;
 	private GeneralHttpClient genClient;
 	private ScheduledExecutorService executor;
@@ -21,6 +22,7 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	private boolean doGetVideo;
 	private RandomTime randomTime;
 	private int time;
+	private Indication indicate;
 	private static final Logger LOGGER = Logger.getLogger(RequestGetVideoStart.class.getName());
 
 	public RequestGetVideoStart(ControllerSite controlSite, GeneralHttpClient genClient) {
@@ -30,32 +32,37 @@ public class RequestGetVideoStart implements Callable<Integer> {
 		randomTime = new RandomTime();
 	}
 
+	public void setDoGetVideo(boolean doGetVideo) {
+		this.doGetVideo = doGetVideo;
+	}
+
 	public void getAuthenticationAndGetVideoVideo() {
-		Request request = new Request();
+		request = new Request();
 		request.authentication(genClient, controlSite);
 		request.getVideo(genClient, controlSite);
 	}
 
 	public void loopRequests() {
-		time = randomTime.getRandomGetRequests();
-		LOGGER.log(Level.SEVERE, "time in loopRequests() " + time);
-		indication(time, controlSite);
-		future = executor.schedule(this, time, TimeUnit.SECONDS);
-		try {
-			future.get();
-		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
-		}
-		if (doGetVideo) {
-			LOGGER.log(Level.SEVERE, "loopRequests() executor shut Down");
-			executor.shutdownNow();
+		if (!doGetVideo) {
+			System.out.println("123");
+			time = randomTime.getRandomGetRequests();
+			LOGGER.log(Level.SEVERE, "time in loopRequests() " + time);
+			indication(time, controlSite);
+			future = executor.schedule(this, time, TimeUnit.SECONDS);
+			try {
+				future.get();
+			} catch (InterruptedException | ExecutionException ex) {
+				LOGGER.log(Level.SEVERE, ex.getMessage());
+			}
+		} else if (doGetVideo) {
+			stopDownload();
 		} else {
 			loopRequests();
 		}
 	}
 
 	private void indication(int time, ControllerSite controlSite) {
-		Indication indicate = new Indication();
+		indicate = new Indication();
 		indicate.startIndicationDownloadVideo(time, controlSite);
 	}
 
@@ -65,4 +72,13 @@ public class RequestGetVideoStart implements Callable<Integer> {
 		return null;
 	}
 
+	public void stopDownload() {
+		LOGGER.log(Level.SEVERE, "loopRequests() executor shut Down");
+		System.out.println("123456");
+		indicate.stopCountDownDownloadVideo(doGetVideo);
+		request.stopDownload();
+		if (!executor.isShutdown()) {
+			executor.shutdown();
+		}
+	}
 }

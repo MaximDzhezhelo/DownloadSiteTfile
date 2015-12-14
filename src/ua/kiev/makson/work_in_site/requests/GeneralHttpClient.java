@@ -4,6 +4,7 @@ import ua.kiev.makson.controller.controllersite.ControllerSite;
 
 public class GeneralHttpClient {
 	private Client client;
+	private RequestsGetVideoCreateThread requestGetVideo;
 
 	public GeneralHttpClient() {
 		client = new Client();
@@ -23,8 +24,12 @@ public class GeneralHttpClient {
 	}
 
 	public void getVideo(ControllerSite controlSite) {
-		RequestsGetVideoCreateThread requestGetVideo = new RequestsGetVideoCreateThread(controlSite, this);
+		requestGetVideo = new RequestsGetVideoCreateThread(controlSite, this);
 		new Thread(requestGetVideo).start();
+	}
+
+	public void stopVideo() {
+		requestGetVideo.stopVideo();
 	}
 
 }

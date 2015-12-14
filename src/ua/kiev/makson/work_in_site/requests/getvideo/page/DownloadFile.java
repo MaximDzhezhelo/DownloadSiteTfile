@@ -93,4 +93,8 @@ public class DownloadFile {
 			LOGGER.log(Level.SEVERE, ex.getMessage());
 		}
 	}
+
+	public void stopDownload() {
+		executor.shutdown();
+	}
 }

@@ -51,6 +51,7 @@ public class Request {
 		try {
 			future.get();
 		} catch (InterruptedException | ExecutionException ex) {
+			ex.printStackTrace();
 			LOGGER.log(Level.SEVERE, ex.getMessage());
 		} finally {
 			LOGGER.log(Level.SEVERE, "executor Request startGetVideo shutdown");
@@ -58,4 +59,7 @@ public class Request {
 		}
 	}
 
+	public void stopDownload() {
+		startGetVideo.stopDownload();
+	}
 }

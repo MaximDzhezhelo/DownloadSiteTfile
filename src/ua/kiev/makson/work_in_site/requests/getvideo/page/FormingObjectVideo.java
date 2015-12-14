@@ -7,6 +7,8 @@ import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 import ua.kiev.makson.work_in_site.requests.getvideo.GetRequests;
 
 public class FormingObjectVideo {
+	private FormingDescription formingDescription;
+
 	private static final Logger LOGGER = Logger.getLogger(FormingObjectVideo.class.getName());
 
 	public VideoDescription getVideoDescription(String viewtopic, VideoDescription descriptionObject,
@@ -21,7 +23,7 @@ public class FormingObjectVideo {
 
 		descriptionObject.setViewtopic(viewtopic);
 
-		FormingDescription formingDescription = new FormingDescription();
+		formingDescription = new FormingDescription();
 		return formingDescription.startForming(assistant, descriptionObject);
 	}
 }

@@ -28,4 +28,8 @@ public class GeneralWorkInSite {
 	public void parsingPage(RequesAssistant assistant) {
 		workWithPage.parsingPage(javaSQL, assistant);
 	}
+
+	public void stopDownload() {
+		workWithPage.stopDownload();
+	}
 }

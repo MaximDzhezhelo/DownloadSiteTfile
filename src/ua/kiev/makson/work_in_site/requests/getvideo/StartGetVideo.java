@@ -33,6 +33,10 @@ public class StartGetVideo implements Callable<Integer> {
 		}
 	}
 
+	public void stopDownload() {
+		downloader.stopDownload();
+	}
+
 	@Override
 	public Integer call() throws Exception {
 		getVideo();

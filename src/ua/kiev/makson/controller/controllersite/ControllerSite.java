@@ -104,6 +104,11 @@ public class ControllerSite {
 		genClient.getVideo(this);
 	}
 
+	public void stopWorkInSite() {
+		genClient.stopVideo();
+
+	}
+
 	public boolean getColorRegistration() {
 		return registration;
 	}

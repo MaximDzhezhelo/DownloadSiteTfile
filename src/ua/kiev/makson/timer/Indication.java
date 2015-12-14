@@ -5,6 +5,7 @@ import java.util.Timer;
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 
 public class Indication {
+	private CountDownDownloadVideo down;
 
 	/*
 	 * creates a Timer Object, CountDown Object. begins the process of the count
@@ -22,7 +23,11 @@ public class Indication {
 	 */
 	public void startIndicationDownloadVideo(int time, ControllerSite controlSite) {
 		Timer timer = new Timer();
-		CountDownDownloadVideo down = new CountDownDownloadVideo(time, timer, controlSite);
+		down = new CountDownDownloadVideo(time, timer, controlSite);
 		down.remaining();
+	}
+
+	public void stopCountDownDownloadVideo(boolean doGetVideo) {
+		down.setDoGetVideo(doGetVideo);
 	}
 }
