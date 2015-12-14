@@ -1,7 +1,6 @@
 package ua.kiev.makson.work_in_site.requests.getvideo;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,7 +15,7 @@ import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 import ua.kiev.makson.work_in_site.requests.getvideo.page.GeneralWorkInSite;
 
-public class VideoDownloader implements Callable<Integer> {
+public class VideoDownloader {
 
 	private GeneralHttpClient genClient;
 	private ControllerSite controlSite;
@@ -67,11 +66,5 @@ public class VideoDownloader implements Callable<Integer> {
 		}
 		return statusLine;
 
-	}
-
-	@Override
-	public Integer call() throws Exception {
-		startVideoDownload();
-		return null;
 	}
 }

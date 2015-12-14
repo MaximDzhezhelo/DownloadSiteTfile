@@ -1,6 +1,7 @@
 package ua.kiev.makson.gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -58,13 +59,13 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 		panelText = new JPanel();
 		JLabel labelCount = new JLabel("Count");
 		count = new JTextField(10);
-		count.setEnabled(false);
+		setParametrsField(count);
 		JLabel labelTime = new JLabel("LeftTime");
 		leftTime = new JTextField(10);
-		leftTime.setEnabled(false);
+		setParametrsField(leftTime);
 		JLabel labelLoad = new JLabel("Loading");
 		loading = new JTextField(10);
-		loading.setEnabled(false);
+		setParametrsField(loading);
 		panelText.add(labelCount);
 		panelText.add(count);
 		panelText.add(labelTime);
@@ -83,6 +84,13 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 		control = frame.getControl();
 		control.stopToTheSite();
 		frame.setControl(control);
+	}
+
+	private void setParametrsField(JTextField field) {
+		field.setEnabled(false);
+		field.setHorizontalAlignment(JTextField.CENTER);
+		field.setBackground(new Color((float) Math.random(), (float) Math.random(), (float) Math.random()));
+
 	}
 
 	@Override

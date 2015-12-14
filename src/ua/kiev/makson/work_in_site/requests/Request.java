@@ -45,7 +45,7 @@ public class Request {
 	public void getVideo(GeneralHttpClient genClient, ControllerSite controlSite) {
 		executor = Executors.newScheduledThreadPool(1);
 		if (startGetVideo == null) {
-			startGetVideo = new StartGetVideo(genClient, controlSite, header, this);
+			startGetVideo = new StartGetVideo(genClient, controlSite, header);
 		}
 		Future<Integer> future = executor.schedule(startGetVideo, 0, TimeUnit.SECONDS);
 		try {
