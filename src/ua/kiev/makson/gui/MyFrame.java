@@ -11,8 +11,8 @@ import javax.swing.JTabbedPane;
 import ua.kiev.makson.controller.Controller;
 import ua.kiev.makson.gui.menu.Menu;
 import ua.kiev.makson.gui.panel.MyPanelJEditorPane;
-import ua.kiev.makson.gui.panel.TablePanel;
 import ua.kiev.makson.gui.panel.WorkInSitePanel;
+import ua.kiev.makson.gui.panel.table.TablePanel;
 
 public class MyFrame extends JFrame {
 
