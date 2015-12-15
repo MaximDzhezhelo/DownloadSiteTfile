@@ -40,7 +40,6 @@ public class WorkWithPage {
 			Element body = doc.body();
 			Elements div = body.select("tr.tor");
 			for (int i = 0; i < div.size() && !stop; i++) {
-				// for (Element elementDiv : div) {
 				Element elementDiv = div.get(i);
 				Elements clasI = elementDiv.getElementsByClass("i");
 

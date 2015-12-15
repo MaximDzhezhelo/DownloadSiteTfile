@@ -60,8 +60,9 @@ public class Request {
 	}
 
 	public void stopDownload() {
-		startGetVideo.stopDownload();
 		executorShutdown();
+		authentication.stopAuthentication();
+		startGetVideo.stopDownload();
 	}
 
 	public void stopAuthentication() {
@@ -71,7 +72,8 @@ public class Request {
 
 	public void executorShutdown() {
 		if (!executor.isShutdown()) {
-			executor.shutdownNow();
+			LOGGER.log(Level.SEVERE, "executor Request shutdown");
+			executor.shutdown();
 		}
 	}
 }

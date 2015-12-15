@@ -14,7 +14,7 @@ import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.RandomTime;
 import ua.kiev.makson.work_in_site.FileWrite;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
-import ua.kiev.makson.work_in_site.requests.get.GetDownlodRequests;
+import ua.kiev.makson.work_in_site.requests.getvideo.GetDownlodRequests;
 
 public class DownloadFile {
 
@@ -95,6 +95,9 @@ public class DownloadFile {
 	}
 
 	public void stopDownload() {
-		executor.shutdown();
+		if (!executor.isShutdown()) {
+			LOGGER.log(Level.SEVERE, "executor DownloadFile shutdown");
+			executor.shutdown();
+		}
 	}
 }

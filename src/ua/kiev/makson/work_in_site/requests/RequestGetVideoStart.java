@@ -44,7 +44,6 @@ public class RequestGetVideoStart implements Callable<Integer> {
 
 	public void loopRequests() {
 		if (!doGetVideo) {
-			System.out.println("123");
 			time = randomTime.getRandomGetRequests();
 			LOGGER.log(Level.SEVERE, "time in loopRequests() " + time);
 			indication(time, controlSite);
@@ -73,11 +72,14 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	}
 
 	public void stopDownload() {
+		System.out.println("RequestGetVideoStart stop Download");
+		
 		LOGGER.log(Level.SEVERE, "loopRequests() executor shut Down");
+		if (!executor.isShutdown()) {
+			executor.shutdown();
+		}
 		indicate.stopCountDownDownloadVideo(doGetVideo);
 		request.stopDownload();
-		if (!executor.isShutdown()) {
-			executor.shutdownNow();
-		}
+
 	}
 }

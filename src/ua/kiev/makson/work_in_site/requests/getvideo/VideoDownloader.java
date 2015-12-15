@@ -68,10 +68,11 @@ public class VideoDownloader {
 	}
 
 	public void stopDownload() {
-		generalWorkInSite.stopDownload();
 		if (!executor.isShutdown()) {
+			LOGGER.log(Level.SEVERE, "executor VideoDownloader shutdownNow");
 			executor.shutdownNow();
 		}
+		generalWorkInSite.stopDownload();
 	}
 
 }
