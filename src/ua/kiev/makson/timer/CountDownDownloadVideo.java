@@ -15,7 +15,7 @@ public class CountDownDownloadVideo extends TimerTask {
 	private ControllerSite controlSite;
 	private ControllerWorkInSitePanel controllerWorkInSitePanel;
 	private JTextField leftTimeField;
-	private boolean doGetVideo;
+	private boolean killThread;
 
 	public CountDownDownloadVideo(int count, Timer timer, ControllerSite controlSite) {
 		this.count = count;
@@ -25,12 +25,12 @@ public class CountDownDownloadVideo extends TimerTask {
 		leftTimeField = controllerWorkInSitePanel.getLeftTime();
 	}
 
-	public void setDoGetVideo(boolean doGetVideo) {
-		this.doGetVideo = doGetVideo;
+	public void setKillThread(boolean doGetVideo) {
+		this.killThread = doGetVideo;
 	}
 
 	public void remaining() {
-		if (doGetVideo || count == 0) {
+		if (killThread || count == 0) {
 			timer.cancel();
 		} else {
 			leftTimeField.setText(new Integer(count).toString());
@@ -42,7 +42,6 @@ public class CountDownDownloadVideo extends TimerTask {
 	@Override
 	public void run() {
 		EventQueue.invokeLater(new Runnable() {
-
 			@Override
 			public void run() {
 				remaining();

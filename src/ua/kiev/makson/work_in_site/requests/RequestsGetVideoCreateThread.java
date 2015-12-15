@@ -24,6 +24,7 @@ public class RequestsGetVideoCreateThread implements Runnable {
 
 	public void stopVideo() {
 		getVideoStart.setDoGetVideo(true);
+		getVideoStart.stopDownload();
 	}
 
 }

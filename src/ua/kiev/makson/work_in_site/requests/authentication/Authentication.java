@@ -27,6 +27,7 @@ public class Authentication implements Callable<Integer> {
 	private PostAuthentication post;
 	private ScheduledFuture<Integer> future;
 	private Map<String, String> params;
+	private Indication indicate;
 	private int time;
 	private int statusLine;
 
@@ -109,8 +110,16 @@ public class Authentication implements Callable<Integer> {
 	 * ControllerSite Object, in which the value setTimeRegistration changes
 	 */
 	private void indication(int time, ControllerSite controlSite) {
-		Indication indicate = new Indication();
+		indicate = new Indication();
 		indicate.startIndicationAuthentication(time, controlSite);
+	}
+
+	public void stopAuthentication() {
+		indicate.stopCountDownAuthenticatio(true);
+		controlSite.setRegistration(false);
+		if (!executor.isShutdown()) {
+			executor.shutdownNow();
+		}
 	}
 
 	@Override

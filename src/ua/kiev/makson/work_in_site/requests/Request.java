@@ -61,5 +61,17 @@ public class Request {
 
 	public void stopDownload() {
 		startGetVideo.stopDownload();
+		executorShutdown();
+	}
+
+	public void stopAuthentication() {
+		executorShutdown();
+		authentication.stopAuthentication();
+	}
+
+	public void executorShutdown() {
+		if (!executor.isShutdown()) {
+			executor.shutdownNow();
+		}
 	}
 }

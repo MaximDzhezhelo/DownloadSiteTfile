@@ -13,6 +13,7 @@ public class CountDownAuthentication extends TimerTask {
 	private int count;
 	private ControllerSite controlSite;
 	private JTextField registrationField;
+	private boolean killThread;
 
 	public CountDownAuthentication(int count, Timer timer, ControllerSite controlSite) {
 		this.count = count;
@@ -21,8 +22,11 @@ public class CountDownAuthentication extends TimerTask {
 		this.registrationField = controlSite.getRegistrationField();
 	}
 
+	public void setKillThread(boolean killThread) {
+		this.killThread = killThread;
+	}
+
 	public void remaining() {
-		boolean killThread = controlSite.isKillThread();
 		if (killThread || count == 0) {
 			timer.cancel();
 		} else {

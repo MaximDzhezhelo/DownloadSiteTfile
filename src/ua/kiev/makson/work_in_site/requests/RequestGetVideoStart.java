@@ -74,11 +74,10 @@ public class RequestGetVideoStart implements Callable<Integer> {
 
 	public void stopDownload() {
 		LOGGER.log(Level.SEVERE, "loopRequests() executor shut Down");
-		System.out.println("123456");
 		indicate.stopCountDownDownloadVideo(doGetVideo);
 		request.stopDownload();
 		if (!executor.isShutdown()) {
-			executor.shutdown();
+			executor.shutdownNow();
 		}
 	}
 }

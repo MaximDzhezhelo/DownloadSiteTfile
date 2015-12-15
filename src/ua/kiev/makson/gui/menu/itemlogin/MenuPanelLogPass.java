@@ -139,8 +139,7 @@ public class MenuPanelLogPass extends JPanel implements ActionListener, Runnable
 			dialog.setVisible(false);
 		} else if (button.getText().equals("Stop")) {
 			if (thread.isAlive()) {
-				thread.interrupt();
-				control.killThread();
+				control.stopAutentication();
 			}
 		}
 	}

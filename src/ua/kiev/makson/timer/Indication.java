@@ -5,7 +5,8 @@ import java.util.Timer;
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 
 public class Indication {
-	private CountDownDownloadVideo down;
+	private CountDownDownloadVideo downDownloadVideo;
+	private CountDownAuthentication downAuthentication;
 
 	/*
 	 * creates a Timer Object, CountDown Object. begins the process of the count
@@ -13,8 +14,8 @@ public class Indication {
 	 */
 	public void startIndicationAuthentication(int time, ControllerSite controlSite) {
 		Timer timer = new Timer();
-		CountDownAuthentication down = new CountDownAuthentication(time, timer, controlSite);
-		down.remaining();
+		downAuthentication = new CountDownAuthentication(time, timer, controlSite);
+		downAuthentication.remaining();
 	}
 
 	/*
@@ -23,11 +24,15 @@ public class Indication {
 	 */
 	public void startIndicationDownloadVideo(int time, ControllerSite controlSite) {
 		Timer timer = new Timer();
-		down = new CountDownDownloadVideo(time, timer, controlSite);
-		down.remaining();
+		downDownloadVideo = new CountDownDownloadVideo(time, timer, controlSite);
+		downDownloadVideo.remaining();
 	}
 
-	public void stopCountDownDownloadVideo(boolean doGetVideo) {
-		down.setDoGetVideo(doGetVideo);
+	public void stopCountDownDownloadVideo(boolean killThread) {
+		downDownloadVideo.setKillThread(killThread);
+	}
+
+	public void stopCountDownAuthenticatio(boolean killThread) {
+		downAuthentication.setKillThread(killThread);
 	}
 }
