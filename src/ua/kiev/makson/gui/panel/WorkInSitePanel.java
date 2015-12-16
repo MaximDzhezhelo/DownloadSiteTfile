@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.Controller;
 import ua.kiev.makson.gui.MyFrame;
+import ua.kiev.makson.gui.panel.table.TablePanel;
 
 public class WorkInSitePanel extends JPanel implements ActionListener {
 
@@ -23,6 +24,7 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 	private JTextField count;
 	private JTextField leftTime;
 	private JTextField loading;
+	private TablePanel tablePanel;
 	private MyFrame frame;
 	private Controller control;
 
@@ -40,8 +42,10 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 		panel.setLayout(df);
 		createButton();
 		createTextFieldPanel();
-		panel.add(panelBut, BorderLayout.CENTER);
-		panel.add(panelText, BorderLayout.AFTER_LAST_LINE);
+		createTablePanel();
+		panel.add(panelBut, BorderLayout.BEFORE_FIRST_LINE);
+		panel.add(panelText, BorderLayout.CENTER);
+		panel.add(tablePanel, BorderLayout.AFTER_LAST_LINE);
 		this.add(panel);
 	}
 
@@ -72,6 +76,11 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 		panelText.add(leftTime);
 		panelText.add(labelLoad);
 		panelText.add(loading);
+	}
+
+	public void createTablePanel() {
+		tablePanel = new TablePanel(frame);
+		tablePanel.createTablePanel();
 	}
 
 	private void startWorkingSite() {

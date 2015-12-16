@@ -1,5 +1,10 @@
 package ua.kiev.makson.gui.panel.table;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 public class TableModel extends AbstractTableModel {
@@ -7,6 +12,11 @@ public class TableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private static final String[] COLUMN_NAMES = new String[] { "Id", "Name", "Data" };
 	private static final Class<?>[] COLUMN_TYPES = new Class<?>[] { Integer.class, String.class, String.class };
+	private List list;
+
+	public TableModel() {
+		list = new ArrayList<>();
+	}
 
 	@Override
 	public int getColumnCount() {
@@ -15,7 +25,7 @@ public class TableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return 3;
+		return list.size();
 	}
 
 	@Override
@@ -36,10 +46,21 @@ public class TableModel extends AbstractTableModel {
 		case 1:
 			return "Text for " + rowIndex;
 		case 2:
-			return "Text for " + rowIndex;
+			return getDate();
 
 		default:
 			return "Error";
 		}
+	}
+
+	private String getDate() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+		return dateFormat.format(new Date());
+	}
+
+	public void updateData() {
+
+		list.add("");
+		fireTableDataChanged();
 	}
 }
