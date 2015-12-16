@@ -2,6 +2,7 @@ package ua.kiev.makson.gui.panel.table;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,7 +26,6 @@ public class TablePanel extends JPanel {
 		table = new JTable(tableModel);
 		table.setEnabled(false);
 		changeTableColumn();
-		// table.setDefaultRenderer(1, renderer);
 		JScrollPane scrollPane = new JScrollPane(table);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
@@ -33,8 +33,12 @@ public class TablePanel extends JPanel {
 	private void changeTableColumn() {
 		TableColumn column0 = table.getColumnModel().getColumn(0);
 		TableColumn column2 = table.getColumnModel().getColumn(2);
+		MyRenderer myRenderer = new MyRenderer();
+
 		column0.setMaxWidth(25);
+		column0.setCellRenderer(myRenderer);
 		column2.setMaxWidth(150);
+		column2.setCellRenderer(myRenderer);
 	}
 
 }
