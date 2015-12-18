@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.Controller;
 import ua.kiev.makson.gui.MyFrame;
+import ua.kiev.makson.gui.panel.table.TableModel;
 import ua.kiev.makson.gui.panel.table.TablePanel;
 
 public class WorkInSitePanel extends JPanel implements ActionListener {
@@ -85,7 +86,8 @@ public class WorkInSitePanel extends JPanel implements ActionListener {
 
 	private void startWorkingSite() {
 		control = frame.getControl();
-		control.goToTheSite(count, leftTime, loading);
+		TableModel tableModel = tablePanel.getTableModel();
+		control.goToTheSite(count, leftTime, loading, tableModel);
 		frame.setControl(control);
 	}
 

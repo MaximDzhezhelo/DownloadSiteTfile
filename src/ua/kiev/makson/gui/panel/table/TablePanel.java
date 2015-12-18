@@ -2,7 +2,7 @@ package ua.kiev.makson.gui.panel.table;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -13,12 +13,16 @@ import ua.kiev.makson.gui.MyFrame;
 public class TablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private MyFrame frame;
+	// private MyFrame frame;
 	private JTable table;
 	private TableModel tableModel;
 
 	public TablePanel(MyFrame frame) {
-		this.frame = frame;
+		// this.frame = frame;
+	}
+
+	public TableModel getTableModel() {
+		return tableModel;
 	}
 
 	public void createTablePanel() {
@@ -26,7 +30,10 @@ public class TablePanel extends JPanel {
 		table = new JTable(tableModel);
 		table.setEnabled(false);
 		changeTableColumn();
+		JButton button = new JButton("Clean");
+
 		JScrollPane scrollPane = new JScrollPane(table);
+		this.add(button, BorderLayout.LINE_START);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
 
@@ -35,7 +42,7 @@ public class TablePanel extends JPanel {
 		TableColumn column2 = table.getColumnModel().getColumn(2);
 		MyRenderer myRenderer = new MyRenderer();
 
-		column0.setMaxWidth(25);
+		column0.setMaxWidth(35);
 		column0.setCellRenderer(myRenderer);
 		column2.setMaxWidth(150);
 		column2.setCellRenderer(myRenderer);

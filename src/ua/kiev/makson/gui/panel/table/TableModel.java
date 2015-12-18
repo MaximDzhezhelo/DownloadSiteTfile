@@ -12,7 +12,7 @@ public class TableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private static final String[] COLUMN_NAMES = new String[] { "Id", "Name", "Data" };
 	private static final Class<?>[] COLUMN_TYPES = new Class<?>[] { Integer.class, String.class, String.class };
-	private List list;
+	private List<String> list;
 
 	public TableModel() {
 		list = new ArrayList<>();
@@ -42,9 +42,9 @@ public class TableModel extends AbstractTableModel {
 	public Object getValueAt(final int rowIndex, final int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return rowIndex;
+			return rowIndex + 1;
 		case 1:
-			return "Text for " + rowIndex;
+			return list.get(rowIndex).toString();
 		case 2:
 			return getDate();
 
@@ -58,9 +58,14 @@ public class TableModel extends AbstractTableModel {
 		return dateFormat.format(new Date());
 	}
 
-	public void updateData() {
-
-		list.add("");
+	public void updateData(String str) {
+		list.add(str);
 		fireTableDataChanged();
 	}
+
+	public void cleanData() {
+		list.clear();
+		fireTableDataChanged();
+	}
+
 }

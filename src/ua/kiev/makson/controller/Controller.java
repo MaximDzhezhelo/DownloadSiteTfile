@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
+import ua.kiev.makson.gui.panel.table.TableModel;
 import ua.kiev.makson.work_in_site.FileRead;
 
 public class Controller {
@@ -86,12 +87,12 @@ public class Controller {
 		return controlSite.getColorRegistration();
 	}
 
-	public void goToTheSite(JTextField count, JTextField leftTime, JTextField loading) {
+	public void goToTheSite(JTextField count, JTextField leftTime, JTextField loading, TableModel tableModel) {
 		if (controlSite == null) {
 			JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
 		}
 		controlSite.setRootDirectory(rootDirectory);
-		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading);
+		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading, tableModel);
 		controlSite.goInTheSite();
 	}
 

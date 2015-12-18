@@ -2,10 +2,13 @@ package ua.kiev.makson.controller.controllersite;
 
 import javax.swing.JTextField;
 
+import ua.kiev.makson.gui.panel.table.TableModel;
+
 public class ControllerWorkInSitePanel {
 	private JTextField count;
 	private JTextField leftTime;
 	private JTextField loading;
+	private TableModel tableModel;
 
 	public JTextField getCount() {
 		return count;
@@ -29,6 +32,14 @@ public class ControllerWorkInSitePanel {
 
 	public void setLoading(JTextField loading) {
 		this.loading = loading;
+	}
+
+	public TableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(TableModel tableModel) {
+		this.tableModel = tableModel;
 	}
 
 }

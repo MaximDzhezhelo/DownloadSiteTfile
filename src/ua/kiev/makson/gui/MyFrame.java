@@ -55,6 +55,7 @@ public class MyFrame extends JFrame {
         createJTabbedPane();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
     }
 
     public void createImageIcon() {

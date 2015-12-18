@@ -13,6 +13,9 @@ import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.sql.JavaSQL;
 import ua.kiev.makson.work_in_site.FileRead;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
+import ua.kiev.makson.work_in_site.requests.getvideo.page.updateworkinsitepanel.UpdateWorkInSitePanel;
+import ua.kiev.makson.work_in_site.requests.getvideo.page.updateworkinsitepanel.UpdateWorkInSitePanelCountField;
+import ua.kiev.makson.work_in_site.requests.getvideo.page.updateworkinsitepanel.UpdateWorkInSitePanelTableModel;
 
 public class WorkWithPage {
 	private FormingObjectVideo objectVideo;
@@ -73,7 +76,7 @@ public class WorkWithPage {
 							description = setDownloadUrl(downloadUrl, description, assistant);
 						}
 						javaSQL.writeData(nameOfFile, description.toString());
-						updatePanel(controlSite);
+						updatePanel(controlSite, nameOfFile);
 					}
 				}
 			}
@@ -99,9 +102,11 @@ public class WorkWithPage {
 		download.stopDownload();
 	}
 
-	private void updatePanel(ControllerSite controlSite) {
-		UpdateWorkInSitePanel update = new UpdateWorkInSitePanel(controlSite);
+	private void updatePanel(ControllerSite controlSite, String nameOfFile) {
+		UpdateWorkInSitePanel update = new UpdateWorkInSitePanelCountField(controlSite);
 		new Thread(update).start();
+		UpdateWorkInSitePanel update2 = new UpdateWorkInSitePanelTableModel(controlSite, nameOfFile);
+		new Thread(update2).start();
 	}
 
 }
