@@ -17,14 +17,14 @@ public class RequestsGetVideoCreateThread implements Runnable {
 		getVideoStart.loopRequests();
 	}
 
-	@Override
-	public void run() {
-		getVideo();
-	}
-
 	public void stopVideo() {
 		getVideoStart.setDoGetVideo(true);
 		getVideoStart.stopDownload();
+	}
+
+	@Override
+	public void run() {
+		getVideo();
 	}
 
 }

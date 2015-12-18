@@ -28,6 +28,7 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	public RequestGetVideoStart(ControllerSite controlSite, GeneralHttpClient genClient) {
 		this.controlSite = controlSite;
 		this.genClient = genClient;
+		request = new Request();
 		executor = Executors.newScheduledThreadPool(1);
 		randomTime = new RandomTime();
 	}
@@ -37,23 +38,21 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	}
 
 	public void getAuthenticationAndGetVideoVideo() {
-		request = new Request();
 		request.authentication(genClient, controlSite);
 		request.getVideo(genClient, controlSite);
 	}
 
 	public void loopRequests() {
-		if (!doGetVideo) {
-			time = randomTime.getRandomGetRequests();
-			LOGGER.log(Level.SEVERE, "time in loopRequests() " + time);
-			indication(time, controlSite);
-			future = executor.schedule(this, time, TimeUnit.SECONDS);
-			try {
-				future.get();
-			} catch (InterruptedException | ExecutionException ex) {
-				LOGGER.log(Level.SEVERE, ex.getMessage());
-			}
-		} else if (doGetVideo) {
+		time = randomTime.getRandomGetRequests();
+		LOGGER.log(Level.SEVERE, "time in loopRequests() " + time);
+		indication(time, controlSite);
+		future = executor.schedule(this, time, TimeUnit.SECONDS);
+		try {
+			future.get();
+		} catch (InterruptedException | ExecutionException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+		if (doGetVideo) {
 			stopDownload();
 		} else {
 			loopRequests();
@@ -65,21 +64,19 @@ public class RequestGetVideoStart implements Callable<Integer> {
 		indicate.startIndicationDownloadVideo(time, controlSite);
 	}
 
-	@Override
-	public Integer call() throws Exception {
-		getAuthenticationAndGetVideoVideo();
-		return null;
-	}
-
 	public void stopDownload() {
-		System.out.println("RequestGetVideoStart stop Download");
-		
 		LOGGER.log(Level.SEVERE, "loopRequests() executor shut Down");
 		if (!executor.isShutdown()) {
-			executor.shutdown();
+			executor.shutdownNow();
 		}
 		indicate.stopCountDownDownloadVideo(doGetVideo);
 		request.stopDownload();
 
+	}
+
+	@Override
+	public Integer call() throws Exception {
+		getAuthenticationAndGetVideoVideo();
+		return null;
 	}
 }

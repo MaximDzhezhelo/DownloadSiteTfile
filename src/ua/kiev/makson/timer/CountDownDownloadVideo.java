@@ -21,17 +21,22 @@ public class CountDownDownloadVideo extends TimerTask {
 		this.count = count;
 		this.timer = timer;
 		this.controlSite = controlSite;
-		controllerWorkInSitePanel = controlSite.getControllerWorkInSitePanel();
-		leftTimeField = controllerWorkInSitePanel.getLeftTime();
+		this.controllerWorkInSitePanel = controlSite.getControllerWorkInSitePanel();
+		this.leftTimeField = controllerWorkInSitePanel.getLeftTime();
 	}
 
-	public void setKillThread(boolean doGetVideo) {
-		this.killThread = doGetVideo;
+	public void setKillThread(boolean killThread) {
+		this.killThread = killThread;
+	}
+
+	public Timer getTimer() {
+		return timer;
 	}
 
 	public void remaining() {
 		if (killThread || count == 0) {
 			timer.cancel();
+			leftTimeField.setText("");
 		} else {
 			leftTimeField.setText(new Integer(count).toString());
 			count--;

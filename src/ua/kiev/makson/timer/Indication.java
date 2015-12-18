@@ -30,6 +30,8 @@ public class Indication {
 
 	public void stopCountDownDownloadVideo(boolean killThread) {
 		downDownloadVideo.setKillThread(killThread);
+		Timer timer = downDownloadVideo.getTimer();
+		timer.cancel();
 	}
 
 	public void stopCountDownAuthenticatio(boolean killThread) {

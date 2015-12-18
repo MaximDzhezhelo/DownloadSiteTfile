@@ -38,7 +38,7 @@ public class Request {
 			LOGGER.log(Level.SEVERE, ex.getMessage());
 		} finally {
 			LOGGER.log(Level.SEVERE, "executor Request authentication shutdown");
-			executor.shutdownNow();
+			executorShutdown();
 		}
 	}
 
@@ -55,7 +55,7 @@ public class Request {
 			LOGGER.log(Level.SEVERE, ex.getMessage());
 		} finally {
 			LOGGER.log(Level.SEVERE, "executor Request startGetVideo shutdown");
-			executor.shutdownNow();
+			executorShutdown();
 		}
 	}
 
@@ -73,7 +73,7 @@ public class Request {
 	public void executorShutdown() {
 		if (!executor.isShutdown()) {
 			LOGGER.log(Level.SEVERE, "executor Request shutdown");
-			executor.shutdown();
+			executor.shutdownNow();
 		}
 	}
 }

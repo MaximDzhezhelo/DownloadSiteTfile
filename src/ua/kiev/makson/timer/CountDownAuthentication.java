@@ -29,6 +29,7 @@ public class CountDownAuthentication extends TimerTask {
 	public void remaining() {
 		if (killThread || count == 0) {
 			timer.cancel();
+			registrationField.setText("");
 		} else {
 			registrationField.setText(new Integer(count).toString());
 			count--;
