@@ -28,7 +28,6 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	public RequestGetVideoStart(ControllerSite controlSite, GeneralHttpClient genClient) {
 		this.controlSite = controlSite;
 		this.genClient = genClient;
-		request = new Request();
 		executor = Executors.newScheduledThreadPool(1);
 		randomTime = new RandomTime();
 	}
@@ -38,8 +37,11 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	}
 
 	public void getAuthenticationAndGetVideoVideo() {
+		System.out.println("start getAuthenticationAndGetVideoVideo()");
+		request = new Request();
 		request.authentication(genClient, controlSite);
 		request.getVideo(genClient, controlSite);
+		System.out.println("cancel getAuthenticationAndGetVideoVideo()");
 	}
 
 	public void loopRequests() {
