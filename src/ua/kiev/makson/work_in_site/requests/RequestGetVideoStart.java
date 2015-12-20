@@ -37,11 +37,9 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	}
 
 	public void getAuthenticationAndGetVideoVideo() {
-		System.out.println("start getAuthenticationAndGetVideoVideo()");
 		request = new Request();
 		request.authentication(genClient, controlSite);
 		request.getVideo(genClient, controlSite);
-		System.out.println("cancel getAuthenticationAndGetVideoVideo()");
 	}
 
 	public void loopRequests() {
