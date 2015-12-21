@@ -1,10 +1,10 @@
 # Игнорировать ВСЕ файлы и директории, включая поддиректории и файлы в них  -  *
-*build
-*lib
-*logs
-*target
-*.settings
-*nbproject
+build/
+lib/
+logs/
+target/
+.settings/
+nbproject/
 # игнорировать doc/notes.txt, но не doc/server/arch.txt
 doc/*.txt
 # игнорировать все .txt файлы в каталоге doc/
