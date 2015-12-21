@@ -16,4 +16,4 @@ doc/*.txt
 *.html
 *.db
 # за исключением файла log4j.properties, он не будет проигнорирован
-!log4j.properties
+!/log4j.properties
