@@ -72,7 +72,7 @@ public class ToreneTest2 extends JFrame {
 			});
 			client.setMaxDownloadRate(50.0);
 			client.setMaxUploadRate(50.0);
-			client.download();
+			// client.download();
 
 		} catch (UnknownHostException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
