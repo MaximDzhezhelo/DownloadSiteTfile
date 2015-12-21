@@ -37,6 +37,7 @@ public class ToreneTest2 extends JFrame {
 		JProgressBar jProgressBar = new JProgressBar();
 		jProgressBar.setStringPainted(true);
 		jProgressBar.setForeground(Color.GREEN);
+		System.out.println();
 
 		table.add(jProgressBar);
 		table.setVisible(true);
