@@ -1,8 +1,10 @@
-#folder bin
-build/
-lib/
-.settings/
-nbproject/
+# Игнорировать ВСЕ файлы и директории, включая поддиректории и файлы в них  -  *
+*build
+*lib
+*logs
+*target
+*.settings
+*nbproject
 # игнорировать doc/notes.txt, но не doc/server/arch.txt
 doc/*.txt
 # игнорировать все .txt файлы в каталоге doc/
@@ -13,5 +15,5 @@ doc/*.txt
 *.project
 *.html
 *.db
-
-/target/
+# за исключением файла log4j.properties, он не будет проигнорирован
+!log4j.properties
