@@ -2,12 +2,7 @@ package torent;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Frame extends JFrame {
 	private ToreneTest2 toreneTest2;
@@ -24,15 +19,8 @@ public class Frame extends JFrame {
 		frame.setSize(width, height);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		Panel panel = new Panel(frame);
+		PanelDownloadTorrent panel = new PanelDownloadTorrent(frame);
 		panel.startDownloadTorrent();
-		
-		
-		// Box box = Box.createVerticalBox();
-		// box.add(toreneTest1);
-		// box.add(toreneTest2);
-		// box.add(toreneTest3);
-		// frame.add(box);
 	}
 
 	public void createTorent() {
