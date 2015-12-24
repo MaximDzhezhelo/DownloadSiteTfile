@@ -37,9 +37,6 @@ public class WorkWithPage {
 			Document doc = Jsoup.parse(page);
 			VideoDescription description = new VideoDescription();
 
-			String title = doc.title();
-			System.out.println(title);
-
 			Element body = doc.body();
 			Elements div = body.select("tr.tor");
 			for (int i = 0; i < div.size() && !stop; i++) {
@@ -75,7 +72,7 @@ public class WorkWithPage {
 							String downloadUrl = link.attr("href");
 							description = setDownloadUrl(downloadUrl, description, assistant);
 						}
-						javaSQL.writeData(nameOfFile, description.toString());
+						javaSQL.writeData(description);
 						updatePanel(controlSite, nameOfFile);
 					}
 				}

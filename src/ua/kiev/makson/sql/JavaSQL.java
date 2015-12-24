@@ -5,122 +5,126 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ua.kiev.makson.work_in_site.requests.getvideo.page.VideoDescription;
+
 public class JavaSQL {
-    // private AESCrypto encrypt;
-    private Statement state;
-    private static final Logger LOGGER = Logger.getLogger(JavaSQL.class
-            .getName());
+	// private AESCrypto encrypt;
+	private Statement state;
+	private static final Logger LOGGER = Logger.getLogger(JavaSQL.class.getName());
 
-    public void createSQL() {
-        try (Connection con = DriverManager
-                .getConnection("jdbc:sqlite:collection.db")) {
-            state = con.createStatement();
-            state.execute("CREATE TABLE IF NOT EXISTS `collection` (id INTEGER PRIMARY KEY AUTOINCREMENT, `collection.nameVideo` TEXT(255), `collection.viDeoObj` TEXT(455)) ");
-            state.close();
-            LOGGER.log(Level.SEVERE, "create SQL");
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
-    }
+	public void createSQL() {
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
+			state = con.createStatement();
+			state.execute("CREATE TABLE IF NOT EXISTS `collection` (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ "`collection.name` TEXT(255), " + "`collection.viewtopic` TEXT(455), "
+					+ "`collection.downloadUrl` TEXT(255), " + "`collection.url` TEXT(255), "
+					+ "`collection.jpg` TEXT(255), " + "`collection.description` TEXT(455)) ");
+			state.close();
+			LOGGER.log(Level.SEVERE, "create SQL");
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+	}
 
-    public void writeData(String nameVideo, String video) {
-        try (Connection con = DriverManager
-                .getConnection("jdbc:sqlite:collection.db")) {
-            state = con.createStatement();
-            // password = encrypt.encrypt(password);
-            state.executeUpdate("INSERT INTO `collection` (`collection.nameVideo`, `collection.viDeoObj`) VALUES('"
-                    + nameVideo + "', '" + video + "')");
-            state.close();
-            LOGGER.log(Level.SEVERE, "insertUsers");
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
-    }
+	public void writeData(VideoDescription video) {
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
+			state = con.createStatement();
+			// password = encrypt.encrypt(password);
+			state.executeUpdate(
+					"INSERT INTO `collection` (`collection.name`, `collection.viewtopic`, `collection.downloadUrl`, `collection.url`, `collection.jpg`,`collection.description`) VALUES('"
+							+ video.getName() + "', '" + video.getViewtopic() + "', '" + video.getDownloadTorrent() + "', '"
+							+ video.getUrl() + "', '" + video.getJpg() + "', '" + video.getDescription() + "')");
+			state.close();
+			LOGGER.log(Level.SEVERE, "insertUsers");
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+	}
 
-    public void showAll() {
-        try (Connection con = DriverManager
-                .getConnection("jdbc:sqlite:collection.db")) {
-            state = con.createStatement();
-            ResultSet rs = state.executeQuery("SELECT * FROM `collection`");
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String nameVideo = rs.getString("collection.nameVideo");
-                String viDeoObj = rs.getString("collection.viDeoObj");
-                LOGGER.log(Level.SEVERE, String.format("#%02d %s  %s%n", id,
-                        nameVideo, viDeoObj));
-            }
-            state.close();
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
-    }
+	public void showAll() {
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
+			state = con.createStatement();
+			ResultSet rs = state.executeQuery("SELECT * FROM `collection`");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String nameVideo = rs.getString("collection.name");
+				String viewtopic = rs.getString("collection.viewtopic");
+				String downloadUrl = rs.getString("collection.downloadUrl");
+				String url = rs.getString("collection.url");
+				String jpg = rs.getString("collection.jpg");
+				String description = rs.getString("collection.description");
+				LOGGER.log(Level.SEVERE, String.format("#%02d %s  %s%n %s%n %s%n %s%n %s%n", id, nameVideo, viewtopic,
+						downloadUrl, url, jpg, description));
+			}
+			state.close();
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+	}
 
-    public HashMap<Integer, String> searchVideoByName(String str) {
-        HashMap<Integer, String> map = new HashMap<>();
-        try (Connection con = DriverManager
-                .getConnection("jdbc:sqlite:collection.db")) {
-            state = con.createStatement();
+	public VideoDescription searchVideoByName(String str) {
+		VideoDescription description = new VideoDescription();
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
+			state = con.createStatement();
 
-            ResultSet rs = state
-                    .executeQuery("SELECT * FROM `collection` WHERE  `collection.nameVideo`= '"
-                            + str + "'");
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String viDeoObj = rs.getString("collection.viDeoObj");
-                map.put(id, viDeoObj);
-            }
-            if (map.size() > 0) {
-                // Set<Entry<Integer, String>> set = map.entrySet();
-                // for (Entry<Integer, String> entry : set) {
-                // System.out.printf("%s%n", entry);
-                // }
+			ResultSet rs = state.executeQuery("SELECT * FROM `collection` WHERE  `collection.name`= '" + str + "'");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				description.setId(id);
+				String name = rs.getString("collection.name");
+				description.setName(name);
+				String viewtopic = rs.getString("collection.viewtopic");
+				description.setViewtopic(viewtopic);
+				String downloadUrl = rs.getString("collection.downloadUrl");
+				description.setDownloadTorrent(downloadUrl);
+				String url = rs.getString("collection.url");
+				description.setUrl(url);
+				String jpg = rs.getString("collection.jpg");
+				description.setJpg(jpg);
+				String descriptionText = rs.getString("collection.description");
+				description.setDescription(descriptionText);
+			}
+			if (description.getName() == null) {
+				LOGGER.log(Level.SEVERE, String.format("%s%n", "not have site with this word"));
+				return null;
+			}
+			state.close();
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+		return description;
+	}
 
-            } else {
-                LOGGER.log(Level.SEVERE,
-                        String.format("%s%n", "not have site with this word"));
-            }
-            state.close();
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
-        return map;
-    }
+	public boolean checkVideoByName(String str) {
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
+			state = con.createStatement();
 
-    public boolean checkVideoByName(String str) {
-        try (Connection con = DriverManager
-                .getConnection("jdbc:sqlite:collection.db")) {
-            state = con.createStatement();
+			ResultSet rs = state
+					.executeQuery("SELECT * FROM `collection` WHERE  `collection.name`= '" + str + "'");
+			if (rs.next()) {
+				state.close();
+				return true;
+			}
+			state.close();
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+		return false;
 
-            ResultSet rs = state
-                    .executeQuery("SELECT * FROM `collection` WHERE  `collection.nameVideo`= '"
-                            + str + "'");
-            if (rs.next()) {
-                state.close();
-                return true;
-            }
-            state.close();
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
-        return false;
+	}
 
-    }
-
-    public int deleteVideoByID(int id) {
-        int x = 0;
-        try (Connection con = DriverManager
-                .getConnection("jdbc:sqlite:collection.db")) {
-            state = con.createStatement();
-            x = state.executeUpdate("DELETE FROM `collection` WHERE id= '" + id
-                    + "'");
-            state.close();
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
-        return x;
-    }
+	public int deleteVideoByID(int id) {
+		int x = 0;
+		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
+			state = con.createStatement();
+			x = state.executeUpdate("DELETE FROM `collection` WHERE id= '" + id + "'");
+			state.close();
+		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, ex.getMessage());
+		}
+		return x;
+	}
 }

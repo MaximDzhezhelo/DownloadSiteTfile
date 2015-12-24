@@ -60,7 +60,7 @@ public class DownloadFile {
 		downloadFile(imgUrl, assistant, fileIMG);
 
 		String getPath = fileDownload.getAbsolutePath();
-		description.setDownloadUrl(getPath);
+		description.setDownloadTorrent(getPath);
 
 		FileWrite fileWrite = new FileWrite();
 		fileWrite.writeInFile(description.toString(), fileFolder, "UTF-8", namedescr);
