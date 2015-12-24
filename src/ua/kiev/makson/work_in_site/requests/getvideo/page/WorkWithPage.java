@@ -23,6 +23,7 @@ public class WorkWithPage {
 	private FormingObjectVideo objectVideo;
 	private DownloadFile download;
 	private boolean stop;
+	private Executor executor;
 	private static final Logger LOGGER = Logger.getLogger(WorkWithPage.class.getName());
 
 	public void parsingPage(JavaSQL javaSQL, RequesAssistant assistant) {
@@ -100,6 +101,7 @@ public class WorkWithPage {
 	public void stopDownload() {
 		stop = true;
 		download.stopDownload();
+		executor.executorStopDownload();
 	}
 
 	private void updatePanel(ControllerSite controlSite, String nameOfFile) {
@@ -111,7 +113,9 @@ public class WorkWithPage {
 
 	private void downloadTorrent(ControllerSite controllerSite, VideoDescription description) {
 		ControllerWorkInSitePanel controllerWorkInSitePanel = controllerSite.getControllerWorkInSitePanel();
-		Executor executor = controllerWorkInSitePanel.getExecutor();
+		if (executor == null) {
+			executor = controllerWorkInSitePanel.getExecutor();
+		}
 		executor.executorStartDownload(description);
 	}
 
