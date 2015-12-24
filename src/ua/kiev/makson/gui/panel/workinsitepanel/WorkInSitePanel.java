@@ -5,12 +5,14 @@ import javax.swing.JPanel;
 
 import ua.kiev.makson.gui.MyFrame;
 import ua.kiev.makson.gui.panel.table.TablePanel;
+import ua.kiev.makson.torrent.PanelDownloadTorrent;
 
 public class WorkInSitePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private TablePanel tablePanel;
+	private PanelDownloadTorrent downloadTorrent;
 	private MyFrame frame;
 
 	private ButtonPanel buttonPanel;
@@ -28,10 +30,10 @@ public class WorkInSitePanel extends JPanel {
 		panel.setLayout(new BorderLayout());
 		createTablePanel();
 		createButtonPanel();
-		// panel.add(panelBut, BorderLayout.BEFORE_FIRST_LINE);
+		createPanelDownloadTorrent();
 		panel.add(buttonPanel, BorderLayout.BEFORE_FIRST_LINE);
-		// panel.add(panelText, BorderLayout.CENTER);
-		panel.add(tablePanel, BorderLayout.AFTER_LAST_LINE);
+		panel.add(tablePanel, BorderLayout.CENTER);
+		panel.add(downloadTorrent, BorderLayout.AFTER_LAST_LINE);
 		this.add(panel);
 	}
 
@@ -43,6 +45,10 @@ public class WorkInSitePanel extends JPanel {
 	public void createButtonPanel() {
 		buttonPanel = new ButtonPanel(frame, tablePanel);
 		buttonPanel.createPanel();
+	}
+
+	public void createPanelDownloadTorrent() {
+		downloadTorrent = new PanelDownloadTorrent(frame);
 	}
 
 }

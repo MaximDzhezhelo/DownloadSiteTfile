@@ -1,32 +1,23 @@
 package ua.kiev.makson.torrent;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import ua.kiev.makson.controller.Controller;
+import ua.kiev.makson.gui.MyFrame;
 
 public class PanelDownloadTorrent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Executor executor;
-	private static final Logger LOGGER = Logger.getLogger(PanelDownloadTorrent.class.getName());
 
-	public PanelDownloadTorrent(JFrame frame) {
-		frame.getContentPane().add(this);
-	}
-
-	public Executor getExecutor() {
-		return executor;
-	}
-
-	public void setExecutor(Executor executor) {
-		this.executor = executor;
-	}
-
-	public void createExecutor() {
+	public PanelDownloadTorrent(MyFrame frame) {
 		executor = new Executor(this);
-		LOGGER.log(Level.SEVERE, "createExecutor");
+		addExecutorInControllerWorkInSitePanel(frame);
+	}
+
+	public void addExecutorInControllerWorkInSitePanel(MyFrame frame) {
+		Controller controller = frame.getControl();
+		controller.setExecutor(executor);
 	}
 
 }

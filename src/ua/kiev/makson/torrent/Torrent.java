@@ -27,7 +27,7 @@ public class Torrent extends JPanel implements Callable<JPanel> {
 
 	public void createPanel() {
 		createProgress();
-		JLabel jLabel = new JLabel(description.getName(), 15);
+		JLabel jLabel = new JLabel(description.getName());
 		add(jLabel);
 		add(jProgressBar);
 	}
@@ -41,6 +41,8 @@ public class Torrent extends JPanel implements Callable<JPanel> {
 	public void startDownloadTorent() {
 		createPanel();
 		box.add(this);
+		box.revalidate();
+		box.repaint();
 		for (int i = 0; i < 5; i++) {
 			try {
 				Thread.sleep(1000);

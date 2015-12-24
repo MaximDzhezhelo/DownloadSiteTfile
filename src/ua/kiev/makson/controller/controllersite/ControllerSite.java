@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JTextField;
 
 import ua.kiev.makson.gui.panel.table.TableModel;
+import ua.kiev.makson.torrent.Executor;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
 public class ControllerSite {
@@ -24,7 +25,6 @@ public class ControllerSite {
 		this.password = password;
 		this.rootDirectory = rootDirectory;
 		genClient = new GeneralHttpClient();
-		controllerWorkInSitePanel = new ControllerWorkInSitePanel();
 		defaultReadName = "site.html";
 	}
 
@@ -69,11 +69,15 @@ public class ControllerSite {
 	}
 
 	public void setTextFieldInWorkinSitePanel(JTextField count, JTextField leftTime, JTextField loading,
-			TableModel tableModel) {
+			TableModel tableModel, Executor executor) {
+		if (controllerWorkInSitePanel == null) {
+			controllerWorkInSitePanel = new ControllerWorkInSitePanel();
+		}
 		controllerWorkInSitePanel.setCount(count);
 		controllerWorkInSitePanel.setLeftTime(leftTime);
 		controllerWorkInSitePanel.setLoading(loading);
 		controllerWorkInSitePanel.setTableModel(tableModel);
+		controllerWorkInSitePanel.setExecutor(executor);
 	}
 
 	public void setUrlLogPass(String url, String login, String password, File rootDirectory) {

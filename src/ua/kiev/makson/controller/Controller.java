@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.gui.panel.table.TableModel;
+import ua.kiev.makson.torrent.Executor;
 import ua.kiev.makson.work_in_site.FileRead;
 
 public class Controller {
@@ -16,6 +17,7 @@ public class Controller {
 	private FileRead read;
 	private ControllerSite controlSite;
 	private JTextField registrationField;
+	private Executor executor;
 
 	public File getRootDirectory() {
 		return rootDirectory;
@@ -35,6 +37,14 @@ public class Controller {
 
 	public void setRegistrationField(JTextField registrationField) {
 		this.registrationField = registrationField;
+	}
+
+	public Executor getExecutor() {
+		return executor;
+	}
+
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
 	}
 
 	public void openSelectDirectoryChoocer() {
@@ -92,7 +102,7 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
 		}
 		controlSite.setRootDirectory(rootDirectory);
-		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading, tableModel);
+		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading, tableModel, executor);
 		controlSite.goInTheSite();
 	}
 

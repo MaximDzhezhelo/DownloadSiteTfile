@@ -35,17 +35,18 @@ public class Executor {
 			result.add(executor.submit(torent));
 		}
 		for (Future<JPanel> future : result) {
+
 			try {
 				JPanel panel = future.get();
 				box.remove(panel);
 				panelMain.revalidate();
 				panelMain.repaint();
-
 			} catch (InterruptedException ex) {
 				LOGGER.log(Level.SEVERE, ex.getMessage());
 			} catch (ExecutionException ex) {
 				LOGGER.log(Level.SEVERE, ex.getMessage());
 			}
+
 		}
 	}
 

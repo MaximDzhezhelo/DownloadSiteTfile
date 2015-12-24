@@ -17,8 +17,7 @@ public class Frame extends JFrame {
 		frame.setSize(width, height);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		PanelDownloadTorrent panel = new PanelDownloadTorrent(frame);
-		panel.createExecutor();
+//		PanelDownloadTorrent panel = new PanelDownloadTorrent(frame);
 	}
 
 	public static void main(String[] arg) {

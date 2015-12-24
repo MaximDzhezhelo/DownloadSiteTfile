@@ -10,7 +10,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
+import ua.kiev.makson.controller.controllersite.ControllerWorkInSitePanel;
 import ua.kiev.makson.sql.JavaSQL;
+import ua.kiev.makson.torrent.Executor;
 import ua.kiev.makson.work_in_site.FileRead;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
 import ua.kiev.makson.work_in_site.requests.getvideo.page.updateworkinsitepanel.UpdateWorkInSitePanel;
@@ -74,6 +76,7 @@ public class WorkWithPage {
 						}
 						javaSQL.writeData(description);
 						updatePanel(controlSite, nameOfFile);
+						downloadTorrent(controlSite, description);
 					}
 				}
 			}
@@ -104,6 +107,12 @@ public class WorkWithPage {
 		new Thread(update).start();
 		UpdateWorkInSitePanel update2 = new UpdateWorkInSitePanelTableModel(controlSite, nameOfFile);
 		new Thread(update2).start();
+	}
+
+	private void downloadTorrent(ControllerSite controllerSite, VideoDescription description) {
+		ControllerWorkInSitePanel controllerWorkInSitePanel = controllerSite.getControllerWorkInSitePanel();
+		Executor executor = controllerWorkInSitePanel.getExecutor();
+		executor.executorStartDownload(description);
 	}
 
 }
