@@ -10,18 +10,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-import ua.kiev.makson.gui.MyFrame;
-
 public class TablePanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	// private MyFrame frame;
 	private JTable table;
 	private TableModel tableModel;
-
-	public TablePanel(MyFrame frame) {
-		// this.frame = frame;
-	}
 
 	public TableModel getTableModel() {
 		return tableModel;

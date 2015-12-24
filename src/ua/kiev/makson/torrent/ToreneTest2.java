@@ -1,4 +1,4 @@
-package torent;
+package ua.kiev.makson.torrent;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,7 +30,7 @@ public class ToreneTest2 extends JPanel {
 	public void createPanel() {
 		createProgress();
 		add(jProgressBar);
-//		startDownloadTorent();
+		// startDownloadTorent();
 	}
 
 	public void createProgress() {
@@ -43,7 +43,7 @@ public class ToreneTest2 extends JPanel {
 		File filet = new File(
 				"/home/makson/Документы/Ловец акул с острова Бора-Бора/Ловец акул с острова Бора-Бора.torrent");
 		File fileD = new File("/home/makson/Документы/Ловец акул с острова Бора-Бора/");
-		Logger LOGGER = Logger.getLogger(TorentTest.class.getName());
+		// Logger LOGGER = Logger.getLogger(TorentTest.class.getName());
 		try {
 			Client client = new Client(InetAddress.getLocalHost(), SharedTorrent.fromFile(filet, fileD));
 
@@ -62,9 +62,7 @@ public class ToreneTest2 extends JPanel {
 			});
 
 		} catch (UnknownHostException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
 

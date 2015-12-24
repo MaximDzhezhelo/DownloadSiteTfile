@@ -1,13 +1,11 @@
-package torent;
+package ua.kiev.makson.torrent;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class Frame extends JFrame {
-	private ToreneTest2 toreneTest2;
-	private TorentTest1 toreneTest1;
-	private TorentTest3 toreneTest3;
+	private static final long serialVersionUID = 1L;
 
 	public void createFrame() {
 		Frame frame = new Frame();
@@ -20,16 +18,7 @@ public class Frame extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		PanelDownloadTorrent panel = new PanelDownloadTorrent(frame);
-		panel.startDownloadTorrent();
-	}
-
-	public void createTorent() {
-		toreneTest2 = new ToreneTest2();
-		toreneTest2.createPanel();
-		toreneTest1 = new TorentTest1();
-		toreneTest1.createPanel();
-		toreneTest3 = new TorentTest3();
-		toreneTest3.createPanel();
+		panel.createExecutor();
 	}
 
 	public static void main(String[] arg) {
