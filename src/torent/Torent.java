@@ -3,17 +3,18 @@ package torent;
 import java.awt.Color;
 import java.util.concurrent.Callable;
 
+import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-public class Torent extends JPanel implements Callable<Integer> {
+public class Torent extends JPanel implements Callable<JPanel> {
 
 	private static final long serialVersionUID = 1L;
 	private JProgressBar jProgressBar;
-	private JPanel panel;
+	private Box box;
 
-	public Torent(JPanel panel) {
-		this.panel = panel;
+	public Torent(Box box) {
+		this.box = box;
 	}
 
 	public void createPanel() {
@@ -29,8 +30,8 @@ public class Torent extends JPanel implements Callable<Integer> {
 
 	public void startDownloadTorent() {
 		createPanel();
-		panel.add(this);
-		for (int i = 0; i < 15; i++) {
+		box.add(this);
+		for (int i = 0; i < 5; i++) {
 			try {
 				Thread.sleep(1000);
 				jProgressBar.setValue(i);
@@ -41,9 +42,9 @@ public class Torent extends JPanel implements Callable<Integer> {
 	}
 
 	@Override
-	public Integer call() throws Exception {
+	public JPanel call() throws Exception {
 		startDownloadTorent();
-		return 12;
+		return this;
 	}
 
 }
