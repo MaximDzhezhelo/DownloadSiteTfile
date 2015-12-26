@@ -76,8 +76,9 @@ public class WorkWithPage {
 							description = setDownloadUrl(downloadUrl, description, assistant);
 						}
 						javaSQL.writeData(description);
-						updatePanel(controlSite, nameOfFile);
+						updatePanel(controlSite, description.getName());
 						downloadTorrent(controlSite, description);
+						System.out.println(description.getName());
 					}
 				}
 			}

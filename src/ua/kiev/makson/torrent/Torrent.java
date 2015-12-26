@@ -1,5 +1,6 @@
 package ua.kiev.makson.torrent;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -41,9 +42,7 @@ public class Torrent extends JPanel implements Callable<JPanel> {
 		JLabel jLabel = new JLabel(description.getName());
 		add(jLabel);
 		add(jProgressBar);
-		box.add(this);
-		box.revalidate();
-		box.repaint();
+
 	}
 
 	public void createProgress() {
@@ -54,31 +53,45 @@ public class Torrent extends JPanel implements Callable<JPanel> {
 
 	public void startDownloadTorent() {
 		createPanel();
-		String torrent = description.getDownloadTorrent();
-		File fileTorrent = new File(torrent);
-		String wayFile = makesWay(torrent);
-		File file = new File(wayFile);
-		try {
-			client = new Client(InetAddress.getLocalHost(), SharedTorrent.fromFile(fileTorrent, file));
-
-			client.setMaxDownloadRate(50.0);
-			client.setMaxUploadRate(50.0);
-			client.addObserver(new Observer() {
-				@Override
-				public void update(Observable o, Object arg) {
-					Client c = (Client) o;
-					if (c.getTorrent().isInitialized()) {
-						final float completion = c.getTorrent().getCompletion();
-						System.out.printf(">>>> torrent is %.2f%% complete.%n", completion);
-						SwingUtilities.invokeLater(() -> jProgressBar.setValue(Math.round(completion)));
-					}
-				}
-			});
-
-		} catch (UnknownHostException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
-		} catch (IOException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+		box.add(this, BorderLayout.LINE_END);
+		box.revalidate();
+		box.repaint();
+		// String torrent = description.getDownloadTorrent();
+		// File fileTorrent = new File(torrent);
+		// String wayFile = makesWay(torrent);
+		// File file = new File(wayFile);
+		// try {
+		// client = new Client(InetAddress.getLocalHost(),
+		// SharedTorrent.fromFile(fileTorrent, file));
+		//
+		// client.setMaxDownloadRate(1000.0);
+		// client.setMaxUploadRate(1000.0);
+		// client.addObserver(new Observer() {
+		// @Override
+		// public void update(Observable o, Object arg) {
+		// Client c = (Client) o;
+		// if (c.getTorrent().isInitialized()) {
+		// final float completion = c.getTorrent().getCompletion();
+		// System.out.printf(">>>> torrent is %.2f%% complete.%n", completion);
+		// SwingUtilities.invokeLater(() ->
+		// jProgressBar.setValue(Math.round(completion)));
+		// }
+		// }
+		// });
+		// client.download();
+		// client.waitForCompletion();
+		// } catch (UnknownHostException ex) {
+		// LOGGER.log(Level.SEVERE, ex.getMessage());
+		// } catch (IOException ex) {
+		// LOGGER.log(Level.SEVERE, ex.getMessage());
+		// }
+		for (int i = 0; i < 45; i++) {
+			try {
+				Thread.sleep(1000);
+				jProgressBar.setValue(i);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

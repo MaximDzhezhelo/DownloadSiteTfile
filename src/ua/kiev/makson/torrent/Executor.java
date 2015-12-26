@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import ua.kiev.makson.work_in_site.requests.getvideo.page.VideoDescription;
 
-public class Executor {
+public class Executor implements Runnable {
 	private ExecutorService executor;
 	private ArrayList<Torrent> arrayList;
 	private ArrayList<Future<JPanel>> result;
@@ -24,23 +24,26 @@ public class Executor {
 	public Executor(JPanel panel) {
 		executor = Executors.newFixedThreadPool(4);
 		this.panelMain = panel;
+		result = new ArrayList<Future<JPanel>>();
 		box = Box.createVerticalBox();
 		arrayList = new ArrayList<>();
 		panel.add(box);
 	}
 
 	public void startExecutor() {
-		result = new ArrayList<Future<JPanel>>();
+
 		for (Torrent torent : arrayList) {
 			result.add(executor.submit(torent));
+			arrayList.remove(torent);
 		}
 		for (Future<JPanel> future : result) {
-
 			try {
+				System.out.println("remove panel");
 				JPanel panel = future.get();
 				box.remove(panel);
 				panelMain.revalidate();
 				panelMain.repaint();
+				result.remove(panel);
 			} catch (InterruptedException ex) {
 				LOGGER.log(Level.SEVERE, ex.getMessage());
 			} catch (ExecutionException ex) {
@@ -54,14 +57,19 @@ public class Executor {
 		for (VideoDescription videoDescription : description) {
 			arrayList.add(new Torrent(box, videoDescription));
 		}
-		startExecutor();
-		arrayList.clear();
+		new Thread(this).start();
+
 	}
 
 	public void executorStopDownload() {
 		if (!executor.isShutdown()) {
 			executor.shutdownNow();
 		}
+	}
+
+	@Override
+	public void run() {
+		startExecutor();
 	}
 
 }
