@@ -1,9 +1,8 @@
 package ua.kiev.makson.work_in_site.requests.getvideo.page;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,7 +23,7 @@ public class WorkWithPage {
 	private DownloadFile download;
 	private boolean stop;
 	private Executor executor;
-	private static final Logger LOGGER = Logger.getLogger(WorkWithPage.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(WorkWithPage.class);
 
 	public void parsingPage(JavaSQL javaSQL, RequesAssistant assistant) {
 		ControllerSite controlSite = assistant.getControlSite();
@@ -33,7 +32,6 @@ public class WorkWithPage {
 		File rootDirectory = controlSite.getRootDirectory();
 		File file = new File(rootDirectory, fileName);
 		if (file.exists()) {
-			LOGGER.log(Level.SEVERE, "File exists");
 			FileRead fileRead = new FileRead(charset);
 			String page = fileRead.readFromRootDirectory(file);
 
@@ -60,7 +58,6 @@ public class WorkWithPage {
 					boolean thereIs = javaSQL.checkVideoByName(nameOfFile);
 					if (!thereIs) {
 						description.setName(nameOfFile);
-						LOGGER.log(Level.SEVERE, "nameOfFile there is");
 
 						Elements links = classT.select("a[href]");
 						for (Element link : links) {
@@ -78,12 +75,11 @@ public class WorkWithPage {
 						javaSQL.writeData(description);
 						updatePanel(controlSite, description.getName());
 						downloadTorrent(controlSite, description);
-						System.out.println(description.getName());
 					}
 				}
 			}
 		} else {
-			LOGGER.log(Level.SEVERE, "File is not exists");
+			LOGGER.info("File is not exists");
 		}
 	}
 

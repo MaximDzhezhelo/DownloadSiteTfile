@@ -6,8 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.requests.authentication.Authentication;
@@ -19,7 +19,7 @@ public class Request {
 	private Authentication authentication;
 	private StartGetVideo startGetVideo;
 	private Map<String, String> header;
-	private static final Logger LOGGER = Logger.getLogger(Request.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Request.class);
 
 	public Request() {
 		requestHelper = new RequestHelper();
@@ -35,9 +35,9 @@ public class Request {
 		try {
 			future.get();
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		} finally {
-			LOGGER.log(Level.SEVERE, "executor Request authentication shutdown");
+			LOGGER.info("executor Request authentication shutdown");
 			executorShutdown();
 		}
 	}
@@ -52,9 +52,9 @@ public class Request {
 			future.get();
 		} catch (InterruptedException | ExecutionException ex) {
 			ex.printStackTrace();
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		} finally {
-			LOGGER.log(Level.SEVERE, "executor Request startGetVideo shutdown");
+			LOGGER.info("executor Request startGetVideo shutdown");
 			executorShutdown();
 		}
 	}
@@ -72,7 +72,7 @@ public class Request {
 
 	public void executorShutdown() {
 		if (!executor.isShutdown()) {
-			LOGGER.log(Level.SEVERE, "executor Request shutdown");
+			LOGGER.info("executor Request shutdown");
 			executor.shutdownNow();
 		}
 	}

@@ -7,8 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.RandomTime;
@@ -25,7 +25,7 @@ public class DownloadFile {
 	private ScheduledFuture<Integer> future;
 	private RandomTime randomTime;
 	private int time;
-	private static final Logger LOGGER = Logger.getLogger(DownloadFile.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(DownloadFile.class);
 
 	public DownloadFile(String downloadUrl, VideoDescription description, RequesAssistant assistant) {
 		this.assistant = assistant;
@@ -36,7 +36,7 @@ public class DownloadFile {
 	}
 
 	public VideoDescription startDownload() {
-		LOGGER.log(Level.SEVERE, "startDownload (download torrent)");
+		LOGGER.info("startDownload (download torrent)");
 		ControllerSite controlSite = assistant.getControlSite();
 		File rootDirectory = controlSite.getRootDirectory();
 		String nameFolder = description.getName();
@@ -76,27 +76,27 @@ public class DownloadFile {
 				if (!executor.isShutdown()) {
 					executor.shutdownNow();
 				}
-				LOGGER.log(Level.SEVERE, ex.getMessage());
+				LOGGER.error(ex.getMessage());
 			}
 		}
 	}
 
 	private void downloadFile(String url, RequesAssistant assistant, File file) {
 		GetDownlodRequests requests = new GetDownlodRequests(url, assistant, file);
-		LOGGER.log(Level.SEVERE, "downloadFile ");
+		LOGGER.info("downloadFile ");
 		time = randomTime.getRandomDownload();
-		LOGGER.log(Level.SEVERE, "randomTime downloadFile " + time);
+		LOGGER.info("randomTime downloadFile " + time);
 		future = executor.schedule(requests, time, TimeUnit.SECONDS);
 		try {
 			future.get();
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
 	public void stopDownload() {
 		if (!executor.isShutdown()) {
-			LOGGER.log(Level.SEVERE, "executor DownloadFile shutdown");
+			LOGGER.info("executor DownloadFile shutdown");
 			executor.shutdown();
 		}
 	}

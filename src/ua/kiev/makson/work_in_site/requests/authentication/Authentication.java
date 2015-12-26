@@ -7,8 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.Indication;
@@ -31,7 +31,7 @@ public class Authentication implements Callable<Integer> {
 	private int time;
 	private int statusLine;
 
-	private static final Logger LOGGER = Logger.getLogger(Authentication.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Authentication.class);
 
 	public Authentication(GeneralHttpClient genClient, ControllerSite controlSite, RequestHelper requestHelper) {
 		this.genClient = genClient;
@@ -67,39 +67,39 @@ public class Authentication implements Callable<Integer> {
 			controlSite.setRegistration(statusLine == 302);
 
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		} finally {
-			LOGGER.log(Level.SEVERE, "executor shutdown");
+			LOGGER.info("executor shutdown");
 			executor.shutdownNow();
 		}
 
 	}
 
 	private int callGet(ControllerSite controlSite) throws InterruptedException, ExecutionException {
-		LOGGER.log(Level.SEVERE, "callGet ");
+		LOGGER.info("callGet ");
 		time = randomTime.getRandomTimeAuthentication();
 		indication(time, controlSite);
-		LOGGER.log(Level.SEVERE, "randomTime " + time);
+		LOGGER.info("randomTime " + time);
 		future = executor.schedule(get, time, TimeUnit.SECONDS);
 		statusLine = future.get();
 		if (statusLine == 200) {
 			return statusLine;
 		} else {
-			LOGGER.log(Level.SEVERE, "statusLine !==200 run again GET ");
+			LOGGER.info("statusLine !==200 run again GET ");
 			callGet(controlSite);
 		}
 		return statusLine;
 	}
 
 	private int callPost(ControllerSite controlSite) throws InterruptedException, ExecutionException {
-		LOGGER.log(Level.SEVERE, "callPost ");
+		LOGGER.info("callPost ");
 		indication(3, controlSite);
 		future = executor.schedule(post, 3, TimeUnit.SECONDS);
 		statusLine = future.get();
 		if (statusLine == 302) {
 			return statusLine;
 		} else {
-			LOGGER.log(Level.SEVERE, "statusLine !==302 run again Post ");
+			LOGGER.info("statusLine !==302 run again Post ");
 			callPost(controlSite);
 		}
 		return statusLine;

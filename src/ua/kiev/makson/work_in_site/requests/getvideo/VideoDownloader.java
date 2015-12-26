@@ -6,8 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.RandomTime;
@@ -27,7 +27,7 @@ public class VideoDownloader {
 	private int time;
 	private GetRequests get;
 	private int statusLine;
-	private static final Logger LOGGER = Logger.getLogger(VideoDownloader.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(VideoDownloader.class);
 
 	public VideoDownloader(GeneralHttpClient genClient, ControllerSite controlSite, Map<String, String> header) {
 		executor = Executors.newScheduledThreadPool(1);
@@ -41,7 +41,7 @@ public class VideoDownloader {
 	public void startVideoDownload() throws InterruptedException, ExecutionException {
 
 		String url = "http://tfile.me/forum/viewforum.php?f=4";
-		LOGGER.log(Level.SEVERE, "run start Video Download");
+		LOGGER.info("run start Video Download");
 
 		RequesAssistant assistant = new RequesAssistant(genClient, controlSite, header);
 
@@ -57,11 +57,11 @@ public class VideoDownloader {
 		future = executor.schedule(get, time, TimeUnit.SECONDS);
 		statusLine = future.get();
 		if (statusLine == 200) {
-			LOGGER.log(Level.SEVERE, "executor shutdown");
+			LOGGER.info("executor shutdown");
 			executor.shutdownNow();
 			return statusLine;
 		} else {
-			LOGGER.log(Level.SEVERE, "statusLine !==200 run again callGetAfterAuthentication() ");
+			LOGGER.info("statusLine !==200 run again callGetAfterAuthentication() ");
 			callGetAfterAuthentication();
 		}
 		return statusLine;
@@ -69,7 +69,7 @@ public class VideoDownloader {
 
 	public void stopDownload() {
 		if (!executor.isShutdown()) {
-			LOGGER.log(Level.SEVERE, "executor VideoDownloader shutdownNow");
+			LOGGER.info("executor VideoDownloader shutdownNow");
 			executor.shutdownNow();
 		}
 		generalWorkInSite.stopDownload();

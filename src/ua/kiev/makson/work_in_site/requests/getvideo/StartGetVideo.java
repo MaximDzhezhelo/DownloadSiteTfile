@@ -3,8 +3,8 @@ package ua.kiev.makson.work_in_site.requests.getvideo;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
@@ -14,7 +14,7 @@ public class StartGetVideo implements Callable<Integer> {
 	private ControllerSite controlSite;
 	private VideoDownloader downloader;
 	private Map<String, String> header;
-	private static final Logger LOGGER = Logger.getLogger(StartGetVideo.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(StartGetVideo.class);
 
 	public StartGetVideo(GeneralHttpClient genClient, ControllerSite controlSite, Map<String, String> header) {
 		this.genClient = genClient;
@@ -29,7 +29,7 @@ public class StartGetVideo implements Callable<Integer> {
 		try {
 			downloader.startVideoDownload();
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 

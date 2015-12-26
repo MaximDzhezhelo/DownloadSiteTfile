@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -14,6 +12,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.log4j.Logger;
+
 import ua.kiev.makson.work_in_site.FileWrite;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
@@ -24,7 +24,7 @@ public class GetDownlodRequests implements Callable<Integer> {
 	private String url;
 	private RequesAssistant assistant;
 	private File fileDownload;
-	private static final Logger LOGGER = Logger.getLogger(GetDownlodRequests.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GetDownlodRequests.class);
 
 	public GetDownlodRequests(String url, RequesAssistant assistant, File fileDownload) {
 		this.assistant = assistant;
@@ -41,7 +41,7 @@ public class GetDownlodRequests implements Callable<Integer> {
 	}
 
 	public void doGet() {
-		LOGGER.log(Level.SEVERE, "GetDownlodRequests ");
+		LOGGER.info("GetDownlodRequests ");
 		GeneralHttpClient genClient = assistant.getGenClient();
 		Map<String, String> header = assistant.getHeader();
 		Client client = genClient.getClient();
@@ -68,7 +68,7 @@ public class GetDownlodRequests implements Callable<Integer> {
 			response = httpClient.execute(httpGet);
 			if (debug) {
 				statusLine = response.getStatusLine().getStatusCode();
-				LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
+				LOGGER.info("statusLine " + statusLine);
 			}
 			HttpEntity entity = response.getEntity();
 
@@ -77,14 +77,14 @@ public class GetDownlodRequests implements Callable<Integer> {
 
 			cookies = cookieStore.getCookies();
 		} catch (IOException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		} finally {
 			if (response != null) {
 				try {
 					response.close();
 					genClient.setClient(client);
 				} catch (IOException ex) {
-					LOGGER.log(Level.SEVERE, ex.getMessage());
+					LOGGER.error(ex.getMessage());
 				}
 			}
 		}

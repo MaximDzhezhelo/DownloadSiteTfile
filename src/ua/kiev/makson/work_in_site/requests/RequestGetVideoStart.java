@@ -6,8 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
 import ua.kiev.makson.timer.Indication;
@@ -23,7 +23,7 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	private RandomTime randomTime;
 	private int time;
 	private Indication indicate;
-	private static final Logger LOGGER = Logger.getLogger(RequestGetVideoStart.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(RequestGetVideoStart.class);
 
 	public RequestGetVideoStart(ControllerSite controlSite, GeneralHttpClient genClient) {
 		this.controlSite = controlSite;
@@ -44,13 +44,13 @@ public class RequestGetVideoStart implements Callable<Integer> {
 
 	public void loopRequests() {
 		time = randomTime.getRandomGetRequests();
-		LOGGER.log(Level.SEVERE, "time in loopRequests() " + time);
+		LOGGER.info("time in loopRequests() " + time);
 		indication(time, controlSite);
 		future = executor.schedule(this, time, TimeUnit.SECONDS);
 		try {
 			future.get();
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 		if (doGetVideo) {
 			stopDownload();
@@ -65,7 +65,7 @@ public class RequestGetVideoStart implements Callable<Integer> {
 	}
 
 	public void stopDownload() {
-		LOGGER.log(Level.SEVERE, "loopRequests() executor shut Down");
+		LOGGER.info("loopRequests() executor shut Down");
 		if (!executor.isShutdown()) {
 			executor.shutdownNow();
 		}

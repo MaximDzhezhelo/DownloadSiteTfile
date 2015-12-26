@@ -9,14 +9,14 @@ import java.net.UnknownHostException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
+
+import org.apache.log4j.Logger;
 
 import com.turn.ttorrent.client.Client;
 import com.turn.ttorrent.client.SharedTorrent;
@@ -30,16 +30,18 @@ public class Torrent extends JPanel implements Callable<JPanel> {
 	private Box box;
 	private VideoDescription description;
 	private Client client;
-	private static final Logger LOGGER = Logger.getLogger(Torrent.class.getName());
+	private JLabel jLabel;
+	private static final Logger LOGGER = Logger.getLogger(Torrent.class);
 
 	public Torrent(Box box, VideoDescription description) {
 		this.box = box;
 		this.description = description;
+		String name = description.getName();
+		jLabel = new JLabel(name);
 	}
 
 	public void createPanel() {
 		createProgress();
-		JLabel jLabel = new JLabel(description.getName());
 		add(jLabel);
 		add(jProgressBar);
 
@@ -56,42 +58,33 @@ public class Torrent extends JPanel implements Callable<JPanel> {
 		box.add(this, BorderLayout.LINE_END);
 		box.revalidate();
 		box.repaint();
-		// String torrent = description.getDownloadTorrent();
-		// File fileTorrent = new File(torrent);
-		// String wayFile = makesWay(torrent);
-		// File file = new File(wayFile);
-		// try {
-		// client = new Client(InetAddress.getLocalHost(),
-		// SharedTorrent.fromFile(fileTorrent, file));
-		//
-		// client.setMaxDownloadRate(1000.0);
-		// client.setMaxUploadRate(1000.0);
-		// client.addObserver(new Observer() {
-		// @Override
-		// public void update(Observable o, Object arg) {
-		// Client c = (Client) o;
-		// if (c.getTorrent().isInitialized()) {
-		// final float completion = c.getTorrent().getCompletion();
-		// System.out.printf(">>>> torrent is %.2f%% complete.%n", completion);
-		// SwingUtilities.invokeLater(() ->
-		// jProgressBar.setValue(Math.round(completion)));
-		// }
-		// }
-		// });
-		// client.download();
-		// client.waitForCompletion();
-		// } catch (UnknownHostException ex) {
-		// LOGGER.log(Level.SEVERE, ex.getMessage());
-		// } catch (IOException ex) {
-		// LOGGER.log(Level.SEVERE, ex.getMessage());
-		// }
-		for (int i = 0; i < 45; i++) {
-			try {
-				Thread.sleep(1000);
-				jProgressBar.setValue(i);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		String torrent = description.getDownloadTorrent();
+		File fileTorrent = new File(torrent);
+		String wayFile = makesWay(torrent);
+
+		File file = new File(wayFile);
+		try {
+			client = new Client(InetAddress.getLocalHost(), SharedTorrent.fromFile(fileTorrent, file));
+
+			client.setMaxDownloadRate(1000.0);
+			client.setMaxUploadRate(1000.0);
+			client.addObserver(new Observer() {
+				@Override
+				public void update(Observable o, Object arg) {
+					Client c = (Client) o;
+					if (c.getTorrent().isInitialized()) {
+						final float completion = c.getTorrent().getCompletion();
+						System.out.printf(">>>> torrent is %.2f%% complete.%n", completion);
+						SwingUtilities.invokeLater(() -> jProgressBar.setValue(Math.round(completion)));
+					}
+				}
+			});
+			client.download();
+			client.waitForCompletion();
+		} catch (UnknownHostException ex) {
+			LOGGER.error(ex.getMessage());
+		} catch (IOException ex) {
+			LOGGER.error(ex.getMessage());
 		}
 	}
 

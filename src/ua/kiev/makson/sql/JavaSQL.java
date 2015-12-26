@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.work_in_site.requests.getvideo.page.VideoDescription;
 
 public class JavaSQL {
 	// private AESCrypto encrypt;
 	private Statement state;
-	private static final Logger LOGGER = Logger.getLogger(JavaSQL.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(JavaSQL.class);
 
 	public void createSQL() {
 		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
@@ -23,9 +23,9 @@ public class JavaSQL {
 					+ "`collection.downloadUrl` TEXT(255), " + "`collection.url` TEXT(255), "
 					+ "`collection.jpg` TEXT(255), " + "`collection.description` TEXT(455)) ");
 			state.close();
-			LOGGER.log(Level.SEVERE, "create SQL");
+			LOGGER.info("create SQL");
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
@@ -35,12 +35,13 @@ public class JavaSQL {
 			// password = encrypt.encrypt(password);
 			state.executeUpdate(
 					"INSERT INTO `collection` (`collection.name`, `collection.viewtopic`, `collection.downloadUrl`, `collection.url`, `collection.jpg`,`collection.description`) VALUES('"
-							+ video.getName() + "', '" + video.getViewtopic() + "', '" + video.getDownloadTorrent() + "', '"
-							+ video.getUrl() + "', '" + video.getJpg() + "', '" + video.getDescription() + "')");
+							+ video.getName() + "', '" + video.getViewtopic() + "', '" + video.getDownloadTorrent()
+							+ "', '" + video.getUrl() + "', '" + video.getJpg() + "', '" + video.getDescription()
+							+ "')");
 			state.close();
-			LOGGER.log(Level.SEVERE, "insertUsers");
+			LOGGER.info("insertUsers");
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
@@ -56,12 +57,12 @@ public class JavaSQL {
 				String url = rs.getString("collection.url");
 				String jpg = rs.getString("collection.jpg");
 				String description = rs.getString("collection.description");
-				LOGGER.log(Level.SEVERE, String.format("#%02d %s  %s%n %s%n %s%n %s%n %s%n", id, nameVideo, viewtopic,
-						downloadUrl, url, jpg, description));
+				LOGGER.info(String.format("#%02d %s  %s%n %s%n %s%n %s%n %s%n", id, nameVideo, viewtopic, downloadUrl,
+						url, jpg, description));
 			}
 			state.close();
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 	}
 
@@ -88,12 +89,12 @@ public class JavaSQL {
 				description.setDescription(descriptionText);
 			}
 			if (description.getName() == null) {
-				LOGGER.log(Level.SEVERE, String.format("%s%n", "not have site with this word"));
+				LOGGER.info(String.format("%s%n", "not have site with this word"));
 				return null;
 			}
 			state.close();
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 		return description;
 	}
@@ -102,15 +103,14 @@ public class JavaSQL {
 		try (Connection con = DriverManager.getConnection("jdbc:sqlite:collection.db")) {
 			state = con.createStatement();
 
-			ResultSet rs = state
-					.executeQuery("SELECT * FROM `collection` WHERE  `collection.name`= '" + str + "'");
+			ResultSet rs = state.executeQuery("SELECT * FROM `collection` WHERE  `collection.name`= '" + str + "'");
 			if (rs.next()) {
 				state.close();
 				return true;
 			}
 			state.close();
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 		return false;
 
@@ -123,7 +123,7 @@ public class JavaSQL {
 			x = state.executeUpdate("DELETE FROM `collection` WHERE id= '" + id + "'");
 			state.close();
 		} catch (SQLException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		}
 		return x;
 	}

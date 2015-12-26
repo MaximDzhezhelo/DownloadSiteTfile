@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.log4j.Logger;
 
 import ua.kiev.makson.work_in_site.AnalysisEntity;
 import ua.kiev.makson.work_in_site.requests.Client;
@@ -21,7 +20,7 @@ public class GetAuthentication implements Callable<Integer> {
 	private int statusLine;
 	private String url;
 	private RequesAssistant assistant;
-	private static final Logger LOGGER = Logger.getLogger(GetAuthentication.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GetAuthentication.class);
 
 	public GetAuthentication(String url, RequesAssistant assistant) {
 		this.url = url;
@@ -64,7 +63,7 @@ public class GetAuthentication implements Callable<Integer> {
 			response = httpClient.execute(httpGet);
 			if (debug) {
 				statusLine = response.getStatusLine().getStatusCode();
-				LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
+				LOGGER.info("statusLine " + statusLine);
 			}
 
 			AnalysisEntity entity = new AnalysisEntity();
@@ -72,14 +71,14 @@ public class GetAuthentication implements Callable<Integer> {
 
 			cookies = cookieStore.getCookies();
 		} catch (IOException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		} finally {
 			if (response != null) {
 				try {
 					response.close();
 					genClient.setClient(client);
 				} catch (IOException ex) {
-					LOGGER.log(Level.SEVERE, ex.getMessage());
+					LOGGER.error(ex.getMessage());
 				}
 			}
 		}

@@ -16,88 +16,87 @@ import ua.kiev.makson.gui.panel.workinsitepanel.WorkInSitePanel;
 
 public class MyFrame extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private int width = 0;
-    private int height = 0;
-    private JTabbedPane jTabbedPane;
-    private MyPanelJEditorPane panelJEditorPane;
-    private WorkInSitePanel workInSitePanel;
-    private TablePanel table;
-    private Menu menu;
-    private Controller control;
+	private static final long serialVersionUID = 1L;
+	private int width = 0;
+	private int height = 0;
+	private JTabbedPane jTabbedPane;
+	private MyPanelJEditorPane panelJEditorPane;
+	private WorkInSitePanel workInSitePanel;
+	private TablePanel table;
+	private Menu menu;
+	private Controller control;
 
-    public MyFrame() {
-        control = new Controller();
-        createFrame();
-    }
+	public MyFrame() {
+		control = new Controller();
+		createFrame();
+	}
 
-    public Controller getControl() {
-        return control;
-    }
+	public Controller getControl() {
+		return control;
+	}
 
-    public void setControl(Controller control) {
-        this.control = control;
-    }
+	public void setControl(Controller control) {
+		this.control = control;
+	}
 
-    public void createDimension() {
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension dim = kit.getScreenSize();
-        width = dim.width / 2;
-        height = dim.height / 2;
-    }
+	public void createDimension() {
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension dim = kit.getScreenSize();
+		width = dim.width / 2;
+		height = dim.height / 2;
+	}
 
-    public void createFrame() {
-        createDimension();
-        setTitle("Download Site");
-        setSize(width, height);
-        createImageIcon();
-        createMyMenu();
-        createJTabbedPane();
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-    }
+	public void createFrame() {
+		createDimension();
+		setTitle("Download Site");
+		setSize(width, height);
+		createImageIcon();
+		createMyMenu();
+		createJTabbedPane();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+	}
 
-    public void createImageIcon() {
-        BufferedImage buff_image;
-        try {
-            buff_image = ImageIO.read(getClass().getResourceAsStream(
-                    "res/bird.jpeg"));
-            setIconImage(buff_image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public void createImageIcon() {
+		BufferedImage buff_image;
+		try {
+			buff_image = ImageIO.read(getClass().getResourceAsStream("res/bird.jpeg"));
+			setIconImage(buff_image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void createJTabbedPane() {
-        jTabbedPane = new JTabbedPane();
-        createMyPanelJEditorPane();
-        createWorkInSitePanel();
-        createTablePanel();
-        jTabbedPane.add("HTML", panelJEditorPane);
-        jTabbedPane.add("Site", workInSitePanel);
-        jTabbedPane.add("Table", table);
-        this.getContentPane().add(jTabbedPane);
+	public void createJTabbedPane() {
+		jTabbedPane = new JTabbedPane();
+		createMyPanelJEditorPane();
+		createWorkInSitePanel();
+		createTablePanel();
+		jTabbedPane.add("HTML", panelJEditorPane);
+		jTabbedPane.add("Site", workInSitePanel);
+		jTabbedPane.add("Table", table);
+		this.getContentPane().add(jTabbedPane);
 
-    }
+	}
 
-    public void createMyPanelJEditorPane() {
-        panelJEditorPane = new MyPanelJEditorPane(this);
-        panelJEditorPane.createMyPanelJEditorPane();
-    }
+	public void createMyPanelJEditorPane() {
+		panelJEditorPane = new MyPanelJEditorPane(this);
+		panelJEditorPane.createMyPanelJEditorPane();
+	}
 
-    public void createWorkInSitePanel() {
-        workInSitePanel = new WorkInSitePanel(this);
-        workInSitePanel.createPanelWorkInSitePanel();
-    }
+	public void createWorkInSitePanel() {
+		workInSitePanel = new WorkInSitePanel(this);
+		workInSitePanel.createPanelWorkInSitePanel();
+	}
 
-    public void createTablePanel() {
-        table = new TablePanel();
-        table.createTablePanel();
-    }
+	public void createTablePanel() {
+		table = new TablePanel();
+		table.createTablePanel();
+	}
 
-    public void createMyMenu() {
-        menu = new Menu(this);
-        menu.createMenu();
-    }
+	public void createMyMenu() {
+		menu = new Menu(this);
+		menu.createMenu();
+	}
 }

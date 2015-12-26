@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.log4j.Logger;
+
 import ua.kiev.makson.work_in_site.AnalysisEntity;
 import ua.kiev.makson.work_in_site.requests.Client;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
@@ -20,7 +20,7 @@ public class GetRequests implements Callable<Integer> {
 	private String url;
 	private RequesAssistant assistant;
 	private int statusLine;
-	private static final Logger LOGGER = Logger.getLogger(GetRequests.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GetRequests.class);
 
 	public GetRequests(String url, RequesAssistant assistant) {
 		this.url = url;
@@ -36,7 +36,7 @@ public class GetRequests implements Callable<Integer> {
 	}
 
 	public void doGet() {
-		LOGGER.log(Level.SEVERE, "getRequests");
+		LOGGER.info("getRequests");
 		GeneralHttpClient genClient = assistant.getGenClient();
 		Map<String, String> header = assistant.getHeader();
 		Client client = genClient.getClient();
@@ -65,7 +65,7 @@ public class GetRequests implements Callable<Integer> {
 
 			if (debug) {
 				statusLine = response.getStatusLine().getStatusCode();
-				LOGGER.log(Level.SEVERE, "statusLine " + statusLine, statusLine);
+				LOGGER.info("statusLine " + statusLine);
 			}
 
 			AnalysisEntity entity = new AnalysisEntity();
@@ -73,14 +73,14 @@ public class GetRequests implements Callable<Integer> {
 
 			cookies = cookieStore.getCookies();
 		} catch (IOException ex) {
-			LOGGER.log(Level.SEVERE, ex.getMessage());
+			LOGGER.error(ex.getMessage());
 		} finally {
 			if (response != null) {
 				try {
 					response.close();
 					genClient.setClient(client);
 				} catch (IOException ex) {
-					LOGGER.log(Level.SEVERE, ex.getMessage());
+					LOGGER.error(ex.getMessage());
 				}
 			}
 		}
