@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
-import ua.kiev.makson.gui.panel.table.TableModel;
+import ua.kiev.makson.controller.controllersite.ControllerWorkInSitePanel;
 import ua.kiev.makson.torrent.Executor;
 import ua.kiev.makson.work_in_site.FileRead;
 
@@ -16,8 +16,13 @@ public class Controller {
 	private SaveWayChoocerEditorPane selectFile;
 	private FileRead read;
 	private ControllerSite controlSite;
+	private ControllerWorkInSitePanel controllerWorkInSitePanel;
 	private JTextField registrationField;
 	private Executor executor;
+
+	public Controller() {
+		controllerWorkInSitePanel = new ControllerWorkInSitePanel();
+	}
 
 	public File getRootDirectory() {
 		return rootDirectory;
@@ -45,6 +50,15 @@ public class Controller {
 
 	public void setExecutor(Executor executor) {
 		this.executor = executor;
+	}
+
+	public ControllerWorkInSitePanel getControllerWorkInSitePanel() {
+		controllerWorkInSitePanel.setExecutor(executor);
+		return controllerWorkInSitePanel;
+	}
+
+	public void setControllerWorkInSitePanel(ControllerWorkInSitePanel controllerWorkInSitePanel) {
+		this.controllerWorkInSitePanel = controllerWorkInSitePanel;
 	}
 
 	public void openSelectDirectoryChoocer() {
@@ -84,7 +98,6 @@ public class Controller {
 				controlSite.setUrlLogPass(urlString, login, password, rootDirectory);
 			}
 			controlSite.setRegistrationField(registrationField);
-			controlSite.shoow();
 			controlSite.loginStart();
 			setRegistrationColor();
 		}
@@ -97,13 +110,12 @@ public class Controller {
 		return controlSite.getColorRegistration();
 	}
 
-	public void goToTheSite(JTextField count, JTextField leftTime, JTextField loading, TableModel tableModel,
-			String download) {
+	public void goToTheSite() {
 		if (controlSite == null) {
 			JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
 		}
 		controlSite.setRootDirectory(rootDirectory);
-		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading, tableModel, download, executor);
+		controlSite.setControllerWorkInSitePanel(controllerWorkInSitePanel);
 		controlSite.goInTheSite();
 	}
 

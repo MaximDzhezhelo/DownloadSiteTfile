@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import ua.kiev.makson.controller.Controller;
+import ua.kiev.makson.controller.controllersite.ControllerWorkInSitePanel;
 import ua.kiev.makson.gui.MyFrame;
 import ua.kiev.makson.gui.panel.table.TableModel;
 import ua.kiev.makson.gui.panel.table.TablePanel;
@@ -93,8 +94,19 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		control = frame.getControl();
 		TableModel tableModel = tablePanel.getTableModel();
 		String download = checkUrlDownload();
-		control.goToTheSite(count, leftTime, loading, tableModel, download);
+		setControllerWorkInSitePanel(tableModel, download);
+		control.goToTheSite();
 		frame.setControl(control);
+	}
+
+	private void setControllerWorkInSitePanel(TableModel tableModel, String download) {
+		ControllerWorkInSitePanel inSitePanel = control.getControllerWorkInSitePanel();
+		inSitePanel.setCount(count);
+		inSitePanel.setLeftTime(leftTime);
+		inSitePanel.setLeftTime(leftTime);
+		inSitePanel.setLoading(loading);
+		inSitePanel.setTableModel(tableModel);
+		inSitePanel.setDownload(download);
 	}
 
 	private String checkUrlDownload() {

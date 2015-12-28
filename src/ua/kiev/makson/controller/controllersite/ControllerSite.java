@@ -3,8 +3,6 @@ package ua.kiev.makson.controller.controllersite;
 import java.io.File;
 
 import javax.swing.JTextField;
-
-import ua.kiev.makson.gui.panel.table.TableModel;
 import ua.kiev.makson.torrent.Executor;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 
@@ -44,6 +42,10 @@ public class ControllerSite {
 		return controllerWorkInSitePanel;
 	}
 
+	public void setControllerWorkInSitePanel(ControllerWorkInSitePanel controllerWorkInSitePanel) {
+		this.controllerWorkInSitePanel = controllerWorkInSitePanel;
+	}
+
 	public String getUrl() {
 		return urlString;
 	}
@@ -68,16 +70,7 @@ public class ControllerSite {
 		return defaultReadName;
 	}
 
-	public void setTextFieldInWorkinSitePanel(JTextField count, JTextField leftTime, JTextField loading,
-			TableModel tableModel, String download, Executor executor) {
-		if (controllerWorkInSitePanel == null) {
-			controllerWorkInSitePanel = new ControllerWorkInSitePanel();
-		}
-		controllerWorkInSitePanel.setCount(count);
-		controllerWorkInSitePanel.setLeftTime(leftTime);
-		controllerWorkInSitePanel.setLoading(loading);
-		controllerWorkInSitePanel.setTableModel(tableModel);
-		controllerWorkInSitePanel.setDownload(download);
+	public void setTextFieldInWorkinSitePanel(Executor executor) {
 		controllerWorkInSitePanel.setExecutor(executor);
 	}
 
@@ -86,12 +79,6 @@ public class ControllerSite {
 		this.login = login;
 		this.password = password;
 		this.rootDirectory = rootDirectory;
-	}
-
-	public void shoow() {
-		System.out.println(urlString);
-		System.out.println(login);
-		System.out.println(password);
 	}
 
 	public void loginStart() {
