@@ -25,8 +25,10 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	private JTextField count;
 	private JTextField leftTime;
 	private JTextField loading;
+	private JTextField urlDownload;
 	private JPanel panelBut;
 	private JPanel panelText;
+	private JPanel download;
 	private TablePanel tablePanel;
 
 	public ButtonPanel(MyFrame frame, TablePanel tablePanel) {
@@ -37,8 +39,10 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	public void createPanel() {
 		createButton();
 		createTextFieldPanel();
+		createUrlDownloadPanel();
 		setLayout(new BorderLayout());
-		this.add(panelBut, BorderLayout.CENTER);
+		this.add(panelBut, BorderLayout.BEFORE_FIRST_LINE);
+		this.add(download, BorderLayout.CENTER);
 		this.add(panelText, BorderLayout.AFTER_LAST_LINE);
 	}
 
@@ -50,19 +54,6 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		butStop.addActionListener(this);
 		panelBut.add(butStart);
 		panelBut.add(butStop);
-	}
-
-	private void startWorkingSite() {
-		control = frame.getControl();
-		TableModel tableModel = tablePanel.getTableModel();
-		control.goToTheSite(count, leftTime, loading, tableModel);
-		frame.setControl(control);
-	}
-
-	private void stopWorkingSite() {
-		control = frame.getControl();
-		control.stopToTheSite();
-		frame.setControl(control);
 	}
 
 	public void createTextFieldPanel() {
@@ -84,11 +75,43 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		panelText.add(loading);
 	}
 
+	public void createUrlDownloadPanel() {
+		download = new JPanel();
+		urlDownload = new JTextField(45);
+		urlDownload.setText("http://tfile.me/forum/viewforum.php?f=4");
+		download.add(urlDownload);
+	}
+
 	private void setParametrsField(JTextField field) {
 		field.setEnabled(false);
 		field.setHorizontalAlignment(JTextField.CENTER);
 		field.setBackground(new Color((float) Math.random(), (float) Math.random(), (float) Math.random()));
 
+	}
+
+	private void startWorkingSite() {
+		control = frame.getControl();
+		TableModel tableModel = tablePanel.getTableModel();
+		String download = checkUrlDownload();
+		control.goToTheSite(count, leftTime, loading, tableModel, download);
+		frame.setControl(control);
+	}
+
+	private String checkUrlDownload() {
+		String download = urlDownload.getText();
+		if (download.isEmpty() || download == null || download.trim().length() < 10) {
+			urlDownload.setText("Enter site PLEASE");
+			urlDownload.setBackground(Color.RED);
+			stopWorkingSite();
+			return null;
+		}
+		return download;
+	}
+
+	private void stopWorkingSite() {
+		control = frame.getControl();
+		control.stopToTheSite();
+		frame.setControl(control);
 	}
 
 	@Override

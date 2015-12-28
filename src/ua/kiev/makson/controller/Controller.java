@@ -97,12 +97,13 @@ public class Controller {
 		return controlSite.getColorRegistration();
 	}
 
-	public void goToTheSite(JTextField count, JTextField leftTime, JTextField loading, TableModel tableModel) {
+	public void goToTheSite(JTextField count, JTextField leftTime, JTextField loading, TableModel tableModel,
+			String download) {
 		if (controlSite == null) {
 			JOptionPane.showMessageDialog(null, "пройдите аутентификацию");
 		}
 		controlSite.setRootDirectory(rootDirectory);
-		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading, tableModel, executor);
+		controlSite.setTextFieldInWorkinSitePanel(count, leftTime, loading, tableModel, download, executor);
 		controlSite.goInTheSite();
 	}
 

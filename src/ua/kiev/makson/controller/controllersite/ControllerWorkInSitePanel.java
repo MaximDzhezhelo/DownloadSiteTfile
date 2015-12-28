@@ -11,6 +11,7 @@ public class ControllerWorkInSitePanel {
 	private JTextField loading;
 	private TableModel tableModel;
 	private Executor executor;
+	private String download;
 
 	public JTextField getCount() {
 		return count;
@@ -50,6 +51,14 @@ public class ControllerWorkInSitePanel {
 
 	public void setExecutor(Executor executor) {
 		this.executor = executor;
+	}
+
+	public String getDownload() {
+		return download;
+	}
+
+	public void setDownload(String download) {
+		this.download = download;
 	}
 
 }

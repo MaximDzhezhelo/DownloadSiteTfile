@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
 import ua.kiev.makson.controller.controllersite.ControllerSite;
+import ua.kiev.makson.controller.controllersite.ControllerWorkInSitePanel;
 import ua.kiev.makson.timer.RandomTime;
 import ua.kiev.makson.work_in_site.requests.GeneralHttpClient;
 import ua.kiev.makson.work_in_site.requests.RequesAssistant;
@@ -40,7 +41,7 @@ public class VideoDownloader {
 
 	public void startVideoDownload() throws InterruptedException, ExecutionException {
 
-		String url = "http://tfile.me/forum/viewforum.php?f=4";
+		String url = getUrlDownload();
 		LOGGER.info("run start Video Download");
 
 		RequesAssistant assistant = new RequesAssistant(genClient, controlSite, header);
@@ -65,6 +66,12 @@ public class VideoDownloader {
 			callGetAfterAuthentication();
 		}
 		return statusLine;
+	}
+
+	private String getUrlDownload() {
+		ControllerWorkInSitePanel controllerWorkInSitePanel = controlSite.getControllerWorkInSitePanel();
+		return controllerWorkInSitePanel.getDownload();
+
 	}
 
 	public void stopDownload() {

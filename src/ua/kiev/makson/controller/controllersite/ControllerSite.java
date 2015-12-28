@@ -69,7 +69,7 @@ public class ControllerSite {
 	}
 
 	public void setTextFieldInWorkinSitePanel(JTextField count, JTextField leftTime, JTextField loading,
-			TableModel tableModel, Executor executor) {
+			TableModel tableModel, String download, Executor executor) {
 		if (controllerWorkInSitePanel == null) {
 			controllerWorkInSitePanel = new ControllerWorkInSitePanel();
 		}
@@ -77,6 +77,7 @@ public class ControllerSite {
 		controllerWorkInSitePanel.setLeftTime(leftTime);
 		controllerWorkInSitePanel.setLoading(loading);
 		controllerWorkInSitePanel.setTableModel(tableModel);
+		controllerWorkInSitePanel.setDownload(download);
 		controllerWorkInSitePanel.setExecutor(executor);
 	}
 
