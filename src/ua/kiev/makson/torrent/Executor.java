@@ -9,7 +9,6 @@ import java.util.concurrent.Future;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 
 import ua.kiev.makson.work_in_site.requests.getvideo.page.VideoDescription;
@@ -21,8 +20,6 @@ public class Executor implements Runnable {
 	private Box box;
 	private JPanel panelMain;
 	private static final Logger LOGGER = Logger.getLogger(Executor.class);
-	static int x = 0;
-	static int y = 0;
 
 	public Executor(JPanel panel) {
 		executor = Executors.newFixedThreadPool(4);
@@ -40,13 +37,10 @@ public class Executor implements Runnable {
 		}
 		for (Future<JPanel> future : result) {
 			try {
-				y++;
 				JPanel panel = future.get();
-				x++;
 				box.remove(panel);
 				panelMain.revalidate();
 				panelMain.repaint();
-				System.out.println("x  " + x + "  y " + y);
 			} catch (InterruptedException ex) {
 				LOGGER.error(ex.getMessage());
 			} catch (ExecutionException ex) {

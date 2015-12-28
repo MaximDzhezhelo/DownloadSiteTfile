@@ -33,7 +33,7 @@ public class WorkInSitePanel extends JPanel {
 		createPanelDownloadTorrent();
 		panel.add(buttonPanel, BorderLayout.BEFORE_FIRST_LINE);
 		panel.add(tablePanel, BorderLayout.CENTER);
-		panel.add(downloadTorrent, BorderLayout.AFTER_LAST_LINE);
+		panel.add(downloadTorrent, BorderLayout.WEST);
 		this.add(panel);
 	}
 
