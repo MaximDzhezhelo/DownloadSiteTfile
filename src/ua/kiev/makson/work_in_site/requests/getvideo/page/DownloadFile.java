@@ -44,13 +44,13 @@ public class DownloadFile {
 		String namedescr = String.format("%s.txt", nameFolder);
 		String nameIMG = String.format("%s.jpg", nameFolder);
 
+		File torrentFolder = new File(rootDirectory, "Torrents");
+		isFileFolderExists(torrentFolder);
+
 		File fileFolder = new File(rootDirectory, nameFolder);
+		isFileFolderExists(fileFolder);
 
-		if (!fileFolder.exists()) {
-			fileFolder.mkdir();
-		}
-
-		File fileDownload = new File(fileFolder, nameFile);
+		File fileDownload = new File(torrentFolder, nameFile);
 		isFileExists(fileDownload);
 		downloadFile(downloadUrl, assistant, fileDownload);
 
@@ -78,6 +78,12 @@ public class DownloadFile {
 				}
 				LOGGER.error(ex.getMessage());
 			}
+		}
+	}
+
+	private void isFileFolderExists(File file) {
+		if (!file.exists()) {
+			file.mkdir();
 		}
 	}
 
