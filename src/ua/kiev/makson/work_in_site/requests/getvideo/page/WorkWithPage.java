@@ -74,7 +74,7 @@ public class WorkWithPage {
 						}
 						javaSQL.writeData(description);
 						updatePanel(controlSite, description.getName());
-						downloadTorrent(controlSite, description);
+						// downloadTorrent(controlSite, description);
 					}
 				}
 			}
