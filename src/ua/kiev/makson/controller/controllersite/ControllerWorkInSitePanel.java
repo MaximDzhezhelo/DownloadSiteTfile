@@ -12,6 +12,7 @@ public class ControllerWorkInSitePanel {
 	private TableModel tableModel;
 	private Executor executor;
 	private String download;
+	private boolean editable;
 
 	public JTextField getCount() {
 		return count;
@@ -59,6 +60,14 @@ public class ControllerWorkInSitePanel {
 
 	public void setDownload(String download) {
 		this.download = download;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 }

@@ -13,6 +13,7 @@ public class WorkInSitePanel extends JPanel {
 	private JPanel panel;
 	private TablePanel tablePanel;
 	private PanelDownloadTorrent downloadTorrent;
+	private TextFieldPanel fieldPanel;
 	private MyFrame frame;
 
 	private ButtonPanel buttonPanel;
@@ -29,10 +30,12 @@ public class WorkInSitePanel extends JPanel {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		createTablePanel();
+		createTextFieldPanel();
 		createButtonPanel();
 		createPanelDownloadTorrent();
 		panel.add(buttonPanel, BorderLayout.BEFORE_FIRST_LINE);
-		panel.add(tablePanel, BorderLayout.CENTER);
+		panel.add(fieldPanel, BorderLayout.CENTER);
+		panel.add(tablePanel, BorderLayout.AFTER_LAST_LINE);
 		panel.add(downloadTorrent, BorderLayout.WEST);
 		this.add(panel);
 	}
@@ -42,8 +45,13 @@ public class WorkInSitePanel extends JPanel {
 		tablePanel.createTablePanel();
 	}
 
+	public void createTextFieldPanel() {
+		fieldPanel = new TextFieldPanel(frame, tablePanel);
+		fieldPanel.createPanel();
+	}
+
 	public void createButtonPanel() {
-		buttonPanel = new ButtonPanel(frame, tablePanel);
+		buttonPanel = new ButtonPanel(frame, fieldPanel);
 		buttonPanel.createPanel();
 	}
 
